@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-meta-title="meta.home.title" data-meta-desc="meta.home.desc">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="meta.home.title">Nawah — Digital Development Agency | The Core of Every Successful Digital Project</title>
+  <meta name="description" data-i18n="meta.home.desc" content="Nawah — a web, app, and business systems development agency in Syria. We turn your ideas into exceptional digital products.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="نواة / Nawah — Digital Development Agency">
+  <meta property="og:description" content="نواة — وكالة تطوير مواقع، تطبيقات، وأنظمة أعمال في سوريا.">
+  <meta property="og:image" content="assets/images/og-image.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nawah.dev">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://nawah.dev">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Almarai:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "نواة / Nawah",
+    "description": "Digital development agency specializing in web design, mobile apps, and business software in Syria.",
+    "url": "https://nawah.dev",
+    "telephone": "+963998950904",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+963998950904",
+      "contactType": "customer service",
+      "availableLanguage": ["Arabic", "English"]
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "SY"
+    }
+  }
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+
+  <!-- ========== Page Transition Overlay ========== -->
+  <div class="page-transition" id="page-transition">
+    <div class="page-transition__hex"></div>
+  </div>
+
+  <!-- ========== NAVBAR ========== -->
+  <header class="navbar" role="banner">
+    <nav class="navbar__inner" aria-label="Main navigation">
+
+      <!-- 📸 TODO: Replace with Nawah SVG logo -->
+      <a href="index.html" class="navbar__logo" aria-label="Nawah Home">نواة</a>
+
+      <div class="navbar__links">
+        <a href="index.html" class="navbar__link" data-i18n="nav.home">Home</a>
+        <a href="#services" class="navbar__link" data-i18n="nav.services">Services</a>
+        <a href="portfolio.html" class="navbar__link" data-i18n="nav.portfolio">Portfolio</a>
+        <a href="about.html" class="navbar__link" data-i18n="nav.about">About</a>
+        <a href="https://wa.me/963998950904" target="_blank" rel="noopener noreferrer" class="navbar__link" data-i18n="nav.contact">Contact</a>
+      </div>
+
+      <div class="navbar__actions">
+        <button class="navbar__toggle" id="lang-toggle" aria-label="Toggle language">EN</button>
+        <button class="navbar__toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu">
+          <span class="hamburger-line hamburger-line--1"></span>
+          <span class="hamburger-line hamburger-line--2"></span>
+          <span class="hamburger-line hamburger-line--3"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========== Mobile Nav Overlay ========== -->
+  <div class="nav-overlay" id="nav-overlay" role="dialog" aria-modal="true">
+    <div class="nav-overlay__links">
+      <a href="index.html" class="nav-overlay__link" data-i18n="nav.home">Home</a>
+      <a href="#services" class="nav-overlay__link" data-i18n="nav.services">Services</a>
+      <a href="portfolio.html" class="nav-overlay__link" data-i18n="nav.portfolio">Portfolio</a>
+      <a href="about.html" class="nav-overlay__link" data-i18n="nav.about">About</a>
+      <a href="https://wa.me/963998950904" target="_blank" rel="noopener noreferrer" class="nav-overlay__link" data-i18n="nav.contact">Contact</a>
+    </div>
+  </div>
+
+  <main>
+
+  <!-- ========== SECTION: Hero ========== -->
+  <section class="hero" id="hero" aria-label="Hero">
+    <canvas class="hero__canvas" id="hero-canvas"></canvas>
+
+    <div class="hero__content">
+      <h1 class="hero__headline" data-i18n="hero.headline">We Are the Core From Which Your Digital Product Is Built</h1>
+
+      <p class="hero__subtitle" data-i18n="hero.subtitle">We build integrated digital solutions blending technical creativity with deep Syrian market insight — from idea to launch, the nucleus of every successful project.</p>
+
+      <div class="hero__ctas">
+        <a href="https://wa.me/963998950904" target="_blank" rel="noopener noreferrer" class="btn btn--primary hero__cta" data-i18n="hero.cta.primary" data-cursor="Start">Start Your Project</a>
+        <a href="portfolio.html" class="btn btn--outline hero__cta" data-i18n="hero.cta.secondary">Our Work</a>
+        <a href="#about-brief" class="btn btn--text hero__cta" data-i18n="hero.cta.tertiary">
+          Discover More <span class="btn__arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__scroll-indicator" aria-hidden="true">
+      <span data-i18n="hero.scroll">Scroll to explore</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION: About Brief ========== -->
+  <section class="section about-brief" id="about-brief">
+    <div class="container">
+      <div class="about-brief__content">
+        <span class="section__eyebrow" data-i18n="about.eyebrow">About Us</span>
+        <h2 class="section__title" data-i18n="about.title">Nawah — Where It All Begins</h2>
+        <p class="about-brief__text" data-i18n="about.text">In the world of technology, every great digital product starts from a solid core. At Nawah, we believe your digital project's success begins at the foundation. We build websites, applications, and integrated business systems with you at their center — because you are the true nucleus of everything we build.</p>
+        <a href="about.html" class="about-brief__link" data-i18n="about.link">
+          Read More About Us <span>→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Hexagon decor -->
+    <div class="hexagon-decor hexagon-decor--lg hex-float hex-float--delay-1" style="top: 20%; left: 5%;"></div>
+    <div class="hexagon-decor hex-float hex-float--delay-2" style="bottom: 15%; right: 8%;"></div>
+  </section>
+
+  <!-- ========== SECTION: Stats ========== -->
+  <section class="section stats" id="stats">
+    <div class="container">
+      <div class="stats__grid">
+        <div class="stats__item">
+          <div class="stats__number">
+            <span class="counter-number" data-target="1" data-suffix="+">0</span>
+          </div>
+          <span class="stats__label" data-i18n="stats.project.label">Completed Project</span>
+        </div>
+
+        <div class="stats__divider" aria-hidden="true"></div>
+
+        <div class="stats__item">
+          <div class="stats__number">
+            <span class="counter-number" data-target="1" data-suffix="+">0</span>
+          </div>
+          <span class="stats__label" data-i18n="stats.client.label">Happy Client</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION: Services ========== -->
+  <section class="section services" id="services">
+    <div class="container">
+      <div class="section__heading">
+        <h2 class="section__title" data-i18n="services.title">Our Services</h2>
+      </div>
+
+      <div class="services__grid">
+
+        <!-- Service Card 1 — Web -->
+        <article class="service-card glass-card">
+          <div class="service-card__icon-frame">
+            <div class="service-card__icon-inner">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+          </div>
+          <h3 class="service-card__title" data-i18n="services.web.title">Web Design & Development</h3>
+          <p class="service-card__desc" data-i18n="services.web.desc">We design and develop professional websites combining stunning visuals with high performance. Custom admin panel, blazing-fast load times, and a fully responsive experience.</p>
+          <a href="portfolio.html" class="service-card__link">
+            <span data-i18n="about.link">Learn More</span> <span>→</span>
+          </a>
+        </article>
+
+        <!-- Service Card 2 — Mobile -->
+        <article class="service-card glass-card">
+          <div class="service-card__icon-frame">
+            <div class="service-card__icon-inner">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+              </svg>
+            </div>
+          </div>
+          <h3 class="service-card__title" data-i18n="services.mobile.title">Mobile App Development</h3>
+          <p class="service-card__desc" data-i18n="services.mobile.desc">We build full-featured mobile applications for iOS and Android with smooth, exceptional UX. Real-time features, push notifications, and third-party service integration.</p>
+          <a href="portfolio.html" class="service-card__link">
+            <span data-i18n="about.link">Learn More</span> <span>→</span>
+          </a>
+        </article>
+
+        <!-- Service Card 3 — Software -->
+        <article class="service-card glass-card">
+          <div class="service-card__icon-frame">
+            <div class="service-card__icon-inner">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
+          </div>
+          <h3 class="service-card__title" data-i18n="services.software.title">Software & Business Systems</h3>
+          <p class="service-card__desc" data-i18n="services.software.desc">We develop integrated ERP systems, inventory and sales management, and business process automation — all tailored to fit your unique business needs.</p>
+          <a href="portfolio.html" class="service-card__link">
+            <span data-i18n="about.link">Learn More</span> <span>→</span>
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION: Why Nawah (Features) ========== -->
+  <section class="section features" id="features">
+    <div class="container">
+      <div class="section__heading">
+        <h2 class="section__title" data-i18n="features.title">Why Nawah?</h2>
+      </div>
+
+      <div class="features__list">
+
+        <!-- Feature 1 -->
+        <div class="features__item">
+          <div class="features__icon-frame">
+            <div class="features__icon-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </div>
+          </div>
+          <div class="features__text">
+            <h4 data-i18n="features.1.title">Integrated Admin Dashboard</h4>
+            <p data-i18n="features.1.desc">We provide a comprehensive dashboard giving you full control over your site or app — content, orders, customers, and reports management with ease.</p>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="features__item">
+          <div class="features__icon-frame">
+            <div class="features__icon-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line>
+              </svg>
+            </div>
+          </div>
+          <div class="features__text">
+            <h4 data-i18n="features.2.title">E-Payment Integration</h4>
+            <p data-i18n="features.2.desc">We integrate the most widely used payment gateways in Syria and the region, enabling you to receive payments securely and effortlessly.</p>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="features__item">
+          <div class="features__icon-frame">
+            <div class="features__icon-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div class="features__text">
+            <h4 data-i18n="features.3.title">Ongoing Post-Launch Support</h4>
+            <p data-i18n="features.3.desc">Our relationship doesn't end at delivery. We provide continuous technical support and regular updates to ensure your digital product keeps running smoothly.</p>
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="features__item">
+          <div class="features__icon-frame">
+            <div class="features__icon-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="features__text">
+            <h4 data-i18n="features.4.title">Social Media Integration</h4>
+            <p data-i18n="features.4.desc">We connect your digital project with social media platforms — Facebook, Instagram, WhatsApp — to boost your reach and audience engagement.</p>
+          </div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="features__item">
+          <div class="features__icon-frame">
+            <div class="features__icon-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div class="features__text">
+            <h4 data-i18n="features.5.title">Speed & Professionalism</h4>
+            <p data-i18n="features.5.desc">We deliver on schedule with the highest quality standards at every stage of development.</p>
+          </div>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="features__item">
+          <div class="features__icon-frame">
+            <div class="features__icon-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <globe-icon><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></globe-icon>
+              </svg>
+            </div>
+          </div>
+          <div class="features__text">
+            <h4 data-i18n="features.6.title">Full Arabic & RTL Support</h4>
+            <p data-i18n="features.6.desc">All our projects fully support Arabic with professional RTL design and bilingual content management.</p>
+          </div>
+        </div>
+
+        <!-- Feature 7 -->
+        <div class="features__item">
+          <div class="features__icon-frame">
+            <div class="features__icon-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+          </div>
+          <div class="features__text">
+            <h4 data-i18n="features.7.title">Fully Responsive Across All Devices</h4>
+            <p data-i18n="features.7.desc">We ensure your site or app looks and performs perfectly on every screen — mobile, tablet, or desktop.</p>
+          </div>
+        </div>
+
+        <!-- Feature 8 -->
+        <div class="features__item">
+          <div class="features__icon-frame">
+            <div class="features__icon-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+              </svg>
+            </div>
+          </div>
+          <div class="features__text">
+            <h4 data-i18n="features.8.title">Built-in SEO Optimization</h4>
+            <p data-i18n="features.8.desc">We build your digital project on solid SEO foundations — clean code structure, fast loading, and optimized search visibility.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION: Clients ========== -->
+  <section class="section clients" id="clients">
+    <div class="container">
+      <div class="section__heading">
+        <h2 class="section__title" data-i18n="clients.title">Our Clients</h2>
+      </div>
+    </div>
+
+    <div class="clients__marquee">
+      <div class="clients__track" id="clients-track">
+        <!-- Set 1 -->
+        <div class="clients__track-inner">
+          <!-- 📸 TODO: Replace with actual client logo image. Recommended: square PNG/SVG with transparent background, min 200x200px -->
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+            <!-- <img src="assets/images/clients/client-1.png" alt="Client Name"> -->
+          </div>
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+          </div>
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+          </div>
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+          </div>
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+          </div>
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+          </div>
+        </div>
+        <!-- Set 2 (duplicate for seamless loop) -->
+        <div class="clients__track-inner">
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+          </div>
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+          </div>
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+          </div>
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+          </div>
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+          </div>
+          <div class="client-logo-circle">
+            <span class="placeholder-text" data-i18n="portfolio.comingSoon">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION: Team ========== -->
+  <section class="section team" id="team">
+    <div class="container">
+      <div class="section__heading">
+        <h2 class="section__title" data-i18n="team.title">Our Team</h2>
+      </div>
+
+      <div class="team__grid">
+
+        <!-- Team Card 1 — Abdulrahman -->
+        <article class="team-card glass-card">
+          <div class="team-card__inner">
+            <!-- 📸 TODO: Add team member photo here — recommended 400x400px square -->
+            <div class="team-card__photo">
+              <div class="team-card__photo-placeholder">
+                <span aria-hidden="true">AR</span>
+              </div>
+              <!-- <img src="assets/images/team/abdulrahman.jpg" alt="Abdulrahman Al-Ladhiqani"> -->
+            </div>
+            <h3 class="team-card__name" data-i18n="team.member.1.name">Abdulrahman Al-Ladhiqani</h3>
+            <p class="team-card__title" data-i18n="team.member.1.role">Chief Executive Officer (CEO)</p>
+          </div>
+        </article>
+
+        <!-- Team Card 2 — Amir -->
+        <article class="team-card glass-card">
+          <div class="team-card__inner">
+            <!-- 📸 TODO: Add team member photo here — recommended 400x400px square -->
+            <div class="team-card__photo">
+              <div class="team-card__photo-placeholder">
+                <span aria-hidden="true">AM</span>
+              </div>
+              <!-- <img src="assets/images/team/amir.jpg" alt="Amir Al-Mara'i"> -->
+            </div>
+            <h3 class="team-card__name" data-i18n="team.member.2.name">Amir Al-Mara'i</h3>
+            <p class="team-card__title" data-i18n="team.member.2.role">Backend Developer & UX Designer</p>
+          </div>
+        </article>
+
+        <!-- Team Card 3 — Lujain -->
+        <article class="team-card glass-card">
+          <div class="team-card__inner">
+            <!-- 📸 TODO: Add team member photo here — recommended 400x400px square -->
+            <div class="team-card__photo">
+              <div class="team-card__photo-placeholder">
+                <span aria-hidden="true">LS</span>
+              </div>
+              <!-- <img src="assets/images/team/lujain.jpg" alt="Al-Lujain Shublut"> -->
+            </div>
+            <h3 class="team-card__name" data-i18n="team.member.3.name">Al-Lujain Shublut</h3>
+            <p class="team-card__title" data-i18n="team.member.3.role">Frontend Developer & UI Designer</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION: Testimonials ========== -->
+  <section class="section testimonials" id="testimonials">
+    <div class="container">
+      <div class="section__heading">
+        <h2 class="section__title" data-i18n="testimonials.title">What Our Clients Say</h2>
+        <p class="section__subtitle" data-i18n="testimonials.subtitle">Our clients' trust is our true motivation — we believe results speak for themselves</p>
+      </div>
+
+      <div class="testimonials__inner">
+
+        <!-- ================================================================
+          TESTIMONIAL CARD — To add a new testimonial, copy everything between
+          START CARD and END CARD, paste it after this block, and update the content.
+          ================================================================ -->
+        <!-- START CARD -->
+        <div class="testimonial-card glass-card">
+          <div class="testimonial-card__stars" aria-label="5 stars">★★★★★</div>
+          <blockquote class="testimonial-card__quote" data-i18n="testimonials.1.quote">We aspire to be the number one technology and development company in Syria.</blockquote>
+          <cite class="testimonial-card__author" data-i18n="testimonials.1.name">Abdulrahman Al-Ladhiqani</cite>
+          <p class="testimonial-card__role" data-i18n="testimonials.1.role">CEO of Nawah</p>
+        </div>
+        <!-- END CARD -->
+
+        <!--
+          READY-TO-USE TESTIMONIAL #2 (uncomment when needed):
+          <div class="testimonial-card glass-card">
+            <div class="testimonial-card__stars" aria-label="5 stars">★★★★★</div>
+            <blockquote class="testimonial-card__quote">"تعاملت مع نواة لتطوير متجري الإلكتروني، وما توقعت النتيجة تكون بهالجمال. التصميم فخم، والسرعة خرافية، والتسليم كان قبل المعاد. صراحة أنصح كل صاحب متجر بالتعامل معهم."<br><br>"I worked with Nawah to develop my online store, and I never expected the result to be this beautiful. The design is stunning, the speed is incredible, and delivery was ahead of schedule. Honestly, I recommend every store owner to work with them."</blockquote>
+            <cite class="testimonial-card__author">محمود الدبس / Mahmoud Al-Dabes</cite>
+            <p class="testimonial-card__role">صاحب متجر موضة / Fashion Store Owner</p>
+          </div>
+        -->
+
+        <!--
+          READY-TO-USE TESTIMONIAL #3 (uncomment when needed):
+          <div class="testimonial-card glass-card">
+            <div class="testimonial-card__stars" aria-label="5 stars">★★★★★</div>
+            <blockquote class="testimonial-card__quote">"كنا محتاجين نظام متكامل لإدارة المخازن والمبيعات، وفريق نواة صممولنا نظام مخصص حسب طلبنا بالضبط. الدعم الفني بعد التسليم ممتاز، وأي مشكلة صغيرة كانوا يجاوبونا ويحلوها بنفس اليوم. شركة محترمة وبصدق."<br><br>"We needed an integrated inventory and sales management system, and the Nawah team designed a custom system exactly to our specifications. The post-delivery technical support is excellent — any small issue was answered and resolved the same day. A truly professional company."</blockquote>
+            <cite class="testimonial-card__author">ليلى كاتبة / Laila Katiba</cite>
+            <p class="testimonial-card__role">مديرة شركة تجارية / Trading Company Manager</p>
+          </div>
+        -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION: FAQ ========== -->
+  <section class="section faq" id="faq">
+    <div class="container">
+      <div class="section__heading">
+        <h2 class="section__title" data-i18n="faq.title">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq__list">
+
+        <!-- FAQ Item 1 -->
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span data-i18n="faq.q1">What does the workflow with Nawah look like?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq__answer">
+            <p data-i18n="faq.a1">We start with a free consultation to understand your needs and goals. We then provide a detailed proposal including timeline and cost. After agreement, we begin design and development with regular weekly updates.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span data-i18n="faq.q2">How much does it cost to develop a website or app?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq__answer">
+            <p data-i18n="faq.a2">Cost depends on project scope and complexity. We provide custom quotes after understanding your requirements. Contact us on WhatsApp for a free consultation and quote.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span data-i18n="faq.q3">How long does digital project development take?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq__answer">
+            <p data-i18n="faq.a3">Timelines vary by project type. Simple websites may take 2-4 weeks, while apps and integrated systems may need 4-12 weeks. We define the timeline precisely before starting.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span data-i18n="faq.q4">What happens after project delivery?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq__answer">
+            <p data-i18n="faq.a4">We provide a warranty period and post-delivery support. We ensure you're trained on using the system, help resolve any technical issues, and offer ongoing maintenance as agreed.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 5 -->
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span data-i18n="faq.q5">Can I request changes after development starts?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq__answer">
+            <p data-i18n="faq.a5">Yes, absolutely. We use an agile approach and understand that vision evolves. We agree on a revision scope upfront and handle additional changes flexibly.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 6 -->
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span data-i18n="faq.q6">Who owns the intellectual property?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq__answer">
+            <p data-i18n="faq.a6">You own all rights to the project after final delivery. The code, design, database — everything becomes fully yours.</p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 7 -->
+        <div class="faq__item">
+          <button class="faq__question" aria-expanded="false">
+            <span data-i18n="faq.q7">Do you support mobile compatibility?</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq__answer">
+            <p data-i18n="faq.a7">All our projects are built with responsive design that works perfectly on all devices — mobile, tablet, and desktop. We test on multiple devices before delivery.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__grid">
+      <!-- Column 1: Brand -->
+      <div>
+        <!-- 📸 TODO: Replace with Nawah SVG logo -->
+        <div class="footer__logo">نواة</div>
+        <p class="footer__desc" data-i18n="footer.desc">NAWAH — building the digital products that shape your business future. From idea to success, the core of every project.</p>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div>
+        <h4 class="footer__heading" data-i18n="footer.quickLinks">Quick Links</h4>
+        <div class="footer__links">
+          <a href="index.html" class="footer__link" data-i18n="nav.home">Home</a>
+          <a href="#services" class="footer__link" data-i18n="nav.services">Services</a>
+          <a href="portfolio.html" class="footer__link" data-i18n="nav.portfolio">Portfolio</a>
+          <a href="about.html" class="footer__link" data-i18n="nav.about">About</a>
+          <a href="https://wa.me/963998950904" target="_blank" rel="noopener noreferrer" class="footer__link" data-i18n="nav.contact">Contact</a>
+        </div>
+      </div>
+
+      <!-- Column 3: Contact -->
+      <div>
+        <h4 class="footer__heading" data-i18n="footer.contact">Contact Us</h4>
+
+        <!-- WhatsApp (in footer, NOT floating) -->
+        <a href="https://wa.me/963998950904" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="margin-bottom: 1rem;" data-i18n="footer.whatsapp">
+          Message Us on WhatsApp
+        </a>
+
+        <!-- Instagram -->
+        <!-- 📸 TODO: Update Instagram link when available -->
+        <div class="footer__contact-item">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+          <span data-i18n="footer.instagram">Instagram</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer__bottom">
+      <span data-i18n="footer.copyright">© 2025 Nawah. All rights reserved.</span>
+      <div class="footer__bottom-links">
+        <a href="#" class="footer__bottom-link" data-i18n="footer.privacy">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <!-- CDN Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+  <!-- App Scripts -->
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/hero.js"></script>
+  <script src="assets/js/counter.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
+
+</body>
+</html>
