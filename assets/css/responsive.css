@@ -125,9 +125,11 @@
     min-height: 30vh;
   }
 
-  .cursor,
-  .cursor-follower {
-    display: none;
+  .cursor__core,
+  .cursor__orbit,
+  .cursor-follower,
+  .cursor__label {
+    display: none !important;
   }
 
   body {
@@ -198,8 +200,10 @@
   }
 
   .hero__canvas,
-  .cursor,
+  .cursor__core,
+  .cursor__orbit,
   .cursor-follower,
+  .cursor__label,
   .nav-overlay,
   .hero__scroll-indicator {
     display: none !important;

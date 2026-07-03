@@ -36,33 +36,35 @@ const cursor = {
   init() {
     if (window.innerWidth <= 768) return;
 
-    const wrapper = document.createElement('div');
-    wrapper.className = 'cursor';
-
-    const core = document.createElement('div');
+    var core = document.createElement('div');
     core.className = 'cursor__core';
 
-    const orbit1 = document.createElement('div');
+    var orbit1 = document.createElement('div');
     orbit1.className = 'cursor__orbit cursor__orbit--1';
 
-    const orbit2 = document.createElement('div');
+    var orbit2 = document.createElement('div');
     orbit2.className = 'cursor__orbit cursor__orbit--2';
 
-    const label = document.createElement('span');
+    var label = document.createElement('span');
     label.className = 'cursor__label';
     label.textContent = 'View';
 
-    const follower = document.createElement('div');
+    var follower = document.createElement('div');
     follower.className = 'cursor-follower';
 
-    document.body.append(wrapper, core, orbit1, orbit2, label, follower);
+    document.body.appendChild(core);
+    document.body.appendChild(orbit1);
+    document.body.appendChild(orbit2);
+    document.body.appendChild(follower);
+    document.body.style.cursor = 'none';
+    document.body.appendChild(label);
 
-    let mx = 0, my = 0;
-    let cx = 0, cy = 0;
-    let ox = 0, oy = 0;
-    let fx = 0, fy = 0;
+    var mx = 0, my = 0;
+    var cx = 0, cy = 0;
+    var ox = 0, oy = 0;
+    var fx = 0, fy = 0;
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', function (e) {
       mx = e.clientX;
       my = e.clientY;
     });
@@ -70,51 +72,46 @@ const cursor = {
     function animate() {
       cx += (mx - cx) * 0.15;
       cy += (my - cy) * 0.15;
-      ox += (mx - ox) * 0.12;
-      oy += (my - oy) * 0.12;
+      ox += (mx - ox) * 0.10;
+      oy += (my - oy) * 0.10;
       fx += (mx - fx) * 0.08;
       fy += (my - fy) * 0.08;
 
-      const ct = `translate(${cx}px, ${cy}px)`;
-      const ot = `translate(${ox}px, ${oy}px)`;
-      const ft = `translate(${fx}px, ${fy}px)`;
-
-      core.style.transform = ct + ' translate(-50%, -50%)';
-      orbit1.style.transform = ot + ' translate(-50%, -50%)';
-      orbit2.style.transform = ot + ' translate(-50%, -50%)';
-      follower.style.transform = ft + ' translate(-50%, -50%)';
-      label.style.transform = ct + ' translate(-50%, -180%)';
+      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%)';
+      orbit1.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%)';
+      orbit2.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%)';
+      follower.style.transform = 'translate(' + fx + 'px, ' + fy + 'px) translate(-50%, -50%)';
+      label.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -200%)';
 
       requestAnimationFrame(animate);
     }
 
     animate();
 
-    const targets = document.querySelectorAll('a, button, .btn, .glass-card, .service-card, .team-card, .project-card');
-    targets.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        wrapper.classList.add('cursor--hover');
+    function applyHover(el) {
+      el.addEventListener('mouseenter', function () {
+        document.body.classList.add('cursor--hover');
         follower.classList.add('cursor-follower--hidden');
 
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
-          wrapper.classList.add('cursor--text');
+          document.body.classList.add('cursor--text');
           label.textContent = el.getAttribute('data-cursor') || 'Click';
         }
       });
 
-      el.addEventListener('mouseleave', () => {
-        wrapper.classList.remove('cursor--hover', 'cursor--text');
+      el.addEventListener('mouseleave', function () {
+        document.body.classList.remove('cursor--hover', 'cursor--text');
         follower.classList.remove('cursor-follower--hidden');
       });
-    });
+    }
 
-    document.addEventListener('mouseleave', () => {
-      wrapper.style.opacity = '0';
-    });
+    var targets = document.querySelectorAll('a, button, .btn, .glass-card, .service-card, .team-card, .project-card');
+    for (var i = 0; i < targets.length; i++) {
+      applyHover(targets[i]);
+    }
 
-    document.addEventListener('mouseenter', () => {
-      wrapper.style.opacity = '1';
-    });
+    document.addEventListener('mouseleave', function () { core.style.opacity = '0'; });
+    document.addEventListener('mouseenter', function () { core.style.opacity = '1'; });
   }
 };
 

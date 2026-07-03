@@ -2,60 +2,50 @@
 
 /* ========== Custom Cursor ========== */
 
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-  z-index: 99999;
-  transition: opacity 0.3s ease;
-}
-
 .cursor__core {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  background: transparent url('/assets/images/cursor/core.png') no-repeat center / contain;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  background: var(--accent) url('../images/cursor/core.png') no-repeat center / contain;
+  border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
   transform: translate(-50%, -50%);
   will-change: transform;
-  image-rendering: auto;
 }
 
 .cursor__orbit {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 26px;
-  height: 26px;
+  top: 0; left: 0;
+  width: 28px; height: 28px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border-radius: 50%;
   pointer-events: none;
   z-index: 99998;
   opacity: 0;
+  transition: opacity 0.3s ease;
   will-change: transform;
 }
 
 .cursor__orbit--1 {
-  background: transparent url('/assets/images/cursor/orbit-1.png') no-repeat center / contain;
+  background-color: #C9A84C;
+  background-image: url('../images/cursor/orbit-1.png');
 }
 
 .cursor__orbit--2 {
-  background: transparent url('/assets/images/cursor/orbit-2.png') no-repeat center / contain;
-}
-
-.cursor--hover .cursor__orbit {
-  opacity: 1;
+  background-color: #1A2744;
+  background-image: url('../images/cursor/orbit-2.png');
 }
 
 .cursor--hover .cursor__orbit--1 {
+  opacity: 1;
   animation: orbit-ccw 2.5s linear infinite;
 }
 
 .cursor--hover .cursor__orbit--2 {
+  opacity: 1;
   animation: orbit-cw 2.5s linear infinite;
 }
 
@@ -65,11 +55,9 @@
 
 .cursor__label {
   position: fixed;
-  top: 0;
-  left: 0;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  top: 0; left: 0;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em;
   color: var(--accent);
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -77,21 +65,18 @@
   white-space: nowrap;
   z-index: 100000;
   pointer-events: none;
-  transform: translate(-50%, -180%);
 }
 
 .cursor-follower {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 50px;
-  height: 50px;
+  top: 0; left: 0;
+  width: 50px; height: 50px;
   border: 1.5px solid var(--accent);
   border-radius: 50%;
   pointer-events: none;
   z-index: 99997;
   transform: translate(-50%, -50%);
-  opacity: 0.3;
+  opacity: 0.25;
   transition: opacity 0.3s ease;
 }
 
@@ -100,13 +85,13 @@
 }
 
 @keyframes orbit-ccw {
-  0%   { transform: translate(-50%, -50%) rotate(0deg)    translateY(-40px) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(-360deg) translateY(-40px) rotate(360deg); }
+  from { transform: translate(-50%, -50%) rotate(0deg)    translateY(-42px) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg) translateY(-42px) rotate(360deg); }
 }
 
 @keyframes orbit-cw {
-  0%   { transform: translate(-50%, -50%) rotate(0deg)    translateY(-40px) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg) translateY(-40px) rotate(-360deg); }
+  from { transform: translate(-50%, -50%) rotate(0deg)    translateY(-42px) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg)  translateY(-42px) rotate(-360deg); }
 }
 
 /* ========== Section Divider ========== */
