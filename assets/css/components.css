@@ -13,22 +13,23 @@
   pointer-events: none;
   will-change: transform;
   transform: translate(-50%, -50%);
+  transform-origin: center center;
 }
 
 .cursor__outer {
-  width: 46px; height: 46px;
+  width: 69px; height: 69px;
   background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-2.png');
   z-index: 99997;
 }
 
 .cursor__mid {
-  width: 30px; height: 30px;
+  width: 45px; height: 45px;
   background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-1.png');
   z-index: 99998;
 }
 
 .cursor__core {
-  width: 14px; height: 14px;
+  width: 21px; height: 21px;
   background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/core.png');
   z-index: 99999;
 }
