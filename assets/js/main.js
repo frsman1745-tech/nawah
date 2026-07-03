@@ -59,6 +59,14 @@ const cursor = {
     var cx = 0, cy = 0;
     var ox = 0, oy = 0;
     var mx2 = 0, my2 = 0;
+    var orbitAngle1 = 0, orbitAngle2 = 0;
+    var orbitIntensity = 0;
+    var orbitTarget = 0;
+    var clickBurst = 0;
+    var ORBIT_RADIUS_1 = 18;
+    var ORBIT_RADIUS_2 = 32;
+    var ORBIT_SPEED_1 = 0.04;
+    var ORBIT_SPEED_2 = -0.03;
 
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX;
@@ -73,10 +81,21 @@ const cursor = {
       mx2 += (ox - mx2) * 0.07;
       my2 += (oy - my2) * 0.07;
 
+      orbitIntensity += (orbitTarget - orbitIntensity) * 0.08;
+      clickBurst *= 0.92;
+      orbitAngle1 += ORBIT_SPEED_1 * (1 + clickBurst * 3);
+      orbitAngle2 += ORBIT_SPEED_2 * (1 + clickBurst * 3);
+
+      var intensity = Math.min(1, orbitIntensity + clickBurst);
+      var midOx = ox + Math.cos(orbitAngle1) * ORBIT_RADIUS_1 * intensity;
+      var midOy = oy + Math.sin(orbitAngle1) * ORBIT_RADIUS_1 * intensity;
+      var outOx = mx2 + Math.cos(orbitAngle2) * ORBIT_RADIUS_2 * intensity;
+      var outOy = my2 + Math.sin(orbitAngle2) * ORBIT_RADIUS_2 * intensity;
+
       core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%)';
-      mid.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%)';
-      outer.style.transform = 'translate(' + mx2 + 'px, ' + my2 + 'px) translate(-50%, -50%)';
-      label.style.transform = 'translate(' + cx + 'px, ' + (cy - 55) + 'px) translate(-50%, -50%)';
+      mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%)';
+      outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%)';
+      label.style.transform = 'translate(' + cx + 'px, ' + (cy - 42) + 'px) translate(-50%, -50%)';
 
       requestAnimationFrame(animate);
     }
@@ -86,7 +105,7 @@ const cursor = {
     function applyHover(el) {
       el.addEventListener('mouseenter', function () {
         document.body.classList.add('cursor--hover');
-
+        orbitTarget = 1;
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
           document.body.classList.add('cursor--text');
           label.textContent = el.getAttribute('data-cursor') || 'Click';
@@ -95,6 +114,7 @@ const cursor = {
 
       el.addEventListener('mouseleave', function () {
         document.body.classList.remove('cursor--hover', 'cursor--text');
+        orbitTarget = 0;
       });
     }
 
@@ -103,8 +123,12 @@ const cursor = {
       applyHover(targets[i]);
     }
 
+    document.addEventListener('click', function () {
+      clickBurst = 1;
+    });
+
     document.addEventListener('mouseleave', function () { core.style.opacity = '0'; mid.style.opacity = '0'; outer.style.opacity = '0'; label.style.opacity = '0'; });
-    document.addEventListener('mouseenter', function () { core.style.opacity = '1'; mid.style.opacity = '1'; outer.style.opacity = '1'; label.style.opacity = ''; });
+    document.addEventListener('mouseenter', function () { core.style.opacity = '1'; mid.style.opacity = '1'; outer.style.opacity = ''; label.style.opacity = ''; });
   }
 };
 
