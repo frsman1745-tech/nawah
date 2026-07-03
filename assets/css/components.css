@@ -6,7 +6,7 @@
   position: fixed;
   top: 0; left: 0;
   width: 36px; height: 36px;
-  background: var(--accent) url('../images/cursor/core.png') no-repeat center / contain;
+  background: var(--accent) url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/core.png') no-repeat center / contain;
   border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
@@ -31,12 +31,12 @@
 
 .cursor__orbit--1 {
   background-color: #C9A84C;
-  background-image: url('../images/cursor/orbit-1.png');
+  background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-1.png');
 }
 
 .cursor__orbit--2 {
   background-color: #1A2744;
-  background-image: url('../images/cursor/orbit-2.png');
+  background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-2.png');
 }
 
 .cursor--hover .cursor__orbit--1 {
