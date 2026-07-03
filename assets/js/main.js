@@ -63,8 +63,8 @@ const cursor = {
     var orbitIntensity = 0;
     var orbitTarget = 0;
     var clickBurst = 0;
-    var ORBIT_RADIUS_1 = 18;
-    var ORBIT_RADIUS_2 = 32;
+    var ORBIT_RADIUS_1 = 9;
+    var ORBIT_RADIUS_2 = 16;
     var ORBIT_SPEED_1 = 0.04;
     var ORBIT_SPEED_2 = -0.03;
 
@@ -95,7 +95,7 @@ const cursor = {
       core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%)';
       mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%)';
       outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%)';
-      label.style.transform = 'translate(' + cx + 'px, ' + (cy - 42) + 'px) translate(-50%, -50%)';
+      label.style.transform = 'translate(' + cx + 'px, ' + (cy - 28) + 'px) translate(-50%, -50%)';
 
       requestAnimationFrame(animate);
     }
