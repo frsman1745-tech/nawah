@@ -32,20 +32,22 @@ const theme = {
 
 /* ========== Custom Cursor ========== */
 
-const CURSOR_SVG = `<svg viewBox="0 0 50 58" xmlns="http://www.w3.org/2000/svg">
-  <polygon points="25,0 50,14.5 50,43.5 25,58 0,43.5 0,14.5" fill="#1A2744"/>
-  <polygon points="25,5 45,17 45,41 25,53 5,41 5,17" fill="#2B3D5F"/>
-  <polygon points="25,10 40,19.5 40,38.5 25,48 10,38.5 10,19.5" fill="#3A506B"/>
-  <polygon points="25,18 33,22.5 33,35.5 25,40 17,35.5 17,22.5" fill="#C9A84C"/>
-</svg>`;
-
 const cursor = {
   init() {
     if (window.innerWidth <= 768) return;
 
+    const basePath = 'assets/images/cursor/';
+
     const cursorEl = document.createElement('div');
     cursorEl.className = 'cursor';
-    cursorEl.innerHTML = CURSOR_SVG + '<span class="cursor__label">View</span>';
+    cursorEl.innerHTML = `
+      <div class="cursor__orbits">
+        <img class="cursor__orbit cursor__orbit--1" src="${basePath}orbit-1.png" alt="" draggable="false">
+        <img class="cursor__orbit cursor__orbit--2" src="${basePath}orbit-2.png" alt="" draggable="false">
+      </div>
+      <img class="cursor__core" src="${basePath}core.png" alt="" draggable="false">
+      <span class="cursor__label">View</span>
+    `;
 
     const follower = document.createElement('div');
     follower.className = 'cursor-follower';
@@ -64,7 +66,7 @@ const cursor = {
     });
 
     function animate() {
-      const lerp = isHovering ? 0.06 : 0.12;
+      const lerp = isHovering ? 0.08 : 0.14;
       cursorX += (mouseX - cursorX) * lerp;
       cursorY += (mouseY - cursorY) * lerp;
       followerX += (mouseX - followerX) * 0.08;
