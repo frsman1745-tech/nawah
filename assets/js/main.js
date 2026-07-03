@@ -36,79 +36,84 @@ const cursor = {
   init() {
     if (window.innerWidth <= 768) return;
 
-    const basePath = 'assets/images/cursor/';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'cursor';
 
-    const cursorEl = document.createElement('div');
-    cursorEl.className = 'cursor';
-    cursorEl.innerHTML = `
-      <div class="cursor__orbits">
-        <img class="cursor__orbit cursor__orbit--1" src="${basePath}orbit-1.png" alt="" draggable="false">
-        <img class="cursor__orbit cursor__orbit--2" src="${basePath}orbit-2.png" alt="" draggable="false">
-      </div>
-      <img class="cursor__core" src="${basePath}core.png" alt="" draggable="false">
-      <span class="cursor__label">View</span>
-    `;
+    const core = document.createElement('div');
+    core.className = 'cursor__core';
+
+    const orbit1 = document.createElement('div');
+    orbit1.className = 'cursor__orbit cursor__orbit--1';
+
+    const orbit2 = document.createElement('div');
+    orbit2.className = 'cursor__orbit cursor__orbit--2';
+
+    const label = document.createElement('span');
+    label.className = 'cursor__label';
+    label.textContent = 'View';
 
     const follower = document.createElement('div');
     follower.className = 'cursor-follower';
 
-    document.body.appendChild(cursorEl);
-    document.body.appendChild(follower);
+    document.body.append(wrapper, core, orbit1, orbit2, label, follower);
 
-    let mouseX = 0, mouseY = 0;
-    let cursorX = 0, cursorY = 0;
-    let followerX = 0, followerY = 0;
-    let isHovering = false;
+    let mx = 0, my = 0;
+    let cx = 0, cy = 0;
+    let ox = 0, oy = 0;
+    let fx = 0, fy = 0;
 
     document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+      mx = e.clientX;
+      my = e.clientY;
     });
 
     function animate() {
-      const lerp = isHovering ? 0.08 : 0.14;
-      cursorX += (mouseX - cursorX) * lerp;
-      cursorY += (mouseY - cursorY) * lerp;
-      followerX += (mouseX - followerX) * 0.08;
-      followerY += (mouseY - followerY) * 0.08;
+      cx += (mx - cx) * 0.15;
+      cy += (my - cy) * 0.15;
+      ox += (mx - ox) * 0.12;
+      oy += (my - oy) * 0.12;
+      fx += (mx - fx) * 0.08;
+      fy += (my - fy) * 0.08;
 
-      cursorEl.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
-      follower.style.transform = `translate(${followerX}px, ${followerY}px) translate(-50%, -50%)`;
+      const ct = `translate(${cx}px, ${cy}px)`;
+      const ot = `translate(${ox}px, ${oy}px)`;
+      const ft = `translate(${fx}px, ${fy}px)`;
+
+      core.style.transform = ct + ' translate(-50%, -50%)';
+      orbit1.style.transform = ot + ' translate(-50%, -50%)';
+      orbit2.style.transform = ot + ' translate(-50%, -50%)';
+      follower.style.transform = ft + ' translate(-50%, -50%)';
+      label.style.transform = ct + ' translate(-50%, -180%)';
 
       requestAnimationFrame(animate);
     }
 
     animate();
 
-    const hoverTargets = document.querySelectorAll('a, button, .btn, .glass-card, .service-card, .team-card, .project-card');
-    hoverTargets.forEach(el => {
+    const targets = document.querySelectorAll('a, button, .btn, .glass-card, .service-card, .team-card, .project-card');
+    targets.forEach(el => {
       el.addEventListener('mouseenter', () => {
-        isHovering = true;
-        cursorEl.classList.add('cursor--hover');
+        wrapper.classList.add('cursor--hover');
         follower.classList.add('cursor-follower--hidden');
 
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
-          cursorEl.classList.add('cursor--text');
-          const label = cursorEl.querySelector('.cursor__label');
-          if (label) label.textContent = el.getAttribute('data-cursor') || 'Click';
+          wrapper.classList.add('cursor--text');
+          label.textContent = el.getAttribute('data-cursor') || 'Click';
         }
       });
 
       el.addEventListener('mouseleave', () => {
-        isHovering = false;
-        cursorEl.classList.remove('cursor--hover', 'cursor--text');
+        wrapper.classList.remove('cursor--hover', 'cursor--text');
         follower.classList.remove('cursor-follower--hidden');
       });
     });
 
     document.addEventListener('mouseleave', () => {
-      cursorEl.style.opacity = '0';
-      follower.style.opacity = '0';
+      wrapper.style.opacity = '0';
     });
 
     document.addEventListener('mouseenter', () => {
-      cursorEl.style.opacity = '1';
-      follower.style.opacity = '1';
+      wrapper.style.opacity = '1';
     });
   }
 };
