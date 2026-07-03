@@ -36,6 +36,9 @@ const cursor = {
   init() {
     if (window.innerWidth <= 768) return;
 
+    var group = document.createElement('div');
+    group.className = 'cursor__group';
+
     var core = document.createElement('div');
     core.className = 'cursor__core';
 
@@ -45,6 +48,10 @@ const cursor = {
     var orbit2 = document.createElement('div');
     orbit2.className = 'cursor__orbit cursor__orbit--2';
 
+    group.appendChild(core);
+    group.appendChild(orbit1);
+    group.appendChild(orbit2);
+
     var label = document.createElement('span');
     label.className = 'cursor__label';
     label.textContent = 'View';
@@ -52,16 +59,13 @@ const cursor = {
     var follower = document.createElement('div');
     follower.className = 'cursor-follower';
 
-    document.body.appendChild(core);
-    document.body.appendChild(orbit1);
-    document.body.appendChild(orbit2);
+    document.body.appendChild(group);
     document.body.appendChild(follower);
-    document.body.style.cursor = 'none';
     document.body.appendChild(label);
+    document.body.style.cursor = 'none';
 
     var mx = 0, my = 0;
     var cx = 0, cy = 0;
-    var ox = 0, oy = 0;
     var fx = 0, fy = 0;
 
     document.addEventListener('mousemove', function (e) {
@@ -72,16 +76,12 @@ const cursor = {
     function animate() {
       cx += (mx - cx) * 0.15;
       cy += (my - cy) * 0.15;
-      ox += (mx - ox) * 0.10;
-      oy += (my - oy) * 0.10;
       fx += (mx - fx) * 0.08;
       fy += (my - fy) * 0.08;
 
-      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%)';
-      orbit1.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%)';
-      orbit2.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%)';
+      group.style.transform = 'translate(' + cx + 'px, ' + cy + 'px)';
       follower.style.transform = 'translate(' + fx + 'px, ' + fy + 'px) translate(-50%, -50%)';
-      label.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -200%)';
+      label.style.transform = 'translate(' + cx + 'px, ' + (cy - 50) + 'px) translate(-50%, -50%)';
 
       requestAnimationFrame(animate);
     }
@@ -110,8 +110,8 @@ const cursor = {
       applyHover(targets[i]);
     }
 
-    document.addEventListener('mouseleave', function () { core.style.opacity = '0'; });
-    document.addEventListener('mouseenter', function () { core.style.opacity = '1'; });
+    document.addEventListener('mouseleave', function () { group.style.opacity = '0'; follower.style.opacity = '0'; label.style.opacity = '0'; });
+    document.addEventListener('mouseenter', function () { group.style.opacity = '1'; follower.style.opacity = ''; label.style.opacity = ''; });
   }
 };
 

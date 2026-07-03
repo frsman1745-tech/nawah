@@ -2,51 +2,52 @@
 
 /* ========== Custom Cursor ========== */
 
-.cursor__core {
+.cursor__group {
   position: fixed;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  pointer-events: none;
+  z-index: 99999;
+}
+
+.cursor__core {
+  position: absolute;
   top: 0; left: 0;
   width: 36px; height: 36px;
   background: var(--accent) url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/core.png') no-repeat center / contain;
   border-radius: 50%;
-  pointer-events: none;
-  z-index: 99999;
   transform: translate(-50%, -50%);
+  pointer-events: none;
   will-change: transform;
 }
 
 .cursor__orbit {
-  position: fixed;
+  position: absolute;
   top: 0; left: 0;
   width: 28px; height: 28px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  border-radius: 50%;
   pointer-events: none;
-  z-index: 99998;
-  opacity: 0;
-  transition: opacity 0.3s ease;
   will-change: transform;
 }
 
 .cursor__orbit--1 {
-  background-color: #C9A84C;
   background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-1.png');
+  animation: orbit-ccw 3s linear infinite paused;
 }
 
 .cursor__orbit--2 {
-  background-color: #1A2744;
   background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-2.png');
+  animation: orbit-cw 3s linear infinite paused;
 }
 
 .cursor--hover .cursor__orbit--1 {
-  opacity: 1;
-  animation: orbit-ccw 2.5s linear infinite;
+  animation-play-state: running;
 }
 
 .cursor--hover .cursor__orbit--2 {
-  opacity: 1;
-  animation: orbit-cw 2.5s linear infinite;
+  animation-play-state: running;
 }
 
 .cursor--text .cursor__label {
