@@ -42,31 +42,26 @@ const cursor = {
     var core = document.createElement('div');
     core.className = 'cursor__core';
 
-    var orbit1 = document.createElement('div');
-    orbit1.className = 'cursor__orbit cursor__orbit--1';
-
     var orbit2 = document.createElement('div');
     orbit2.className = 'cursor__orbit cursor__orbit--2';
 
-    group.appendChild(core);
-    group.appendChild(orbit1);
+    var orbit1 = document.createElement('div');
+    orbit1.className = 'cursor__orbit cursor__orbit--1';
+
     group.appendChild(orbit2);
+    group.appendChild(orbit1);
+    group.appendChild(core);
 
     var label = document.createElement('span');
     label.className = 'cursor__label';
     label.textContent = 'View';
 
-    var follower = document.createElement('div');
-    follower.className = 'cursor-follower';
-
     document.body.appendChild(group);
-    document.body.appendChild(follower);
     document.body.appendChild(label);
     document.body.style.cursor = 'none';
 
     var mx = 0, my = 0;
     var cx = 0, cy = 0;
-    var fx = 0, fy = 0;
 
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX;
@@ -74,13 +69,10 @@ const cursor = {
     });
 
     function animate() {
-      cx += (mx - cx) * 0.15;
-      cy += (my - cy) * 0.15;
-      fx += (mx - fx) * 0.08;
-      fy += (my - fy) * 0.08;
+      cx += (mx - cx) * 0.18;
+      cy += (my - cy) * 0.18;
 
       group.style.transform = 'translate(' + cx + 'px, ' + cy + 'px)';
-      follower.style.transform = 'translate(' + fx + 'px, ' + fy + 'px) translate(-50%, -50%)';
       label.style.transform = 'translate(' + cx + 'px, ' + (cy - 50) + 'px) translate(-50%, -50%)';
 
       requestAnimationFrame(animate);
@@ -91,7 +83,6 @@ const cursor = {
     function applyHover(el) {
       el.addEventListener('mouseenter', function () {
         document.body.classList.add('cursor--hover');
-        follower.classList.add('cursor-follower--hidden');
 
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
           document.body.classList.add('cursor--text');
@@ -101,7 +92,6 @@ const cursor = {
 
       el.addEventListener('mouseleave', function () {
         document.body.classList.remove('cursor--hover', 'cursor--text');
-        follower.classList.remove('cursor-follower--hidden');
       });
     }
 
@@ -110,8 +100,8 @@ const cursor = {
       applyHover(targets[i]);
     }
 
-    document.addEventListener('mouseleave', function () { group.style.opacity = '0'; follower.style.opacity = '0'; label.style.opacity = '0'; });
-    document.addEventListener('mouseenter', function () { group.style.opacity = '1'; follower.style.opacity = ''; label.style.opacity = ''; });
+    document.addEventListener('mouseleave', function () { group.style.opacity = '0'; label.style.opacity = '0'; });
+    document.addEventListener('mouseenter', function () { group.style.opacity = '1'; label.style.opacity = ''; });
   }
 };
 

@@ -14,40 +14,30 @@
   position: absolute;
   top: 0; left: 0;
   width: 36px; height: 36px;
-  background: var(--accent) url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/core.png') no-repeat center / contain;
-  border-radius: 50%;
+  background: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/core.png') no-repeat center / contain;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  will-change: transform;
 }
 
 .cursor__orbit {
   position: absolute;
   top: 0; left: 0;
-  width: 28px; height: 28px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   pointer-events: none;
-  will-change: transform;
 }
 
 .cursor__orbit--1 {
+  width: 50px; height: 50px;
   background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-1.png');
-  animation: orbit-ccw 3s linear infinite paused;
+  transform: translate(-50%, -50%);
 }
 
 .cursor__orbit--2 {
+  width: 65px; height: 65px;
   background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-2.png');
-  animation: orbit-cw 3s linear infinite paused;
-}
-
-.cursor--hover .cursor__orbit--1 {
-  animation-play-state: running;
-}
-
-.cursor--hover .cursor__orbit--2 {
-  animation-play-state: running;
+  transform: translate(-50%, -50%);
 }
 
 .cursor--text .cursor__label {
@@ -66,33 +56,6 @@
   white-space: nowrap;
   z-index: 100000;
   pointer-events: none;
-}
-
-.cursor-follower {
-  position: fixed;
-  top: 0; left: 0;
-  width: 50px; height: 50px;
-  border: 1.5px solid var(--accent);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 99997;
-  transform: translate(-50%, -50%);
-  opacity: 0.25;
-  transition: opacity 0.3s ease;
-}
-
-.cursor-follower--hidden {
-  opacity: 0;
-}
-
-@keyframes orbit-ccw {
-  from { transform: translate(-50%, -50%) rotate(0deg)    translateY(-42px) rotate(0deg); }
-  to   { transform: translate(-50%, -50%) rotate(-360deg) translateY(-42px) rotate(360deg); }
-}
-
-@keyframes orbit-cw {
-  from { transform: translate(-50%, -50%) rotate(0deg)    translateY(-42px) rotate(0deg); }
-  to   { transform: translate(-50%, -50%) rotate(360deg)  translateY(-42px) rotate(-360deg); }
 }
 
 /* ========== Section Divider ========== */

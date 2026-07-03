@@ -126,7 +126,6 @@
   }
 
   .cursor__group,
-  .cursor-follower,
   .cursor__label {
     display: none !important;
   }
@@ -200,7 +199,6 @@
 
   .hero__canvas,
   .cursor__group,
-  .cursor-follower,
   .cursor__label,
   .nav-overlay,
   .hero__scroll-indicator {
