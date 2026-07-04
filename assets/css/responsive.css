@@ -52,6 +52,10 @@
     align-items: center;
   }
 
+  .hero__scroll-indicator {
+    display: none;
+  }
+
   .stats__grid {
     flex-direction: column;
     gap: var(--space-lg);
@@ -99,9 +103,14 @@
     grid-template-columns: 1fr;
   }
 
+  .about-vision__grid {
+    gap: var(--space-lg);
+  }
+
   .footer__grid {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: var(--space-lg);
   }
 
   .footer__contact-item {
@@ -111,6 +120,7 @@
   .footer__bottom {
     flex-direction: column;
     text-align: center;
+    gap: var(--space-sm);
   }
 
   .testimonial-card__quote {
@@ -119,6 +129,10 @@
 
   .faq__question {
     font-size: var(--text-sm);
+  }
+
+  .faq__item {
+    padding: var(--space-sm);
   }
 
   .page-hero {
@@ -143,15 +157,35 @@
   }
 
   .hero__headline {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+
+  html[lang="en"] .hero__headline {
+    font-size: 1.5rem;
+  }
+
+  .hero__subtitle {
+    font-size: var(--text-sm);
+  }
+
+  .section__subtitle {
+    font-size: var(--text-sm);
   }
 
   .stats__number {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   .btn {
-    padding: 12px 24px;
+    padding: 10px 20px;
+    font-size: var(--text-xs);
+  }
+
+  .service-card {
+    padding: var(--space-md);
+  }
+
+  .service-card__desc {
     font-size: var(--text-xs);
   }
 
@@ -171,6 +205,54 @@
 
   .section__title {
     font-size: var(--text-xl);
+  }
+}
+
+@media (max-width: 380px) {
+  .hero__headline {
+    font-size: 1.5rem;
+  }
+
+  html[lang="en"] .hero__headline {
+    font-size: 1.3rem;
+  }
+
+  .hero {
+    min-height: 90vh;
+  }
+
+  .section {
+    padding: var(--space-xl) var(--space-sm);
+  }
+
+  .container {
+    padding: 0 var(--space-sm);
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px 16px;
+  }
+
+  .hero__ctas {
+    gap: var(--space-sm);
+  }
+
+  .footer__bottom-links {
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .goals-list {
+    padding-left: var(--space-md);
+  }
+
+  [dir="rtl"] .goals-list {
+    padding-right: var(--space-md);
+  }
+
+  .page-hero {
+    min-height: 25vh;
   }
 }
 
