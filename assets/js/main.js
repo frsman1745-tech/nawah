@@ -36,8 +36,6 @@ const cursor = {
   init() {
     if (window.innerWidth <= 768) return;
     this.createElements();
-    this.state = {};
-    this.config = {};
     this.trackMouse();
     this.animate();
     this.bindHover();
