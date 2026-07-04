@@ -81,13 +81,18 @@ const cursor = {
       my2 += (oy - my2) * 0.07;
 
       orbitIntensity += (orbitTarget - orbitIntensity) * 0.08;
-      orbitAngle1 += ORBIT_SPEED_1 * orbitIntensity;
-      orbitAngle2 += ORBIT_SPEED_2 * orbitIntensity;
+      orbitAngle1 += ORBIT_SPEED_1;
+      orbitAngle2 += ORBIT_SPEED_2;
 
-      var midOx = ox + Math.cos(orbitAngle1) * ORBIT_RADIUS_1 * orbitIntensity;
-      var midOy = oy + Math.sin(orbitAngle1) * ORBIT_RADIUS_1 * orbitIntensity;
-      var outOx = mx2 + Math.cos(orbitAngle2) * ORBIT_RADIUS_2 * orbitIntensity;
-      var outOy = my2 + Math.sin(orbitAngle2) * ORBIT_RADIUS_2 * orbitIntensity;
+      var midTargetX = cx + Math.cos(orbitAngle1) * ORBIT_RADIUS_1;
+      var midTargetY = cy + Math.sin(orbitAngle1) * ORBIT_RADIUS_1;
+      var outTargetX = cx + Math.cos(orbitAngle2) * ORBIT_RADIUS_2;
+      var outTargetY = cy + Math.sin(orbitAngle2) * ORBIT_RADIUS_2;
+
+      var midOx = ox + (midTargetX - ox) * orbitIntensity;
+      var midOy = oy + (midTargetY - oy) * orbitIntensity;
+      var outOx = mx2 + (outTargetX - mx2) * orbitIntensity;
+      var outOy = my2 + (outTargetY - my2) * orbitIntensity;
 
       clickBurst *= 0.78;
       var t = clickBurst;
