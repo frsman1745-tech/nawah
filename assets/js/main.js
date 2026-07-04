@@ -35,196 +35,100 @@ const theme = {
 const cursor = {
   init() {
     if (window.innerWidth <= 768) return;
-    this.createElements();
-    this.trackMouse();
-    this.animate();
-    this.bindHover();
-    this.bindWindowEdge();
-  },
 
-  /* ---------- 1. DOM Elements ---------- */
-
-  createElements() {
     var outer = document.createElement('div');
     outer.className = 'cursor__outer';
+
     var mid = document.createElement('div');
     mid.className = 'cursor__mid';
+
     var core = document.createElement('div');
     core.className = 'cursor__core';
+
     var label = document.createElement('span');
     label.className = 'cursor__label';
     label.textContent = 'View';
+
     document.body.appendChild(outer);
     document.body.appendChild(mid);
     document.body.appendChild(core);
     document.body.appendChild(label);
     document.body.style.cursor = 'none';
-    this.el = { outer: outer, mid: mid, core: core, label: label };
 
-    this.state = {
-      mx: 0, my: 0,
-      cx: 0, cy: 0,
-      ox: 0, oy: 0,
-      wx: 0, wy: 0,
-      orbitPhase: 0,
-      orbitT: 0,
-      orbitTarget: 0,
-      clickBurst: 0,
-      spin1: 0,
-      spin2: 0
-    };
+    var mx = 0, my = 0;
+    var cx = 0, cy = 0;
+    var ox = 0, oy = 0;
+    var mx2 = 0, my2 = 0;
+    var orbitAngle1 = 0, orbitAngle2 = 0;
+    var orbitIntensity = 0;
+    var orbitTarget = 0;
+    var clickBurst = 0;
+    var ORBIT_RADIUS_1 = 10;
+    var ORBIT_RADIUS_2 = 18;
+    var ORBIT_SPEED_1 = 0.04;
+    var ORBIT_SPEED_2 = -0.03;
 
-    this.config = {
-      orbitRX: 18, orbitRY: 9,
-      orbitRX2: 30, orbitRY2: 15,
-      orbitSpeed: 0.03,
-      spinSpeedMid: 0.6,
-      spinSpeedOut: -0.4,
-      lerpCore: 0.18,
-      lerpMid: 0.09,
-      lerpOut: 0.06
-    };
-  },
-
-  /* ---------- 2. Mouse Tracking ---------- */
-
-  trackMouse() {
-    var self = this;
     document.addEventListener('mousemove', function (e) {
-      self.state.mx = e.clientX;
-      self.state.my = e.clientY;
+      mx = e.clientX;
+      my = e.clientY;
     });
-    document.addEventListener('click', function () {
-      self.state.clickBurst = 1;
-    });
-  },
 
-  /* ---------- 3. Trailing (3-layer chain) ---------- */
+    function animate() {
+      cx += (mx - cx) * 0.25;
+      cy += (my - cy) * 0.25;
+      ox += (cx - ox) * 0.10;
+      oy += (cy - oy) * 0.10;
+      mx2 += (ox - mx2) * 0.07;
+      my2 += (oy - my2) * 0.07;
 
-  calcTrailing() {
-    var s = this.state;
-    var c = this.config;
-    s.cx += (s.mx - s.cx) * c.lerpCore;
-    s.cy += (s.my - s.cy) * c.lerpCore;
-    s.ox += (s.cx - s.ox) * c.lerpMid;
-    s.oy += (s.cy - s.oy) * c.lerpMid;
-    s.wx += (s.ox - s.wx) * c.lerpOut;
-    s.wy += (s.oy - s.wy) * c.lerpOut;
-  },
+      orbitIntensity += (orbitTarget - orbitIntensity) * 0.08;
+      clickBurst *= 0.92;
+      orbitAngle1 += ORBIT_SPEED_1 * (1 + clickBurst * 3);
+      orbitAngle2 += ORBIT_SPEED_2 * (1 + clickBurst * 3);
 
-  /* ---------- 4. Orbit (Lissajous, active on hover) ---------- */
+      var intensity = Math.min(1, orbitIntensity + clickBurst);
+      var midOx = ox + Math.cos(orbitAngle1) * ORBIT_RADIUS_1 * intensity;
+      var midOy = oy + Math.sin(orbitAngle1) * ORBIT_RADIUS_1 * intensity;
+      var outOx = mx2 + Math.cos(orbitAngle2) * ORBIT_RADIUS_2 * intensity;
+      var outOy = my2 + Math.sin(orbitAngle2) * ORBIT_RADIUS_2 * intensity;
 
-  calcOrbit() {
-    var s = this.state;
-    var c = this.config;
-    s.orbitT += (s.orbitTarget - s.orbitT) * 0.07;
-    var intensity = Math.min(1.3, s.orbitT + s.clickBurst * 0.5);
+      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%)';
+      mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%)';
+      outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%)';
+      label.style.transform = 'translate(' + cx + 'px, ' + (cy - 28) + 'px) translate(-50%, -50%)';
 
-    var spd = 1 + s.clickBurst * 4;
-    s.orbitPhase += c.orbitSpeed * spd;
+      requestAnimationFrame(animate);
+    }
 
-    var p1 = s.orbitPhase;
-    var p2 = s.orbitPhase * 0.7 + 1.8;
+    animate();
 
-    var x1 = Math.cos(p1) * c.orbitRX;
-    var y1 = Math.sin(p1 * 1.5) * c.orbitRY + Math.sin(p1 * 3.1) * 2;
-    var x2 = Math.cos(p2) * c.orbitRX2;
-    var y2 = Math.sin(p2 * 1.3 + 0.9) * c.orbitRY2 + Math.sin(p2 * 2.7) * 3;
-
-    var kick = s.clickBurst * 8;
-
-    this._orbitX1 = (x1 + Math.cos(s.orbitPhase) * kick) * intensity;
-    this._orbitY1 = (y1 + Math.sin(s.orbitPhase * 1.1) * kick) * intensity;
-    this._orbitX2 = (x2 - Math.cos(s.orbitPhase * 0.8) * kick * 0.7) * intensity;
-    this._orbitY2 = (y2 - Math.sin(s.orbitPhase * 0.9) * kick * 0.7) * intensity;
-  },
-
-  /* ---------- 5. Self-Rotation ---------- */
-
-  calcSpin() {
-    var s = this.state;
-    var c = this.config;
-    var spd = 1 + s.clickBurst * 4;
-    s.spin1 += c.spinSpeedMid * spd;
-    s.spin2 += c.spinSpeedOut * spd;
-  },
-
-  /* ---------- 6. Click Burst (core only) ---------- */
-
-  calcClickBurst() {
-    this.state.clickBurst *= 0.93;
-  },
-
-  /* ---------- 7. Apply Transforms ---------- */
-
-  applyTransforms() {
-    var s = this.state;
-    var e = this.el;
-
-    var coreScale = 1 + s.clickBurst * 0.3;
-
-    var midX = s.ox + this._orbitX1;
-    var midY = s.oy + this._orbitY1;
-    var outX = s.wx + this._orbitX2;
-    var outY = s.wy + this._orbitY2;
-
-    e.core.style.transform = 'translate(' + s.cx + 'px,' + s.cy + 'px) translate(-50%,-50%) scale(' + coreScale + ')';
-    e.mid.style.transform = 'translate(' + midX + 'px,' + midY + 'px) translate(-50%,-50%) rotate(' + s.spin1 + 'deg)';
-    e.outer.style.transform = 'translate(' + outX + 'px,' + outY + 'px) translate(-50%,-50%) rotate(' + s.spin2 + 'deg)';
-    e.label.style.transform = 'translate(' + s.cx + 'px,' + (s.cy - 28) + 'px) translate(-50%,-50%)';
-  },
-
-  /* ---------- 8. Animation Loop ---------- */
-
-  animate() {
-    this.calcTrailing();
-    this.calcOrbit();
-    this.calcSpin();
-    this.calcClickBurst();
-    this.applyTransforms();
-    requestAnimationFrame(this.animate.bind(this));
-  },
-
-  /* ---------- 9. Hover Effects (activate orbit) ---------- */
-
-  bindHover() {
-    var self = this;
     function applyHover(el) {
       el.addEventListener('mouseenter', function () {
         document.body.classList.add('cursor--hover');
-        self.state.orbitTarget = 1;
+        orbitTarget = 1;
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
           document.body.classList.add('cursor--text');
-          self.el.label.textContent = el.getAttribute('data-cursor') || 'Click';
+          label.textContent = el.getAttribute('data-cursor') || 'Click';
         }
       });
+
       el.addEventListener('mouseleave', function () {
         document.body.classList.remove('cursor--hover', 'cursor--text');
-        self.state.orbitTarget = 0;
+        orbitTarget = 0;
       });
     }
+
     var targets = document.querySelectorAll('a, button, .btn, .glass-card, .service-card, .team-card, .project-card');
     for (var i = 0; i < targets.length; i++) {
       applyHover(targets[i]);
     }
-  },
 
-  /* ---------- 10. Window Edge (hide/show) ---------- */
+    document.addEventListener('click', function () {
+      clickBurst = 1;
+    });
 
-  bindWindowEdge() {
-    var e = this.el;
-    document.addEventListener('mouseleave', function () {
-      e.core.style.opacity = '0';
-      e.mid.style.opacity = '0';
-      e.outer.style.opacity = '0';
-      e.label.style.opacity = '0';
-    });
-    document.addEventListener('mouseenter', function () {
-      e.core.style.opacity = '1';
-      e.mid.style.opacity = '1';
-      e.outer.style.opacity = '';
-      e.label.style.opacity = '';
-    });
+    document.addEventListener('mouseleave', function () { core.style.opacity = '0'; mid.style.opacity = '0'; outer.style.opacity = '0'; label.style.opacity = '0'; });
+    document.addEventListener('mouseenter', function () { core.style.opacity = '1'; mid.style.opacity = '1'; outer.style.opacity = ''; label.style.opacity = ''; });
   }
 };
 
