@@ -56,23 +56,15 @@ const cursor = {
     document.body.style.cursor = 'none';
 
     var mx = 0, my = 0;
-    var pmx = 0, pmy = 0;
-    var vx = 0, vy = 0;
     var cx = 0, cy = 0;
     var ox = 0, oy = 0;
     var mx2 = 0, my2 = 0;
     var orbitPhase = 0;
     var orbitT = 0;
-    var orbitTarget = 1;
+    var orbitTarget = 0;
     var clickBurst = 0;
-    var burstPhase = 0;
     var selfRot1 = 0;
     var selfRot2 = 0;
-    var coreScale = 1;
-    var midScale = 1;
-    var outerScale = 1;
-    var smoothSpeed = 0;
-    var idleT = 0;
 
     var ORBIT_RX = 18, ORBIT_RY = 9;
     var ORBIT_RX2 = 30, ORBIT_RY2 = 15;
@@ -81,79 +73,50 @@ const cursor = {
     var SPIN_OUT = -0.4;
 
     document.addEventListener('mousemove', function (e) {
-      pmx = mx; pmy = my;
       mx = e.clientX;
       my = e.clientY;
-      vx = mx - pmx;
-      vy = my - pmy;
     });
 
     document.addEventListener('click', function () {
       clickBurst = 1;
-      burstPhase = 0;
     });
 
-    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
     function animate() {
-      var vel = Math.sqrt(vx * vx + vy * vy);
-      var speedFactor = Math.min(1, vel / 30);
-      smoothSpeed += (speedFactor - smoothSpeed) * 0.1;
-
-      var lerpCore = 0.18 + smoothSpeed * 0.15;
-      var lerpMid = 0.08 + smoothSpeed * 0.08;
-      var lerpOut = 0.05 + smoothSpeed * 0.05;
-
-      cx += (mx - cx) * lerpCore;
-      cy += (my - cy) * lerpCore;
-      ox += (cx - ox) * lerpMid;
-      oy += (cy - oy) * lerpMid;
-      mx2 += (ox - mx2) * lerpOut;
-      my2 += (oy - my2) * lerpOut;
-
-      vx *= 0.85; vy *= 0.85;
+      cx += (mx - cx) * 0.18;
+      cy += (my - cy) * 0.18;
+      ox += (cx - ox) * 0.09;
+      oy += (cy - oy) * 0.09;
+      mx2 += (ox - mx2) * 0.06;
+      my2 += (oy - my2) * 0.06;
 
       orbitT += (orbitTarget - orbitT) * 0.07;
+      clickBurst *= 0.93;
 
-      burstPhase += 0.04;
-      if (clickBurst > 0.01) {
-        clickBurst *= 0.92;
-        var burstProgress = easeOutCubic(Math.min(1, burstPhase));
-        var burstScale = 0.7 + (1 - burstProgress) * 0.3;
-        coreScale += (burstScale - coreScale) * 0.25;
-      } else {
-        clickBurst = 0;
-        idleT += 0.02;
-        var breath = 1 + Math.sin(idleT * 0.5) * 0.015;
-        var speedScaleCore = 1 + smoothSpeed * 0.08;
-        coreScale += (speedScaleCore * breath - coreScale) * 0.05;
-        midScale += (1 - midScale) * 0.05;
-        outerScale += (1 - outerScale) * 0.05;
-      }
+      var spd = 1 + clickBurst * 4;
+      orbitPhase += ORBIT_SPD * spd;
+      selfRot1 += SPIN_MID * spd;
+      selfRot2 += SPIN_OUT * spd;
 
-      var spd = 1 + clickBurst * 3;
-      orbitPhase += ORBIT_SPD * spd * (0.5 + smoothSpeed * 0.5);
-      selfRot1 += SPIN_MID * spd * (0.7 + smoothSpeed * 0.3);
-      selfRot2 += SPIN_OUT * spd * (0.7 + smoothSpeed * 0.3);
-
-      var intensity = Math.min(1.3, orbitT + clickBurst * 0.4);
+      var intensity = Math.min(1.3, orbitT + clickBurst * 0.5);
       var p1 = orbitPhase;
       var p2 = orbitPhase * 0.7 + 1.8;
 
-      var orbitX1 = Math.sin(p1 * 0.9) * ORBIT_RX + Math.sin(p1 * 2.3) * 3;
-      var orbitY1 = Math.cos(p1 * 1.1) * ORBIT_RY + Math.sin(p1 * 3.1) * 2;
-      var orbitX2 = Math.cos(p2) * ORBIT_RX2 + Math.sin(p2 * 2.1) * 3;
-      var orbitY2 = Math.sin(p2 * 0.8 + 0.9) * ORBIT_RY2 + Math.cos(p2 * 2.7) * 3;
+      var orbitX1 = Math.cos(p1) * ORBIT_RX;
+      var orbitY1 = Math.sin(p1 * 1.5) * ORBIT_RY + Math.sin(p1 * 3.1) * 2;
+      var orbitX2 = Math.cos(p2) * ORBIT_RX2;
+      var orbitY2 = Math.sin(p2 * 1.3 + 0.9) * ORBIT_RY2 + Math.sin(p2 * 2.7) * 3;
 
-      var kick = clickBurst * 12;
-      var midOx = ox + (orbitX1 + Math.cos(orbitPhase + burstPhase * 2) * kick) * intensity;
-      var midOy = oy + (orbitY1 + Math.sin(orbitPhase * 1.1 + burstPhase * 2) * kick) * intensity;
-      var outOx = mx2 + (orbitX2 - Math.cos(orbitPhase * 0.8 + burstPhase * 1.5) * kick * 0.6) * intensity;
-      var outOy = my2 + (orbitY2 - Math.sin(orbitPhase * 0.9 + burstPhase * 1.5) * kick * 0.6) * intensity;
+      var kick = clickBurst * 8;
+      var midOx = ox + (orbitX1 + Math.cos(orbitPhase) * kick) * intensity;
+      var midOy = oy + (orbitY1 + Math.sin(orbitPhase * 1.1) * kick) * intensity;
+      var outOx = mx2 + (orbitX2 - Math.cos(orbitPhase * 0.8) * kick * 0.7) * intensity;
+      var outOy = my2 + (orbitY2 - Math.sin(orbitPhase * 0.9) * kick * 0.7) * intensity;
 
-      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%) scale(' + coreScale + ')';
-      mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%) rotate(' + selfRot1 + 'deg) scale(' + midScale + ')';
-      outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%) rotate(' + selfRot2 + 'deg) scale(' + outerScale + ')';
+      var coreS = 1 + clickBurst * 0.3;
+
+      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%) scale(' + coreS + ')';
+      mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%) rotate(' + selfRot1 + 'deg)';
+      outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%) rotate(' + selfRot2 + 'deg)';
       label.style.transform = 'translate(' + cx + 'px, ' + (cy - 28) + 'px) translate(-50%, -50%)';
 
       requestAnimationFrame(animate);
@@ -164,7 +127,7 @@ const cursor = {
     function applyHover(el) {
       el.addEventListener('mouseenter', function () {
         document.body.classList.add('cursor--hover');
-        orbitTarget = 0;
+        orbitTarget = 1;
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
           document.body.classList.add('cursor--text');
           label.textContent = el.getAttribute('data-cursor') || 'Click';
@@ -173,7 +136,7 @@ const cursor = {
 
       el.addEventListener('mouseleave', function () {
         document.body.classList.remove('cursor--hover', 'cursor--text');
-        orbitTarget = 1;
+        orbitTarget = 0;
       });
     }
 
