@@ -35,9 +35,7 @@
 
     var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
     grad.addColorStop(0, 'rgba(255, 252, 248, 0.08)');
-    grad.addColorStop(0.25, 'rgba(255, 250, 242, 0.04)');
-    grad.addColorStop(0.6, 'rgba(255, 248, 238, 0.02)');
-    grad.addColorStop(1, 'rgba(255, 248, 238, 0)');
+    grad.addColorStop(1, 'rgba(255, 252, 248, 0)');
 
     ctx.fillStyle = grad;
     ctx.beginPath();
