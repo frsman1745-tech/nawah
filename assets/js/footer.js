@@ -1,4 +1,4 @@
-/* ============ FOOTER: Soft Light Behind Cursor (contrast for gold rings) ============ */
+/* ============ FOOTER: Stardust trail behind mouse ============ */
 
 (function () {
   var canvas = document.getElementById('footer-hex-canvas');
@@ -6,12 +6,10 @@
 
   var ctx = canvas.getContext('2d');
   var footer = canvas.parentElement;
-  var mx = -9999, my = -9999;
-  var sx = -9999, sy = -9999;
-  var inside = false;
-  var visible = 0;
   var w = 0, h = 0, topOffset = 0;
   var resizeId = null;
+  var particles = [];
+  var px = -9999, py = -9999;
 
   function resize() {
     var rect = footer.getBoundingClientRect();
@@ -24,49 +22,68 @@
     topOffset = rect.top;
   }
 
-  function drawGlow(cx, cy, alpha, time) {
-    if (alpha < 0.001) return;
-
-    var pulse = 1 + Math.sin(time * 0.001) * 0.04;
-    var finalAlpha = alpha * pulse;
-
-    ctx.save();
-    ctx.globalAlpha = finalAlpha;
-    ctx.filter = 'blur(200px)';
-
-    ctx.fillStyle = '#F0EEE9';
-    ctx.beginPath();
-    ctx.arc(cx, cy, 60, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.restore();
+  function addBurst(x, y, count) {
+    for (var i = 0; i < count; i++) {
+      var angle = Math.random() * Math.PI * 2;
+      var speed = Math.random() * 1.0 + 0.2;
+      particles.push({
+        x: x,
+        y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 1,
+        decay: Math.random() * 0.015 + 0.008,
+        size: Math.random() * 2.5 + 0.5,
+      });
+    }
   }
 
   function animate() {
     ctx.clearRect(0, 0, w, h);
 
-    sx += (mx - sx) * 0.07;
-    sy += (my - topOffset - sy) * 0.07;
-
     var footerRect = footer.getBoundingClientRect();
     var curTop = footerRect.top;
     var curBottom = footerRect.bottom;
-    inside = (mx >= 0 && mx <= window.innerWidth && my >= curTop && my <= curBottom);
 
-    visible += inside ? 0.03 : -0.02;
-    if (visible < 0) visible = 0;
-    if (visible > 1) visible = 1;
+    var inside = (px >= 0 && px <= window.innerWidth && py >= curTop && py <= curBottom);
 
-    if (visible > 0.005) {
-      drawGlow(sx, sy, visible * 0.55, Date.now());
+    if (inside) {
+      addBurst(px, py - topOffset, 1);
+    }
+
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= 0.97;
+      p.vy *= 0.97;
+      p.life -= p.decay;
+      p.life -= 0.003;
+
+      if (p.life <= 0 || p.x < -20 || p.x > w + 20 || p.y < -20 || p.y > h + 20) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      ctx.save();
+      ctx.globalAlpha = p.life * p.life * 0.15;
+      ctx.fillStyle = '#F0EEE9';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    if (particles.length > 200) {
+      particles.splice(0, particles.length - 200);
     }
 
     requestAnimationFrame(animate);
   }
 
   document.addEventListener('mousemove', function (e) {
-    mx = e.clientX;
-    my = e.clientY;
+    px = e.clientX;
+    py = e.clientY;
   });
 
   window.addEventListener('resize', function () {
