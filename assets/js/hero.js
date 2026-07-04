@@ -28,37 +28,45 @@ class HexagonParticleSystem {
   }
 
   resize() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-    this.width = this.canvas.width;
-    this.height = this.canvas.height;
+    var rect = this.canvas.getBoundingClientRect();
+    var w = Math.round(rect.width);
+    var h = Math.round(rect.height);
+    if (w < 1) w = window.innerWidth;
+    if (h < 1) h = window.innerHeight;
+    this.canvas.width = w;
+    this.canvas.height = h;
+    this.width = w;
+    this.height = h;
 
     if (this.particles.length) {
-      this.particles.forEach(p => {
-        p.x = Math.random() * this.width;
-        p.y = Math.random() * this.height;
+      this.particles.forEach(function (p) {
+        p.x = Math.random() * w;
+        p.y = Math.random() * h;
       });
     }
   }
 
   createParticles() {
-    var count = Math.min(Math.floor((this.width * this.height) / 15000), 80);
+    var area = this.width * this.height;
+    var count = Math.min(Math.floor(area / 20000), 60);
+    if (count < 10) count = 10;
     this.particles = [];
+
+    var maxSize = Math.min(50, this.height * 0.12);
 
     for (var i = 0; i < count; i++) {
       this.particles.push({
         x: Math.random() * this.width,
         y: Math.random() * this.height,
-        size: Math.random() * 50 + 10,
+        size: Math.random() * maxSize + 6,
         rotation: Math.random() * Math.PI * 2,
-        rotSpeed: (Math.random() - 0.5) * 0.01,
-        vx: (Math.random() - 0.5) * 0.12,
-        vy: (Math.random() - 0.5) * 0.12,
-        opacity: Math.random() * 0.08 + 0.02,
+        rotSpeed: (Math.random() - 0.5) * 0.008,
+        vx: (Math.random() - 0.5) * 0.1,
+        vy: (Math.random() - 0.5) * 0.1,
+        opacity: Math.random() * 0.07 + 0.015,
         color: Math.random() > 0.5 ? '#C9A84C' : '#0E1C3D',
         phase: Math.random() * Math.PI * 2,
-        floatAmp: Math.random() * 0.5 + 0.3,
-        floatSpeed: Math.random() * 0.0003 + 0.0002,
+        floatSpeed: Math.random() * 0.0003 + 0.00015,
         floatOffX: Math.random() * Math.PI * 2,
         floatOffY: Math.random() * Math.PI * 2,
       });
@@ -87,14 +95,16 @@ class HexagonParticleSystem {
 
   drawConnections() {
     var i, j, dx, dy, dist, alpha;
+    var maxDist = Math.min(250, this.height * 0.6);
+
     for (i = 0; i < this.particles.length; i++) {
       for (j = i + 1; j < this.particles.length; j++) {
         dx = this.particles[i].x - this.particles[j].x;
         dy = this.particles[i].y - this.particles[j].y;
         dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 250) {
-          alpha = 0.04 * (1 - dist / 250) * (1 - dist / 250);
+        if (dist < maxDist) {
+          alpha = 0.04 * (1 - dist / maxDist) * (1 - dist / maxDist);
           if (alpha < 0.002) continue;
           this.ctx.save();
           this.ctx.globalAlpha = alpha;
@@ -134,22 +144,22 @@ class HexagonParticleSystem {
 
     var time = Date.now();
     var self = this;
+    var mouseRadius = Math.min(220, this.height * 0.5);
 
     this.particles.forEach(function (p) {
       var dx = p.x - self.mouseX;
       var dy = p.y - self.mouseY;
       var dist = Math.sqrt(dx * dx + dy * dy);
-      var mouseRadius = 220;
 
       if (dist < mouseRadius && dist > 0.1) {
-        var force = (1 - dist / mouseRadius) * 0.7;
+        var force = (1 - dist / mouseRadius) * 0.6;
         var angle = Math.atan2(dy, dx);
         p.x += Math.cos(angle) * force;
         p.y += Math.sin(angle) * force;
       }
 
-      p.x += Math.sin(time * p.floatSpeed + p.floatOffX) * 0.12;
-      p.y += Math.cos(time * p.floatSpeed * 0.7 + p.floatOffY) * 0.12;
+      p.x += Math.sin(time * p.floatSpeed + p.floatOffX) * 0.1;
+      p.y += Math.cos(time * p.floatSpeed * 0.7 + p.floatOffY) * 0.1;
 
       p.x += p.vx;
       p.y += p.vy;
