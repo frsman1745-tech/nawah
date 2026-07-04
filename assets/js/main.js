@@ -61,7 +61,7 @@ const cursor = {
     var mx2 = 0, my2 = 0;
     var orbitPhase = 0;
     var orbitT = 0;
-    var orbitTarget = 1;
+    var orbitTarget = 0;
     var clickBurst = 0;
     var selfRot1 = 0;
     var selfRot2 = 0;
@@ -125,7 +125,7 @@ const cursor = {
     function applyHover(el) {
       el.addEventListener('mouseenter', function () {
         document.body.classList.add('cursor--hover');
-        orbitTarget = 0;
+        orbitTarget = 1;
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
           document.body.classList.add('cursor--text');
           label.textContent = el.getAttribute('data-cursor') || 'Click';
@@ -134,7 +134,7 @@ const cursor = {
 
       el.addEventListener('mouseleave', function () {
         document.body.classList.remove('cursor--hover', 'cursor--text');
-        orbitTarget = 1;
+        orbitTarget = 0;
       });
     }
 
