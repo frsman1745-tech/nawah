@@ -36,41 +36,43 @@ const cursor = {
   init() {
     if (window.innerWidth <= 768) return;
 
+    /* ─── Create DOM elements ─── */
     var outer = document.createElement('div');
     outer.className = 'cursor__outer';
-
     var mid = document.createElement('div');
     mid.className = 'cursor__mid';
-
     var core = document.createElement('div');
     core.className = 'cursor__core';
-
     var label = document.createElement('span');
     label.className = 'cursor__label';
     label.textContent = 'View';
 
-    document.body.appendChild(outer);
-    document.body.appendChild(mid);
-    document.body.appendChild(core);
-    document.body.appendChild(label);
+    document.body.append(outer, mid, core, label);
     document.body.style.cursor = 'none';
 
-    var mx = 0, my = 0;
-    var cx = 0, cy = 0;
-    var ox = 0, oy = 0;
-    var mx2 = 0, my2 = 0;
-    var orbitPhase = 0;
+    /* ─── Position state ─── */
+    var mx = 0, my = 0;      // raw mouse
+    var cx = 0, cy = 0;      // core → mouse (lerp 0.21)
+    var ox = 0, oy = 0;      // mid  → core (lerp 0.09)
+    var mx2 = 0, my2 = 0;    // outer → mid (lerp 0.06)
+
+    /* ─── Animation state ─── */
+    var orbitAngle = 0;
     var orbitT = 0;
     var orbitTarget = 0;
     var clickBurst = 0;
-    var selfRot1 = 0;
-    var selfRot2 = 0;
-    var ORBIT_RX = 12, ORBIT_RY = 6;
-    var ORBIT_RX2 = 20, ORBIT_RY2 = 10;
-    var ORBIT_SPD = 0.03;
-    var SPIN_MID = 0.6;
-    var SPIN_OUT = -0.4;
+    var spinAngle = 0;
 
+    /* ─── Tunables ─── */
+    var CONFIG = {
+      orbitRX: 18,  orbitRY: 9,
+      orbitRX2: 30, orbitRY2: 15,
+      speed: 0.035,
+      spinRate: 0.5,
+      kickRadius: 8,
+    };
+
+    /* ─── Events ─── */
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX;
       my = e.clientY;
@@ -80,47 +82,65 @@ const cursor = {
       clickBurst = 1;
     });
 
+    /* ─── Main animation loop ─── */
     function animate() {
-      cx += (mx - cx) * 0.25;
-      cy += (my - cy) * 0.25;
-      ox += (cx - ox) * 0.10;
-      oy += (cy - oy) * 0.10;
-      mx2 += (ox - mx2) * 0.07;
-      my2 += (oy - my2) * 0.07;
+      /* trailing chain */
+      cx += (mx - cx) * 0.21;
+      cy += (my - cy) * 0.21;
+      ox += (cx - ox) * 0.09;
+      oy += (cy - oy) * 0.09;
+      mx2 += (ox - mx2) * 0.06;
+      my2 += (oy - my2) * 0.06;
 
-      orbitT += (orbitTarget - orbitT) * 0.07;
-      clickBurst *= 0.93;
+      /* smooth intensity transition */
+      orbitT += (orbitTarget - orbitT) * 0.08;
+      clickBurst *= 0.92;
 
-      var spd = 1 + clickBurst * 4;
-      orbitPhase += ORBIT_SPD * spd;
-      selfRot1 += SPIN_MID * spd;
-      selfRot2 += SPIN_OUT * spd;
+      var intensity = orbitT + clickBurst * 0.6;
+      if (intensity > 0) {
+        var spd = 1 + clickBurst * 4;
+        orbitAngle += CONFIG.speed * spd;
+        spinAngle += CONFIG.spinRate * spd;
 
-      var intensity = Math.min(1.2, orbitT + clickBurst * 0.6);
-      var p1 = orbitPhase;
-      var p2 = orbitPhase * 0.7 + 1.8;
+        /* compound Lissajous orbit */
+        var p1 = orbitAngle;
+        var p2 = orbitAngle * 0.7 + 1.8;
 
-      var orbitX1 = Math.cos(p1) * ORBIT_RX;
-      var orbitY1 = Math.sin(p1 * 1.5) * ORBIT_RY + Math.sin(p1 * 3.1) * 2;
-      var orbitX2 = Math.cos(p2) * ORBIT_RX2;
-      var orbitY2 = Math.sin(p2 * 1.3 + 0.9) * ORBIT_RY2 + Math.sin(p2 * 2.7) * 3;
+        var offX1 = Math.cos(p1) * CONFIG.orbitRX;
+        var offY1 = Math.sin(p1 * 1.5) * CONFIG.orbitRY + Math.sin(p1 * 3.1) * 2;
+        var offX2 = Math.cos(p2) * CONFIG.orbitRX2;
+        var offY2 = Math.sin(p2 * 1.3 + 0.9) * CONFIG.orbitRY2 + Math.sin(p2 * 2.7) * 3;
 
-      var kick = clickBurst * 8;
-      var midOx = ox + (orbitX1 + Math.cos(orbitPhase) * kick) * intensity;
-      var midOy = oy + (orbitY1 + Math.sin(orbitPhase * 1.1) * kick) * intensity;
-      var outOx = mx2 + (orbitX2 - Math.cos(orbitPhase * 0.8) * kick * 0.7) * intensity;
-      var outOy = my2 + (orbitY2 - Math.sin(orbitPhase * 0.9) * kick * 0.7) * intensity;
+        var kick = clickBurst * CONFIG.kickRadius;
+        var kx1 = Math.cos(orbitAngle) * kick;
+        var ky1 = Math.sin(orbitAngle * 1.1) * kick;
+        var kx2 = Math.cos(orbitAngle * 0.8) * kick * 0.7;
+        var ky2 = Math.sin(orbitAngle * 0.9) * kick * 0.7;
 
-      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%)';
-      mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%) rotate(' + selfRot1 + 'deg)';
-      outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%) rotate(' + selfRot2 + 'deg)';
+        mid.style.transform = translate(ox + (offX1 + kx1) * intensity,
+                                        oy + (offY1 + ky1) * intensity,
+                                        spinAngle);
+        outer.style.transform = translate(mx2 + (offX2 - kx2) * intensity,
+                                          my2 + (offY2 - ky2) * intensity,
+                                          -spinAngle);
+      } else {
+        mid.style.transform = translate(ox, oy, 0);
+        outer.style.transform = translate(mx2, my2, 0);
+      }
+
+      core.style.transform = translate(cx, cy, 0);
       label.style.transform = 'translate(' + cx + 'px, ' + (cy - 28) + 'px) translate(-50%, -50%)';
 
       requestAnimationFrame(animate);
     }
 
+    function translate(x, y, deg) {
+      return 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%) rotate(' + deg + 'deg)';
+    }
+
     animate();
 
+    /* ─── Hover in → orbit, Hover out → static ─── */
     function applyHover(el) {
       el.addEventListener('mouseenter', function () {
         document.body.classList.add('cursor--hover');
@@ -137,13 +157,16 @@ const cursor = {
       });
     }
 
-    var targets = document.querySelectorAll('a, button, .btn, .glass-card, .service-card, .team-card, .project-card');
-    for (var i = 0; i < targets.length; i++) {
-      applyHover(targets[i]);
-    }
+    var selectors = 'a, button, .btn, .glass-card, .service-card, .team-card, .project-card';
+    document.querySelectorAll(selectors).forEach(applyHover);
 
-    document.addEventListener('mouseleave', function () { core.style.opacity = '0'; mid.style.opacity = '0'; outer.style.opacity = '0'; label.style.opacity = '0'; });
-    document.addEventListener('mouseenter', function () { core.style.opacity = '1'; mid.style.opacity = '1'; outer.style.opacity = '1'; label.style.opacity = ''; });
+    /* ─── Window leave / enter ─── */
+    document.addEventListener('mouseleave', function () {
+      core.style.opacity = '0'; mid.style.opacity = '0'; outer.style.opacity = '0'; label.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', function () {
+      core.style.opacity = '1'; mid.style.opacity = '1'; outer.style.opacity = '1'; label.style.opacity = '1';
+    });
   }
 };
 
