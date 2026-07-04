@@ -397,6 +397,10 @@ p {
   transform: translateY(40px);
 }
 
+html[lang="en"] .hero__headline {
+  font-size: clamp(1.6rem, 3.5vw, 3rem);
+}
+
 .hero__subtitle {
   font-size: var(--text-lg);
   color: var(--text-secondary);

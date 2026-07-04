@@ -3,6 +3,8 @@
 const translations = {
   ar: {
     /* Navbar */
+    "nav.logo": "نواة",
+    "footer.logo": "نواة",
     "nav.home": "الرئيسية",
     "nav.services": "خدماتنا",
     "nav.portfolio": "أعمالنا",
@@ -153,6 +155,8 @@ const translations = {
 
   en: {
     /* Navbar */
+    "nav.logo": "Nawah",
+    "footer.logo": "Nawah",
     "nav.home": "Home",
     "nav.services": "Services",
     "nav.portfolio": "Portfolio",
