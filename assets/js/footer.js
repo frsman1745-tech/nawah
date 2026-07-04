@@ -29,10 +29,8 @@
     ctx.globalAlpha = alpha;
 
     var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-    grad.addColorStop(0, 'rgba(255, 215, 0, 0.5)');
-    grad.addColorStop(0.15, 'rgba(255, 200, 50, 0.3)');
-    grad.addColorStop(0.4, 'rgba(201, 168, 76, 0.12)');
-    grad.addColorStop(0.7, 'rgba(201, 168, 76, 0.04)');
+    grad.addColorStop(0, 'rgba(201, 168, 76, 0.04)');
+    grad.addColorStop(0.75, 'rgba(201, 168, 76, 0.04)');
     grad.addColorStop(1, 'rgba(201, 168, 76, 0)');
 
     ctx.fillStyle = grad;
@@ -59,7 +57,7 @@
     if (visible > 1) visible = 1;
 
     if (visible > 0.005) {
-      drawSunlight(sx, sy, 250, visible * 0.5);
+      drawSunlight(sx, sy, 400, visible * 0.5);
     }
 
     requestAnimationFrame(animate);
