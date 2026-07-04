@@ -1,4 +1,4 @@
-/* ============ FOOTER: Faint Gold Hexagon Mouse Follower ============ */
+/* ============ FOOTER: Sunlight Glow Behind Mouse ============ */
 
 (function () {
   var canvas = document.getElementById('footer-hex-canvas');
@@ -24,34 +24,30 @@
     topOffset = rect.top;
   }
 
-  function drawHexagon(cx, cy, radius, rotation, alpha) {
+  function drawSunlight(cx, cy, radius, alpha) {
     ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(rotation);
     ctx.globalAlpha = alpha;
-    ctx.strokeStyle = '#C9A84C';
-    ctx.lineWidth = 1;
-    ctx.shadowBlur = 15;
-    ctx.shadowColor = 'rgba(201, 168, 76, 0.06)';
 
+    var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+    grad.addColorStop(0, 'rgba(255, 215, 0, 0.5)');
+    grad.addColorStop(0.15, 'rgba(255, 200, 50, 0.3)');
+    grad.addColorStop(0.4, 'rgba(201, 168, 76, 0.12)');
+    grad.addColorStop(0.7, 'rgba(201, 168, 76, 0.04)');
+    grad.addColorStop(1, 'rgba(201, 168, 76, 0)');
+
+    ctx.fillStyle = grad;
     ctx.beginPath();
-    for (var i = 0; i < 6; i++) {
-      var a = (Math.PI / 3) * i - Math.PI / 6;
-      var px = radius * Math.cos(a);
-      var py = radius * Math.sin(a);
-      if (i === 0) ctx.moveTo(px, py);
-      else ctx.lineTo(px, py);
-    }
-    ctx.closePath();
-    ctx.stroke();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.fill();
+
     ctx.restore();
   }
 
   function animate() {
     ctx.clearRect(0, 0, w, h);
 
-    sx += (mx - sx) * 0.12;
-    sy += (my - topOffset - sy) * 0.12;
+    sx += (mx - sx) * 0.1;
+    sy += (my - topOffset - sy) * 0.1;
 
     var footerRect = footer.getBoundingClientRect();
     var curTop = footerRect.top;
@@ -63,7 +59,7 @@
     if (visible > 1) visible = 1;
 
     if (visible > 0.005) {
-      drawHexagon(sx, sy, 100, Date.now() * 0.0002, visible * 0.06);
+      drawSunlight(sx, sy, 250, visible * 0.5);
     }
 
     requestAnimationFrame(animate);
