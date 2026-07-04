@@ -58,7 +58,14 @@ const cursor = {
     var cx = 0, cy = 0;
     var ox = 0, oy = 0;
     var mx2 = 0, my2 = 0;
+    var orbitAngle1 = 0, orbitAngle2 = 0;
+    var orbitIntensity = 0;
+    var orbitTarget = 0;
     var clickBurst = 0;
+    var ORBIT_RADIUS_1 = 10;
+    var ORBIT_RADIUS_2 = 18;
+    var ORBIT_SPEED_1 = -0.04;
+    var ORBIT_SPEED_2 = 0.03;
 
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX;
@@ -73,18 +80,28 @@ const cursor = {
       mx2 += (ox - mx2) * 0.07;
       my2 += (oy - my2) * 0.07;
 
-      clickBurst *= 0.82;
-      var coreScale = 1 - clickBurst * 0.28;
-      var coreRotate = clickBurst * 6;
-      if (clickBurst > 0.05) {
-        core.style.filter = 'drop-shadow(0 0 ' + (clickBurst * 12) + 'px rgba(201, 168, 76, 0.8))';
+      orbitIntensity += (orbitTarget - orbitIntensity) * 0.08;
+      orbitAngle1 += ORBIT_SPEED_1 * orbitIntensity;
+      orbitAngle2 += ORBIT_SPEED_2 * orbitIntensity;
+
+      var midOx = ox + Math.cos(orbitAngle1) * ORBIT_RADIUS_1 * orbitIntensity;
+      var midOy = oy + Math.sin(orbitAngle1) * ORBIT_RADIUS_1 * orbitIntensity;
+      var outOx = mx2 + Math.cos(orbitAngle2) * ORBIT_RADIUS_2 * orbitIntensity;
+      var outOy = my2 + Math.sin(orbitAngle2) * ORBIT_RADIUS_2 * orbitIntensity;
+
+      clickBurst *= 0.78;
+      var t = clickBurst;
+      var coreScale = 1 - t * 0.32 + t * (1 - t) * 0.08;
+      var coreRotate = t * 15;
+      if (t > 0.05) {
+        core.style.filter = 'drop-shadow(0 0 ' + (t * 20) + 'px rgba(201, 168, 76, 0.9)) drop-shadow(0 0 ' + (t * 8) + 'px rgba(255, 215, 0, 0.5))';
       } else {
         core.style.filter = '';
       }
 
       core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%) scale(' + coreScale + ') rotate(' + coreRotate + 'deg)';
-      mid.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%)';
-      outer.style.transform = 'translate(' + mx2 + 'px, ' + my2 + 'px) translate(-50%, -50%)';
+      mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%)';
+      outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%)';
       label.style.transform = 'translate(' + cx + 'px, ' + (cy - 28) + 'px) translate(-50%, -50%)';
 
       requestAnimationFrame(animate);
@@ -95,6 +112,7 @@ const cursor = {
     function applyHover(el) {
       el.addEventListener('mouseenter', function () {
         document.body.classList.add('cursor--hover');
+        orbitTarget = 1;
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
           document.body.classList.add('cursor--text');
           label.textContent = el.getAttribute('data-cursor') || 'Click';
@@ -103,6 +121,7 @@ const cursor = {
 
       el.addEventListener('mouseleave', function () {
         document.body.classList.remove('cursor--hover', 'cursor--text');
+        orbitTarget = 0;
       });
     }
 
