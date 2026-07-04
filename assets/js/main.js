@@ -250,6 +250,48 @@ function initFAQ() {
   });
 }
 
+/* ========== Footer Hex Glow ========== */
+
+function initFooterGlow() {
+  var footer = document.querySelector('.footer');
+  if (!footer || window.innerWidth <= 768) return;
+
+  var glow = document.createElement('div');
+  glow.className = 'footer__hex-glow';
+  footer.insertBefore(glow, footer.firstChild);
+
+  var mx = -9999, my = -9999;
+  var gx = -9999, gy = -9999;
+  var isOver = false;
+
+  function onMove(e) {
+    var rect = footer.getBoundingClientRect();
+    mx = e.clientX - rect.left;
+    my = e.clientY - rect.top;
+  }
+
+  footer.addEventListener('mouseenter', function () {
+    isOver = true;
+    glow.style.opacity = '1';
+  });
+
+  footer.addEventListener('mousemove', onMove);
+
+  footer.addEventListener('mouseleave', function () {
+    isOver = false;
+    glow.style.opacity = '0';
+  });
+
+  function track() {
+    gx += (mx - gx) * 0.15;
+    gy += (my - gy) * 0.15;
+    glow.style.transform = 'translate(' + gx + 'px, ' + gy + 'px) translate(-50%, -50%)';
+    requestAnimationFrame(track);
+  }
+
+  track();
+}
+
 /* ========== Smooth Anchor Scrolling ========== */
 
 function initSmoothScroll() {
@@ -298,6 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initFAQ();
   initSmoothScroll();
+  initFooterGlow();
 
   if (typeof Lenis !== 'undefined' && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     initLenis();
