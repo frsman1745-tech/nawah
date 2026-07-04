@@ -58,14 +58,12 @@ const cursor = {
     var cx = 0, cy = 0;
     var ox = 0, oy = 0;
     var mx2 = 0, my2 = 0;
-    var orbitAngle1 = 0, orbitAngle2 = 0;
+    var spinAngle1 = 0, spinAngle2 = 0;
     var orbitIntensity = 0;
     var orbitTarget = 0;
     var clickBurst = 0;
-    var ORBIT_RADIUS_1 = 10;
-    var ORBIT_RADIUS_2 = 18;
-    var ORBIT_SPEED_1 = -0.04;
-    var ORBIT_SPEED_2 = 0.03;
+    var SPIN_SPEED_1 = -1.8;
+    var SPIN_SPEED_2 = 1.4;
 
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX;
@@ -81,18 +79,10 @@ const cursor = {
       my2 += (oy - my2) * 0.07;
 
       orbitIntensity += (orbitTarget - orbitIntensity) * 0.08;
-      orbitAngle1 += ORBIT_SPEED_1;
-      orbitAngle2 += ORBIT_SPEED_2;
-
-      var midTargetX = cx + Math.cos(orbitAngle1) * ORBIT_RADIUS_1;
-      var midTargetY = cy + Math.sin(orbitAngle1) * ORBIT_RADIUS_1;
-      var outTargetX = cx + Math.cos(orbitAngle2) * ORBIT_RADIUS_2;
-      var outTargetY = cy + Math.sin(orbitAngle2) * ORBIT_RADIUS_2;
-
-      var midOx = ox + (midTargetX - ox) * orbitIntensity;
-      var midOy = oy + (midTargetY - oy) * orbitIntensity;
-      var outOx = mx2 + (outTargetX - mx2) * orbitIntensity;
-      var outOy = my2 + (outTargetY - my2) * orbitIntensity;
+      if (orbitIntensity > 0.01) {
+        spinAngle1 += SPIN_SPEED_1 * orbitIntensity;
+        spinAngle2 += SPIN_SPEED_2 * orbitIntensity;
+      }
 
       clickBurst *= 0.78;
       var t = clickBurst;
@@ -105,8 +95,8 @@ const cursor = {
       }
 
       core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%) scale(' + coreScale + ') rotate(' + coreRotate + 'deg)';
-      mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%)';
-      outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%)';
+      mid.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%) rotate(' + spinAngle1 + 'deg)';
+      outer.style.transform = 'translate(' + mx2 + 'px, ' + my2 + 'px) translate(-50%, -50%) rotate(' + spinAngle2 + 'deg)';
       label.style.transform = 'translate(' + cx + 'px, ' + (cy - 28) + 'px) translate(-50%, -50%)';
 
       requestAnimationFrame(animate);
