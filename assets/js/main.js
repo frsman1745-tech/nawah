@@ -119,19 +119,16 @@ const cursor = {
       if (clickBurst > 0.01) {
         clickBurst *= 0.92;
         var burstProgress = easeOutCubic(Math.min(1, burstPhase));
-        var burstScale = 1 + (1 - burstProgress) * 0.5;
-        coreScale += (burstScale - coreScale) * 0.2;
-        midScale += (1 + (1 - burstProgress) * 0.3 - midScale) * 0.2;
-        outerScale += (1 + (1 - burstProgress) * 0.2 - outerScale) * 0.2;
+        var burstScale = 0.7 + (1 - burstProgress) * 0.3;
+        coreScale += (burstScale - coreScale) * 0.25;
       } else {
         clickBurst = 0;
-        var speedScaleCore = 1 + smoothSpeed * 0.08;
-        var speedScaleOther = 1 + smoothSpeed * 0.05;
         idleT += 0.02;
         var breath = 1 + Math.sin(idleT * 0.5) * 0.015;
+        var speedScaleCore = 1 + smoothSpeed * 0.08;
         coreScale += (speedScaleCore * breath - coreScale) * 0.05;
-        midScale += (speedScaleOther - midScale) * 0.05;
-        outerScale += (speedScaleOther * breath - outerScale) * 0.05;
+        midScale += (1 - midScale) * 0.05;
+        outerScale += (1 - outerScale) * 0.05;
       }
 
       var spd = 1 + clickBurst * 3;
