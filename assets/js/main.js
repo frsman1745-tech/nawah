@@ -65,7 +65,7 @@ const cursor = {
     var SPIN_SPEED_2 = 0.6;
 
     var ripple = document.createElement('div');
-    ripple.style.cssText = 'position:fixed;top:0;left:0;width:40px;height:46px;border:1.5px solid rgba(201,168,76,0.25);background:rgba(201,168,76,0.03);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);pointer-events:none;z-index:99998;opacity:0;transform:translate(-50%,-50%) scale(0.2)';
+    ripple.style.cssText = 'position:fixed;top:0;left:0;width:40px;height:46px;border:2px solid #C9A84C;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);pointer-events:none;z-index:99998;opacity:0;transform:translate(-50%,-50%) scale(0.2)';
     document.body.appendChild(ripple);
     var rippleActive = false, rippleStart = 0, rippleX = 0, rippleY = 0;
 
