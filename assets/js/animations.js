@@ -190,28 +190,6 @@ function scrollReveals() {
   });
 }
 
-/* ========== FAQ Accordion Animation Enhancement ========== */
-
-function faqAnimations() {
-  if (typeof gsap === 'undefined') return;
-
-  document.querySelectorAll('.faq__question').forEach(q => {
-    q.addEventListener('click', function() {
-      const item = this.closest('.faq__item');
-      const answer = item.querySelector('.faq__answer');
-
-      if (item.classList.contains('active')) {
-        gsap.to(answer, { maxHeight: 0, paddingBottom: 0, duration: 0.3, ease: 'power2.inOut' });
-      } else {
-        gsap.fromTo(answer,
-          { maxHeight: 0, paddingBottom: 0 },
-          { maxHeight: answer.scrollHeight, paddingBottom: '0.5rem', duration: 0.4, ease: 'power2.inOut' }
-        );
-      }
-    });
-  });
-}
-
 /* ========== Parallax on Hero Canvas ========== */
 
 function parallaxHero() {
@@ -236,7 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     heroEntrance();
     scrollReveals();
-    faqAnimations();
     parallaxHero();
 
     if (typeof ScrollTrigger !== 'undefined') {

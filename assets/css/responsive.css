@@ -131,14 +131,6 @@
   .cursor__label {
     display: none !important;
   }
-
-  body {
-    cursor: auto;
-  }
-
-  button {
-    cursor: pointer;
-  }
 }
 
 @media (max-width: 480px) {
@@ -209,11 +201,4 @@
     display: none !important;
   }
 
-  body {
-    cursor: auto;
-  }
-
-  .btn {
-    cursor: pointer;
-  }
 }

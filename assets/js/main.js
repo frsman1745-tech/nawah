@@ -53,15 +53,12 @@ const cursor = {
     document.body.appendChild(mid);
     document.body.appendChild(core);
     document.body.appendChild(label);
-    document.body.style.cursor = 'none';
 
     var mx = 0, my = 0;
     var cx = 0, cy = 0;
     var ox = 0, oy = 0;
     var mx2 = 0, my2 = 0;
     var orbitAngle1 = 0, orbitAngle2 = 0;
-    var orbitIntensity = 0;
-    var orbitTarget = 0;
     var clickBurst = 0;
     var ORBIT_RADIUS_1 = 10;
     var ORBIT_RADIUS_2 = 18;
@@ -81,18 +78,18 @@ const cursor = {
       mx2 += (ox - mx2) * 0.07;
       my2 += (oy - my2) * 0.07;
 
-      orbitIntensity += (orbitTarget - orbitIntensity) * 0.08;
-      clickBurst *= 0.92;
-      orbitAngle1 += ORBIT_SPEED_1 * (1 + clickBurst * 3);
-      orbitAngle2 += ORBIT_SPEED_2 * (1 + clickBurst * 3);
+      orbitAngle1 += ORBIT_SPEED_1;
+      orbitAngle2 += ORBIT_SPEED_2;
 
-      var intensity = Math.min(1, orbitIntensity + clickBurst);
-      var midOx = ox + Math.cos(orbitAngle1) * ORBIT_RADIUS_1 * intensity;
-      var midOy = oy + Math.sin(orbitAngle1) * ORBIT_RADIUS_1 * intensity;
-      var outOx = mx2 + Math.cos(orbitAngle2) * ORBIT_RADIUS_2 * intensity;
-      var outOy = my2 + Math.sin(orbitAngle2) * ORBIT_RADIUS_2 * intensity;
+      var midOx = ox + Math.cos(orbitAngle1) * ORBIT_RADIUS_1;
+      var midOy = oy + Math.sin(orbitAngle1) * ORBIT_RADIUS_1;
+      var outOx = mx2 + Math.cos(orbitAngle2) * ORBIT_RADIUS_2;
+      var outOy = my2 + Math.sin(orbitAngle2) * ORBIT_RADIUS_2;
 
-      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%)';
+      clickBurst *= 0.9;
+      var coreScale = 1 - clickBurst * 0.25;
+
+      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%) scale(' + coreScale + ')';
       mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%)';
       outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%)';
       label.style.transform = 'translate(' + cx + 'px, ' + (cy - 28) + 'px) translate(-50%, -50%)';
@@ -105,7 +102,6 @@ const cursor = {
     function applyHover(el) {
       el.addEventListener('mouseenter', function () {
         document.body.classList.add('cursor--hover');
-        orbitTarget = 1;
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
           document.body.classList.add('cursor--text');
           label.textContent = el.getAttribute('data-cursor') || 'Click';
@@ -114,7 +110,6 @@ const cursor = {
 
       el.addEventListener('mouseleave', function () {
         document.body.classList.remove('cursor--hover', 'cursor--text');
-        orbitTarget = 0;
       });
     }
 
@@ -129,6 +124,14 @@ const cursor = {
 
     document.addEventListener('mouseleave', function () { core.style.opacity = '0'; mid.style.opacity = '0'; outer.style.opacity = '0'; label.style.opacity = '0'; });
     document.addEventListener('mouseenter', function () { core.style.opacity = '1'; mid.style.opacity = '1'; outer.style.opacity = ''; label.style.opacity = ''; });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth <= 768) {
+        core.style.display = 'none'; mid.style.display = 'none'; outer.style.display = 'none'; label.style.display = 'none';
+      } else {
+        core.style.display = ''; mid.style.display = ''; outer.style.display = ''; label.style.display = '';
+      }
+    });
   }
 };
 
@@ -192,15 +195,31 @@ function initFAQ() {
 
   items.forEach(item => {
     const question = item.querySelector('.faq__question');
+    const answer = item.querySelector('.faq__answer');
     if (!question) return;
 
     question.addEventListener('click', () => {
       const isActive = item.classList.contains('active');
 
-      items.forEach(i => i.classList.remove('active'));
+      items.forEach(i => {
+        i.classList.remove('active');
+        const q = i.querySelector('.faq__question');
+        if (q) q.setAttribute('aria-expanded', 'false');
+        if (typeof gsap !== 'undefined') {
+          const a = i.querySelector('.faq__answer');
+          if (a) gsap.to(a, { maxHeight: 0, paddingBottom: 0, duration: 0.3, ease: 'power2.inOut', overwrite: 'auto' });
+        }
+      });
 
       if (!isActive) {
         item.classList.add('active');
+        question.setAttribute('aria-expanded', 'true');
+        if (answer && typeof gsap !== 'undefined') {
+          gsap.fromTo(answer,
+            { maxHeight: 0, paddingBottom: 0 },
+            { maxHeight: answer.scrollHeight, paddingBottom: '0.5rem', duration: 0.4, ease: 'power2.inOut', overwrite: 'auto' }
+          );
+        }
       }
     });
   });
