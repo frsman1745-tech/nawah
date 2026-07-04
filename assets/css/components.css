@@ -13,7 +13,6 @@
   pointer-events: none;
   will-change: transform;
   transform: translate(-50%, -50%);
-  transform-origin: center center;
 }
 
 .cursor__outer {

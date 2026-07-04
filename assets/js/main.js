@@ -59,26 +59,10 @@ const cursor = {
     var cx = 0, cy = 0;
     var ox = 0, oy = 0;
     var mx2 = 0, my2 = 0;
-    var orbitPhase = 0;
-    var orbitT = 0;
-    var orbitTarget = 0;
-    var clickBurst = 0;
-    var selfRot1 = 0;
-    var selfRot2 = 0;
-
-    var ORBIT_RX = 18, ORBIT_RY = 9;
-    var ORBIT_RX2 = 30, ORBIT_RY2 = 15;
-    var ORBIT_SPD = 0.03;
-    var SPIN_MID = 0.6;
-    var SPIN_OUT = -0.4;
 
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX;
       my = e.clientY;
-    });
-
-    document.addEventListener('click', function () {
-      clickBurst = 1;
     });
 
     function animate() {
@@ -89,32 +73,9 @@ const cursor = {
       mx2 += (ox - mx2) * 0.07;
       my2 += (oy - my2) * 0.07;
 
-      orbitT += (orbitTarget - orbitT) * 0.07;
-      clickBurst *= 0.93;
-
-      var spd = 1 + clickBurst * 4;
-      orbitPhase += ORBIT_SPD * spd;
-      selfRot1 += SPIN_MID * spd;
-      selfRot2 += SPIN_OUT * spd;
-
-      var intensity = Math.min(1.2, orbitT + clickBurst * 0.6);
-      var p1 = orbitPhase;
-      var p2 = orbitPhase * 0.7 + 1.8;
-
-      var orbitX1 = Math.cos(p1) * ORBIT_RX;
-      var orbitY1 = Math.sin(p1 * 1.5) * ORBIT_RY + Math.sin(p1 * 3.1) * 2;
-      var orbitX2 = Math.cos(p2) * ORBIT_RX2;
-      var orbitY2 = Math.sin(p2 * 1.3 + 0.9) * ORBIT_RY2 + Math.sin(p2 * 2.7) * 3;
-
-      var kick = clickBurst * 8;
-      var midOx = ox + (orbitX1 + Math.cos(orbitPhase) * kick) * intensity;
-      var midOy = oy + (orbitY1 + Math.sin(orbitPhase * 1.1) * kick) * intensity;
-      var outOx = mx2 + (orbitX2 - Math.cos(orbitPhase * 0.8) * kick * 0.7) * intensity;
-      var outOy = my2 + (orbitY2 - Math.sin(orbitPhase * 0.9) * kick * 0.7) * intensity;
-
       core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%)';
-      mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%) rotate(' + selfRot1 + 'deg)';
-      outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%) rotate(' + selfRot2 + 'deg)';
+      mid.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%)';
+      outer.style.transform = 'translate(' + mx2 + 'px, ' + my2 + 'px) translate(-50%, -50%)';
       label.style.transform = 'translate(' + cx + 'px, ' + (cy - 28) + 'px) translate(-50%, -50%)';
 
       requestAnimationFrame(animate);
@@ -125,7 +86,6 @@ const cursor = {
     function applyHover(el) {
       el.addEventListener('mouseenter', function () {
         document.body.classList.add('cursor--hover');
-        orbitTarget = 1;
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
           document.body.classList.add('cursor--text');
           label.textContent = el.getAttribute('data-cursor') || 'Click';
@@ -134,7 +94,6 @@ const cursor = {
 
       el.addEventListener('mouseleave', function () {
         document.body.classList.remove('cursor--hover', 'cursor--text');
-        orbitTarget = 0;
       });
     }
 
@@ -144,7 +103,7 @@ const cursor = {
     }
 
     document.addEventListener('mouseleave', function () { core.style.opacity = '0'; mid.style.opacity = '0'; outer.style.opacity = '0'; label.style.opacity = '0'; });
-    document.addEventListener('mouseenter', function () { core.style.opacity = '1'; mid.style.opacity = '1'; outer.style.opacity = ''; label.style.opacity = ''; });
+    document.addEventListener('mouseenter', function () { core.style.opacity = '1'; mid.style.opacity = '1'; outer.style.opacity = '1'; label.style.opacity = ''; });
   }
 };
 
