@@ -100,6 +100,10 @@ input, textarea {
   --anim-reveal: 800ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+@media (max-width: 768px) {
+  body { cursor: auto; }
+}
+
 [data-theme="dark"] {
   --bg-primary:      var(--color-onyx);
   --bg-secondary:    #111111;
@@ -1458,4 +1462,14 @@ html[lang="en"] .hero__headline {
 
 [dir="rtl"] .footer__grid {
   direction: rtl;
+}
+
+[dir="rtl"] .section__eyebrow {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+[dir="rtl"] .footer__heading {
+  letter-spacing: 0;
+  text-transform: none;
 }

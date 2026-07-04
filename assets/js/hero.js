@@ -13,6 +13,8 @@ class HexagonParticleSystem {
     this.smoothMY = -9999;
     this.isRunning = true;
     this.resizeRAF = null;
+    this.frameSkip = window.innerWidth < 768 ? 2 : 1;
+    this.frameCount = 0;
 
     this.init();
   }
@@ -49,12 +51,15 @@ class HexagonParticleSystem {
   }
 
   createParticles() {
+    var isMobile = window.innerWidth < 768;
     var area = this.width * this.height;
-    var count = Math.min(Math.floor(area / 20000), 60);
-    if (count < 10) count = 10;
+    var divisor = isMobile ? 50000 : 20000;
+    var maxP = isMobile ? 25 : 60;
+    var count = Math.min(Math.floor(area / divisor), maxP);
+    if (count < 5) count = 5;
     this.particles = [];
 
-    var maxSize = Math.min(50, this.height * 0.12);
+    var maxSize = isMobile ? Math.min(30, this.height * 0.08) : Math.min(50, this.height * 0.12);
 
     for (var i = 0; i < count; i++) {
       var baseVx = (Math.random() - 0.5) * 0.1;
@@ -69,8 +74,7 @@ class HexagonParticleSystem {
         vy: baseVy,
         baseVx: baseVx,
         baseVy: baseVy,
-        opacity: Math.random() * 0.07 + 0.015,
-        baseOpacity: 0,
+        opacity: isMobile ? Math.random() * 0.04 + 0.01 : Math.random() * 0.07 + 0.015,
         color: Math.random() > 0.5 ? '#C9A84C' : '#0E1C3D',
         phase: Math.random() * Math.PI * 2,
         floatSpeed: Math.random() * 0.0003 + 0.00015,
@@ -102,7 +106,7 @@ class HexagonParticleSystem {
 
   drawConnections() {
     var i, j, dx, dy, dist, alpha;
-    var maxDist = Math.min(250, this.height * 0.6);
+    var maxDist = Math.min(200, this.height * 0.5);
 
     for (i = 0; i < this.particles.length; i++) {
       for (j = i + 1; j < this.particles.length; j++) {
@@ -111,7 +115,7 @@ class HexagonParticleSystem {
         dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < maxDist) {
-          alpha = 0.04 * (1 - dist / maxDist) * (1 - dist / maxDist);
+          alpha = 0.03 * (1 - dist / maxDist) * (1 - dist / maxDist);
           if (alpha < 0.002) continue;
           this.ctx.save();
           this.ctx.globalAlpha = alpha;
@@ -129,32 +133,46 @@ class HexagonParticleSystem {
 
   bindEvents() {
     var self = this;
+    var ticking = false;
 
     window.addEventListener('resize', function () {
       if (self.resizeRAF) return;
       self.resizeRAF = requestAnimationFrame(function () {
         self.resize();
+        self.createParticles();
         self.resizeRAF = null;
       });
     });
 
     document.addEventListener('mousemove', function (e) {
-      self.mouseX = e.clientX;
-      self.mouseY = e.clientY;
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          self.mouseX = e.clientX;
+          self.mouseY = e.clientY;
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
   }
 
   animate() {
     if (!this.isRunning) return;
 
+    this.frameCount++;
+    if (this.frameCount % this.frameSkip !== 0) {
+      requestAnimationFrame(function () { self.animate(); });
+      return;
+    }
+
     this.ctx.clearRect(0, 0, this.width, this.height);
 
     var time = Date.now();
     var self = this;
-    var mouseRadius = Math.min(220, this.height * 0.5);
+    var mouseRadius = Math.min(180, this.height * 0.4);
 
-    this.smoothMX += (this.mouseX - this.smoothMX) * 0.12;
-    this.smoothMY += (this.mouseY - this.smoothMY) * 0.12;
+    this.smoothMX += (this.mouseX - this.smoothMX) * 0.15;
+    this.smoothMY += (this.mouseY - this.smoothMY) * 0.15;
 
     this.particles.forEach(function (p) {
       var dx = p.x - self.smoothMX;
@@ -164,12 +182,10 @@ class HexagonParticleSystem {
 
       if (dist < mouseRadius && dist > 0.5) {
         influence = 1 - dist / mouseRadius;
-
         var force = Math.pow(influence, 1.5) * 1.2;
         var angle = Math.atan2(dy, dx);
         p.vx += Math.cos(angle) * force * 0.08;
         p.vy += Math.sin(angle) * force * 0.08;
-
         p.rotation += influence * 0.03;
       }
 
@@ -193,7 +209,9 @@ class HexagonParticleSystem {
       self.drawHexagon(self.ctx, p.x, p.y, p.size, p.rotation, finalOpacity, p.color);
     });
 
-    this.drawConnections();
+    if (this.frameSkip < 2) {
+      this.drawConnections();
+    }
 
     requestAnimationFrame(function () { self.animate(); });
   }

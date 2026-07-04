@@ -58,16 +58,6 @@ const cursor = {
     var cx = 0, cy = 0;
     var ox = 0, oy = 0;
     var mx2 = 0, my2 = 0;
-    var spinAngle1 = 0, spinAngle2 = 0;
-    var orbitIntensity = 0, orbitTarget = 0;
-    var clickBurst = 0;
-    var SPIN_SPEED_1 = -0.8;
-    var SPIN_SPEED_2 = 0.6;
-
-    var ripple = document.createElement('div');
-    ripple.style.cssText = 'position:fixed;top:0;left:0;width:40px;height:46px;border:2px solid #C9A84C;background:rgba(201,168,76,0.06);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);pointer-events:none;z-index:99998;opacity:0;transform:translate(-50%,-50%) scale(0.2)';
-    document.body.appendChild(ripple);
-    var rippleActive = false, rippleStart = 0, rippleX = 0, rippleY = 0;
 
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX;
@@ -75,45 +65,17 @@ const cursor = {
     });
 
     function animate() {
-      cx += (mx - cx) * 0.25;
-      cy += (my - cy) * 0.25;
-      ox += (cx - ox) * 0.10;
-      oy += (cy - oy) * 0.10;
-      mx2 += (ox - mx2) * 0.07;
-      my2 += (oy - my2) * 0.07;
+      cx += (mx - cx) * 0.2;
+      cy += (my - cy) * 0.2;
+      ox += (cx - ox) * 0.08;
+      oy += (cy - oy) * 0.08;
+      mx2 += (ox - mx2) * 0.05;
+      my2 += (oy - my2) * 0.05;
 
-      orbitIntensity += (orbitTarget - orbitIntensity) * 0.08;
-      if (orbitIntensity > 0.01) {
-        spinAngle1 += SPIN_SPEED_1 * orbitIntensity;
-        spinAngle2 += SPIN_SPEED_2 * orbitIntensity;
-      }
-
-      clickBurst *= 0.75;
-      var t = clickBurst;
-      var coreScale = 1 - t * 0.35 + t * (1 - t) * 0.18;
-      var coreRotate = t * 22 + Math.sin(t * Math.PI * 5) * t * 6;
-      var ringPulse = 1 + t * 0.1;
-      spinAngle1 += t * 3;
-      spinAngle2 += t * 2.5;
-      if (t > 0.05) {
-        core.style.filter = 'drop-shadow(0 0 ' + (t * 20) + 'px rgba(201, 168, 76, 0.9)) drop-shadow(0 0 ' + (t * 8) + 'px rgba(255, 215, 0, 0.5))';
-      } else {
-        core.style.filter = '';
-      }
-
-      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%) scale(' + coreScale + ') rotate(' + coreRotate + 'deg)';
-      mid.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%) rotate(' + spinAngle1 + 'deg) scale(' + ringPulse + ')';
-      outer.style.transform = 'translate(' + mx2 + 'px, ' + my2 + 'px) translate(-50%, -50%) rotate(' + spinAngle2 + 'deg) scale(' + ringPulse + ')';
-      label.style.transform = 'translate(' + cx + 'px, ' + (cy - 28) + 'px) translate(-50%, -50%)';
-
-      if (rippleActive) {
-        var elapsed = performance.now() - rippleStart;
-        var rp = Math.min(elapsed / 500, 1);
-        var easeOut = 1 - Math.pow(1 - rp, 2.5);
-        ripple.style.transform = 'translate(' + rippleX + 'px, ' + rippleY + 'px) translate(-50%, -50%) scale(' + (0.3 + easeOut * 3) + ') rotate(' + (rp * 60) + 'deg)';
-        ripple.style.opacity = Math.pow(1 - rp, 2.5) * 0.85;
-        if (rp >= 1) { rippleActive = false; ripple.style.opacity = '0'; }
-      }
+      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%)';
+      mid.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%)';
+      outer.style.transform = 'translate(' + mx2 + 'px, ' + my2 + 'px) translate(-50%, -50%)';
+      label.style.transform = 'translate(' + cx + 'px, ' + (cy - 26) + 'px) translate(-50%, -50%)';
 
       requestAnimationFrame(animate);
     }
@@ -123,7 +85,6 @@ const cursor = {
     function applyHover(el) {
       el.addEventListener('mouseenter', function () {
         document.body.classList.add('cursor--hover');
-        orbitTarget = 1;
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
           document.body.classList.add('cursor--text');
           label.textContent = el.getAttribute('data-cursor') || 'Click';
@@ -132,7 +93,6 @@ const cursor = {
 
       el.addEventListener('mouseleave', function () {
         document.body.classList.remove('cursor--hover', 'cursor--text');
-        orbitTarget = 0;
       });
     }
 
@@ -141,14 +101,8 @@ const cursor = {
       applyHover(targets[i]);
     }
 
-    document.addEventListener('click', function () {
-      clickBurst = 1;
-      rippleX = cx; rippleY = cy;
-      rippleActive = true; rippleStart = performance.now();
-    });
-
-    document.addEventListener('mouseleave', function () { core.style.opacity = '0'; mid.style.opacity = '0'; outer.style.opacity = '0'; label.style.opacity = '0'; ripple.style.opacity = '0'; });
-    document.addEventListener('mouseenter', function () { core.style.opacity = '1'; mid.style.opacity = '1'; outer.style.opacity = ''; label.style.opacity = ''; });
+    document.addEventListener('mouseleave', function () { core.style.opacity = '0'; mid.style.opacity = '0'; outer.style.opacity = '0'; label.style.opacity = '0'; });
+    document.addEventListener('mouseenter', function () { core.style.opacity = '1'; mid.style.opacity = '1'; outer.style.opacity = '1'; label.style.opacity = '1'; });
 
     window.addEventListener('resize', function () {
       if (window.innerWidth <= 768) {
