@@ -58,12 +58,7 @@ const cursor = {
     var cx = 0, cy = 0;
     var ox = 0, oy = 0;
     var mx2 = 0, my2 = 0;
-    var orbitAngle1 = 0, orbitAngle2 = 0;
     var clickBurst = 0;
-    var ORBIT_RADIUS_1 = 10;
-    var ORBIT_RADIUS_2 = 18;
-    var ORBIT_SPEED_1 = 0.04;
-    var ORBIT_SPEED_2 = -0.03;
 
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX;
@@ -78,20 +73,18 @@ const cursor = {
       mx2 += (ox - mx2) * 0.07;
       my2 += (oy - my2) * 0.07;
 
-      orbitAngle1 += ORBIT_SPEED_1;
-      orbitAngle2 += ORBIT_SPEED_2;
+      clickBurst *= 0.82;
+      var coreScale = 1 - clickBurst * 0.28;
+      var coreRotate = clickBurst * 6;
+      if (clickBurst > 0.05) {
+        core.style.filter = 'drop-shadow(0 0 ' + (clickBurst * 12) + 'px rgba(201, 168, 76, 0.8))';
+      } else {
+        core.style.filter = '';
+      }
 
-      var midOx = ox + Math.cos(orbitAngle1) * ORBIT_RADIUS_1;
-      var midOy = oy + Math.sin(orbitAngle1) * ORBIT_RADIUS_1;
-      var outOx = mx2 + Math.cos(orbitAngle2) * ORBIT_RADIUS_2;
-      var outOy = my2 + Math.sin(orbitAngle2) * ORBIT_RADIUS_2;
-
-      clickBurst *= 0.9;
-      var coreScale = 1 - clickBurst * 0.25;
-
-      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%) scale(' + coreScale + ')';
-      mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%)';
-      outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%)';
+      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%) scale(' + coreScale + ') rotate(' + coreRotate + 'deg)';
+      mid.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%)';
+      outer.style.transform = 'translate(' + mx2 + 'px, ' + my2 + 'px) translate(-50%, -50%)';
       label.style.transform = 'translate(' + cx + 'px, ' + (cy - 28) + 'px) translate(-50%, -50%)';
 
       requestAnimationFrame(animate);
