@@ -159,6 +159,8 @@ class HexagonParticleSystem {
   animate() {
     if (!this.isRunning) return;
 
+    var self = this;
+
     this.frameCount++;
     if (this.frameCount % this.frameSkip !== 0) {
       requestAnimationFrame(function () { self.animate(); });
@@ -168,7 +170,6 @@ class HexagonParticleSystem {
     this.ctx.clearRect(0, 0, this.width, this.height);
 
     var time = Date.now();
-    var self = this;
     var mouseRadius = Math.min(180, this.height * 0.4);
 
     this.smoothMX += (this.mouseX - this.smoothMX) * 0.15;

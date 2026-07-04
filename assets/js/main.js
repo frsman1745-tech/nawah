@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFAQ();
   initSmoothScroll();
 
-  if (typeof Lenis !== 'undefined' && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  if (typeof Lenis !== 'undefined' && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 768) {
     initLenis();
   }
 });
