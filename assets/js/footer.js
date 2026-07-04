@@ -1,4 +1,4 @@
-/* ============ FOOTER: Warm Glow Behind Mouse ============ */
+/* ============ FOOTER: Soft Light Behind Cursor (contrast for gold rings) ============ */
 
 (function () {
   var canvas = document.getElementById('footer-hex-canvas');
@@ -34,11 +34,10 @@
     ctx.globalAlpha = finalAlpha;
 
     var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-    grad.addColorStop(0, 'rgba(230, 195, 70, 0.05)');
-    grad.addColorStop(0.3, 'rgba(210, 175, 70, 0.04)');
-    grad.addColorStop(0.65, 'rgba(201, 168, 76, 0.035)');
-    grad.addColorStop(0.85, 'rgba(201, 168, 76, 0.015)');
-    grad.addColorStop(1, 'rgba(201, 168, 76, 0)');
+    grad.addColorStop(0, 'rgba(255, 252, 248, 0.08)');
+    grad.addColorStop(0.25, 'rgba(255, 250, 242, 0.04)');
+    grad.addColorStop(0.6, 'rgba(255, 248, 238, 0.02)');
+    grad.addColorStop(1, 'rgba(255, 248, 238, 0)');
 
     ctx.fillStyle = grad;
     ctx.beginPath();
@@ -64,7 +63,7 @@
     if (visible > 1) visible = 1;
 
     if (visible > 0.005) {
-      drawGlow(sx, sy, 450, visible * 0.4, Date.now());
+      drawGlow(sx, sy, 500, visible * 0.5, Date.now());
     }
 
     requestAnimationFrame(animate);
