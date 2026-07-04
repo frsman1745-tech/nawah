@@ -73,7 +73,6 @@
 
   .hero__ctas { flex-direction: column; align-items: center; gap: var(--space-sm); }
   .hero__cta.btn--primary, .hero__cta.btn--outline { width: 100%; max-width: 320px; }
-  .hero__scroll-indicator { display: none; }
 
   html[lang="en"] .hero__headline {
     font-size: clamp(1.35rem, 3.5vw, 1.75rem);
@@ -101,6 +100,9 @@
 
   .faq__item { padding: var(--space-sm) 0; }
 
+  .hero__scroll-indicator { bottom: var(--space-lg); }
+  .hero__scroll-indicator .arrow { width: 16px; height: 16px; }
+
   .cursor__outer, .cursor__mid, .cursor__core, .cursor__label { display: none !important; }
 }
 
@@ -116,6 +118,11 @@
   .mockup--mobile { width: 120px; }
 
   .nav-overlay__link { font-size: var(--text-xl); }
+
+  .hero { min-height: 92vh; }
+  .hero__content { padding: 0 var(--space-md); }
+  .hero__scroll-indicator { bottom: var(--space-md); }
+  .hero__subtitle { max-width: none; }
 }
 
 @media (max-width: 380px) {
