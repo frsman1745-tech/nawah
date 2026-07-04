@@ -88,11 +88,13 @@ const cursor = {
         spinAngle2 += SPIN_SPEED_2 * orbitIntensity;
       }
 
-      clickBurst *= 0.78;
+      clickBurst *= 0.75;
       var t = clickBurst;
-      var coreScale = 1 - t * 0.35 + t * (1 - t) * 0.15;
-      var coreRotate = t * 20 + Math.sin(t * Math.PI * 5) * t * 5;
-      var ringPulse = 1 + t * 0.08;
+      var coreScale = 1 - t * 0.35 + t * (1 - t) * 0.18;
+      var coreRotate = t * 22 + Math.sin(t * Math.PI * 5) * t * 6;
+      var ringPulse = 1 + t * 0.1;
+      spinAngle1 += t * 3;
+      spinAngle2 += t * 2.5;
       if (t > 0.05) {
         core.style.filter = 'drop-shadow(0 0 ' + (t * 20) + 'px rgba(201, 168, 76, 0.9)) drop-shadow(0 0 ' + (t * 8) + 'px rgba(255, 215, 0, 0.5))';
       } else {
@@ -107,8 +109,9 @@ const cursor = {
       if (rippleActive) {
         var elapsed = performance.now() - rippleStart;
         var rp = Math.min(elapsed / 500, 1);
-        ripple.style.transform = 'translate(' + rippleX + 'px, ' + rippleY + 'px) translate(-50%, -50%) scale(' + (0.3 + rp * 3) + ')';
-        ripple.style.opacity = Math.pow(1 - rp, 2) * 0.8;
+        var easeOut = 1 - Math.pow(1 - rp, 2.5);
+        ripple.style.transform = 'translate(' + rippleX + 'px, ' + rippleY + 'px) translate(-50%, -50%) scale(' + (0.3 + easeOut * 3) + ') rotate(' + (rp * 60) + 'deg)';
+        ripple.style.opacity = Math.pow(1 - rp, 2.5) * 0.85;
         if (rp >= 1) { rippleActive = false; ripple.style.opacity = '0'; }
       }
 
