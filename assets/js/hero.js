@@ -9,6 +9,8 @@ class HexagonParticleSystem {
     this.particles = [];
     this.mouseX = -9999;
     this.mouseY = -9999;
+    this.smoothMX = -9999;
+    this.smoothMY = -9999;
     this.isRunning = true;
     this.resizeRAF = null;
 
@@ -55,15 +57,20 @@ class HexagonParticleSystem {
     var maxSize = Math.min(50, this.height * 0.12);
 
     for (var i = 0; i < count; i++) {
+      var baseVx = (Math.random() - 0.5) * 0.1;
+      var baseVy = (Math.random() - 0.5) * 0.1;
       this.particles.push({
         x: Math.random() * this.width,
         y: Math.random() * this.height,
         size: Math.random() * maxSize + 6,
         rotation: Math.random() * Math.PI * 2,
         rotSpeed: (Math.random() - 0.5) * 0.008,
-        vx: (Math.random() - 0.5) * 0.1,
-        vy: (Math.random() - 0.5) * 0.1,
+        vx: baseVx,
+        vy: baseVy,
+        baseVx: baseVx,
+        baseVy: baseVy,
         opacity: Math.random() * 0.07 + 0.015,
+        baseOpacity: 0,
         color: Math.random() > 0.5 ? '#C9A84C' : '#0E1C3D',
         phase: Math.random() * Math.PI * 2,
         floatSpeed: Math.random() * 0.0003 + 0.00015,
@@ -146,17 +153,28 @@ class HexagonParticleSystem {
     var self = this;
     var mouseRadius = Math.min(220, this.height * 0.5);
 
-    this.particles.forEach(function (p) {
-      var dx = p.x - self.mouseX;
-      var dy = p.y - self.mouseY;
-      var dist = Math.sqrt(dx * dx + dy * dy);
+    this.smoothMX += (this.mouseX - this.smoothMX) * 0.12;
+    this.smoothMY += (this.mouseY - this.smoothMY) * 0.12;
 
-      if (dist < mouseRadius && dist > 0.1) {
-        var force = (1 - dist / mouseRadius) * 0.6;
+    this.particles.forEach(function (p) {
+      var dx = p.x - self.smoothMX;
+      var dy = p.y - self.smoothMY;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var influence = 0;
+
+      if (dist < mouseRadius && dist > 0.5) {
+        influence = 1 - dist / mouseRadius;
+
+        var force = Math.pow(influence, 1.5) * 1.2;
         var angle = Math.atan2(dy, dx);
-        p.x += Math.cos(angle) * force;
-        p.y += Math.sin(angle) * force;
+        p.vx += Math.cos(angle) * force * 0.08;
+        p.vy += Math.sin(angle) * force * 0.08;
+
+        p.rotation += influence * 0.03;
       }
+
+      p.vx += (p.baseVx - p.vx) * 0.04;
+      p.vy += (p.baseVy - p.vy) * 0.04;
 
       p.x += Math.sin(time * p.floatSpeed + p.floatOffX) * 0.1;
       p.y += Math.cos(time * p.floatSpeed * 0.7 + p.floatOffY) * 0.1;
@@ -171,7 +189,8 @@ class HexagonParticleSystem {
       if (p.y < -p.size * 2) p.y = self.height + p.size;
       if (p.y > self.height + p.size) p.y = -p.size * 2;
 
-      self.drawHexagon(self.ctx, p.x, p.y, p.size, p.rotation, p.opacity, p.color);
+      var finalOpacity = p.opacity + influence * 0.04;
+      self.drawHexagon(self.ctx, p.x, p.y, p.size, p.rotation, finalOpacity, p.color);
     });
 
     this.drawConnections();
