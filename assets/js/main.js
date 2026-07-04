@@ -35,118 +35,198 @@ const theme = {
 const cursor = {
   init() {
     if (window.innerWidth <= 768) return;
+    this.createElements();
+    this.state = {};
+    this.config = {};
+    this.trackMouse();
+    this.animate();
+    this.bindHover();
+    this.bindWindowEdge();
+  },
 
+  /* ---------- 1. DOM Elements ---------- */
+
+  createElements() {
     var outer = document.createElement('div');
     outer.className = 'cursor__outer';
-
     var mid = document.createElement('div');
     mid.className = 'cursor__mid';
-
     var core = document.createElement('div');
     core.className = 'cursor__core';
-
     var label = document.createElement('span');
     label.className = 'cursor__label';
     label.textContent = 'View';
-
     document.body.appendChild(outer);
     document.body.appendChild(mid);
     document.body.appendChild(core);
     document.body.appendChild(label);
     document.body.style.cursor = 'none';
+    this.el = { outer: outer, mid: mid, core: core, label: label };
 
-    var mx = 0, my = 0;
-    var cx = 0, cy = 0;
-    var ox = 0, oy = 0;
-    var mx2 = 0, my2 = 0;
-    var orbitPhase = 0;
-    var orbitT = 0;
-    var orbitTarget = 0;
-    var clickBurst = 0;
-    var selfRot1 = 0;
-    var selfRot2 = 0;
+    this.state = {
+      mx: 0, my: 0,
+      cx: 0, cy: 0,
+      ox: 0, oy: 0,
+      wx: 0, wy: 0,
+      orbitPhase: 0,
+      orbitT: 0,
+      orbitTarget: 0,
+      clickBurst: 0,
+      spin1: 0,
+      spin2: 0
+    };
 
-    var ORBIT_RX = 18, ORBIT_RY = 9;
-    var ORBIT_RX2 = 30, ORBIT_RY2 = 15;
-    var ORBIT_SPD = 0.03;
-    var SPIN_MID = 0.6;
-    var SPIN_OUT = -0.4;
+    this.config = {
+      orbitRX: 18, orbitRY: 9,
+      orbitRX2: 30, orbitRY2: 15,
+      orbitSpeed: 0.03,
+      spinSpeedMid: 0.6,
+      spinSpeedOut: -0.4,
+      lerpCore: 0.18,
+      lerpMid: 0.09,
+      lerpOut: 0.06
+    };
+  },
 
+  /* ---------- 2. Mouse Tracking ---------- */
+
+  trackMouse() {
+    var self = this;
     document.addEventListener('mousemove', function (e) {
-      mx = e.clientX;
-      my = e.clientY;
+      self.state.mx = e.clientX;
+      self.state.my = e.clientY;
     });
-
     document.addEventListener('click', function () {
-      clickBurst = 1;
+      self.state.clickBurst = 1;
     });
+  },
 
-    function animate() {
-      cx += (mx - cx) * 0.18;
-      cy += (my - cy) * 0.18;
-      ox += (cx - ox) * 0.09;
-      oy += (cy - oy) * 0.09;
-      mx2 += (ox - mx2) * 0.06;
-      my2 += (oy - my2) * 0.06;
+  /* ---------- 3. Trailing (3-layer chain) ---------- */
 
-      orbitT += (orbitTarget - orbitT) * 0.07;
-      clickBurst *= 0.93;
+  calcTrailing() {
+    var s = this.state;
+    var c = this.config;
+    s.cx += (s.mx - s.cx) * c.lerpCore;
+    s.cy += (s.my - s.cy) * c.lerpCore;
+    s.ox += (s.cx - s.ox) * c.lerpMid;
+    s.oy += (s.cy - s.oy) * c.lerpMid;
+    s.wx += (s.ox - s.wx) * c.lerpOut;
+    s.wy += (s.oy - s.wy) * c.lerpOut;
+  },
 
-      var spd = 1 + clickBurst * 4;
-      orbitPhase += ORBIT_SPD * spd;
-      selfRot1 += SPIN_MID * spd;
-      selfRot2 += SPIN_OUT * spd;
+  /* ---------- 4. Orbit (Lissajous, active on hover) ---------- */
 
-      var intensity = Math.min(1.3, orbitT + clickBurst * 0.5);
-      var p1 = orbitPhase;
-      var p2 = orbitPhase * 0.7 + 1.8;
+  calcOrbit() {
+    var s = this.state;
+    var c = this.config;
+    s.orbitT += (s.orbitTarget - s.orbitT) * 0.07;
+    var intensity = Math.min(1.3, s.orbitT + s.clickBurst * 0.5);
 
-      var orbitX1 = Math.cos(p1) * ORBIT_RX;
-      var orbitY1 = Math.sin(p1 * 1.5) * ORBIT_RY + Math.sin(p1 * 3.1) * 2;
-      var orbitX2 = Math.cos(p2) * ORBIT_RX2;
-      var orbitY2 = Math.sin(p2 * 1.3 + 0.9) * ORBIT_RY2 + Math.sin(p2 * 2.7) * 3;
+    var spd = 1 + s.clickBurst * 4;
+    s.orbitPhase += c.orbitSpeed * spd;
 
-      var kick = clickBurst * 8;
-      var midOx = ox + (orbitX1 + Math.cos(orbitPhase) * kick) * intensity;
-      var midOy = oy + (orbitY1 + Math.sin(orbitPhase * 1.1) * kick) * intensity;
-      var outOx = mx2 + (orbitX2 - Math.cos(orbitPhase * 0.8) * kick * 0.7) * intensity;
-      var outOy = my2 + (orbitY2 - Math.sin(orbitPhase * 0.9) * kick * 0.7) * intensity;
+    var p1 = s.orbitPhase;
+    var p2 = s.orbitPhase * 0.7 + 1.8;
 
-      var coreS = 1 + clickBurst * 0.3;
+    var x1 = Math.cos(p1) * c.orbitRX;
+    var y1 = Math.sin(p1 * 1.5) * c.orbitRY + Math.sin(p1 * 3.1) * 2;
+    var x2 = Math.cos(p2) * c.orbitRX2;
+    var y2 = Math.sin(p2 * 1.3 + 0.9) * c.orbitRY2 + Math.sin(p2 * 2.7) * 3;
 
-      core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%) scale(' + coreS + ')';
-      mid.style.transform = 'translate(' + midOx + 'px, ' + midOy + 'px) translate(-50%, -50%) rotate(' + selfRot1 + 'deg)';
-      outer.style.transform = 'translate(' + outOx + 'px, ' + outOy + 'px) translate(-50%, -50%) rotate(' + selfRot2 + 'deg)';
-      label.style.transform = 'translate(' + cx + 'px, ' + (cy - 28) + 'px) translate(-50%, -50%)';
+    var kick = s.clickBurst * 8;
 
-      requestAnimationFrame(animate);
-    }
+    this._orbitX1 = (x1 + Math.cos(s.orbitPhase) * kick) * intensity;
+    this._orbitY1 = (y1 + Math.sin(s.orbitPhase * 1.1) * kick) * intensity;
+    this._orbitX2 = (x2 - Math.cos(s.orbitPhase * 0.8) * kick * 0.7) * intensity;
+    this._orbitY2 = (y2 - Math.sin(s.orbitPhase * 0.9) * kick * 0.7) * intensity;
+  },
 
-    animate();
+  /* ---------- 5. Self-Rotation ---------- */
 
+  calcSpin() {
+    var s = this.state;
+    var c = this.config;
+    var spd = 1 + s.clickBurst * 4;
+    s.spin1 += c.spinSpeedMid * spd;
+    s.spin2 += c.spinSpeedOut * spd;
+  },
+
+  /* ---------- 6. Click Burst (core only) ---------- */
+
+  calcClickBurst() {
+    this.state.clickBurst *= 0.93;
+  },
+
+  /* ---------- 7. Apply Transforms ---------- */
+
+  applyTransforms() {
+    var s = this.state;
+    var e = this.el;
+
+    var coreScale = 1 + s.clickBurst * 0.3;
+
+    var midX = s.ox + this._orbitX1;
+    var midY = s.oy + this._orbitY1;
+    var outX = s.wx + this._orbitX2;
+    var outY = s.wy + this._orbitY2;
+
+    e.core.style.transform = 'translate(' + s.cx + 'px,' + s.cy + 'px) translate(-50%,-50%) scale(' + coreScale + ')';
+    e.mid.style.transform = 'translate(' + midX + 'px,' + midY + 'px) translate(-50%,-50%) rotate(' + s.spin1 + 'deg)';
+    e.outer.style.transform = 'translate(' + outX + 'px,' + outY + 'px) translate(-50%,-50%) rotate(' + s.spin2 + 'deg)';
+    e.label.style.transform = 'translate(' + s.cx + 'px,' + (s.cy - 28) + 'px) translate(-50%,-50%)';
+  },
+
+  /* ---------- 8. Animation Loop ---------- */
+
+  animate() {
+    this.calcTrailing();
+    this.calcOrbit();
+    this.calcSpin();
+    this.calcClickBurst();
+    this.applyTransforms();
+    requestAnimationFrame(this.animate.bind(this));
+  },
+
+  /* ---------- 9. Hover Effects (activate orbit) ---------- */
+
+  bindHover() {
+    var self = this;
     function applyHover(el) {
       el.addEventListener('mouseenter', function () {
         document.body.classList.add('cursor--hover');
-        orbitTarget = 1;
+        self.state.orbitTarget = 1;
         if (el.tagName === 'A' || el.classList.contains('btn') || el.closest('a')) {
           document.body.classList.add('cursor--text');
-          label.textContent = el.getAttribute('data-cursor') || 'Click';
+          self.el.label.textContent = el.getAttribute('data-cursor') || 'Click';
         }
       });
-
       el.addEventListener('mouseleave', function () {
         document.body.classList.remove('cursor--hover', 'cursor--text');
-        orbitTarget = 0;
+        self.state.orbitTarget = 0;
       });
     }
-
     var targets = document.querySelectorAll('a, button, .btn, .glass-card, .service-card, .team-card, .project-card');
     for (var i = 0; i < targets.length; i++) {
       applyHover(targets[i]);
     }
+  },
 
-    document.addEventListener('mouseleave', function () { core.style.opacity = '0'; mid.style.opacity = '0'; outer.style.opacity = '0'; label.style.opacity = '0'; });
-    document.addEventListener('mouseenter', function () { core.style.opacity = '1'; mid.style.opacity = '1'; outer.style.opacity = ''; label.style.opacity = ''; });
+  /* ---------- 10. Window Edge (hide/show) ---------- */
+
+  bindWindowEdge() {
+    var e = this.el;
+    document.addEventListener('mouseleave', function () {
+      e.core.style.opacity = '0';
+      e.mid.style.opacity = '0';
+      e.outer.style.opacity = '0';
+      e.label.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', function () {
+      e.core.style.opacity = '1';
+      e.mid.style.opacity = '1';
+      e.outer.style.opacity = '';
+      e.label.style.opacity = '';
+    });
   }
 };
 
