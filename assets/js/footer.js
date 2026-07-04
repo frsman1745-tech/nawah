@@ -24,7 +24,7 @@
     topOffset = rect.top;
   }
 
-  function drawGlow(cx, cy, radius, alpha, time) {
+  function drawGlow(cx, cy, alpha, time) {
     if (alpha < 0.001) return;
 
     var pulse = 1 + Math.sin(time * 0.001) * 0.04;
@@ -32,14 +32,11 @@
 
     ctx.save();
     ctx.globalAlpha = finalAlpha;
+    ctx.filter = 'blur(200px)';
 
-    var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-    grad.addColorStop(0, 'rgba(255, 252, 248, 0.08)');
-    grad.addColorStop(1, 'rgba(255, 252, 248, 0)');
-
-    ctx.fillStyle = grad;
+    ctx.fillStyle = '#F0EEE9';
     ctx.beginPath();
-    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.arc(cx, cy, 60, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.restore();
@@ -61,7 +58,7 @@
     if (visible > 1) visible = 1;
 
     if (visible > 0.005) {
-      drawGlow(sx, sy, 500, visible * 0.5, Date.now());
+      drawGlow(sx, sy, visible * 0.55, Date.now());
     }
 
     requestAnimationFrame(animate);
