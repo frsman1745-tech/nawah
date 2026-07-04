@@ -1,4 +1,4 @@
-/* ============ FOOTER: Sunlight Glow Behind Mouse ============ */
+/* ============ FOOTER: Warm Glow Behind Mouse ============ */
 
 (function () {
   var canvas = document.getElementById('footer-hex-canvas');
@@ -24,13 +24,20 @@
     topOffset = rect.top;
   }
 
-  function drawSunlight(cx, cy, radius, alpha) {
+  function drawGlow(cx, cy, radius, alpha, time) {
+    if (alpha < 0.001) return;
+
+    var pulse = 1 + Math.sin(time * 0.001) * 0.04;
+    var finalAlpha = alpha * pulse;
+
     ctx.save();
-    ctx.globalAlpha = alpha;
+    ctx.globalAlpha = finalAlpha;
 
     var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-    grad.addColorStop(0, 'rgba(201, 168, 76, 0.04)');
-    grad.addColorStop(0.75, 'rgba(201, 168, 76, 0.04)');
+    grad.addColorStop(0, 'rgba(230, 195, 70, 0.05)');
+    grad.addColorStop(0.3, 'rgba(210, 175, 70, 0.04)');
+    grad.addColorStop(0.65, 'rgba(201, 168, 76, 0.035)');
+    grad.addColorStop(0.85, 'rgba(201, 168, 76, 0.015)');
     grad.addColorStop(1, 'rgba(201, 168, 76, 0)');
 
     ctx.fillStyle = grad;
@@ -44,20 +51,20 @@
   function animate() {
     ctx.clearRect(0, 0, w, h);
 
-    sx += (mx - sx) * 0.1;
-    sy += (my - topOffset - sy) * 0.1;
+    sx += (mx - sx) * 0.07;
+    sy += (my - topOffset - sy) * 0.07;
 
     var footerRect = footer.getBoundingClientRect();
     var curTop = footerRect.top;
     var curBottom = footerRect.bottom;
     inside = (mx >= 0 && mx <= window.innerWidth && my >= curTop && my <= curBottom);
 
-    visible += inside ? 0.04 : -0.02;
+    visible += inside ? 0.03 : -0.02;
     if (visible < 0) visible = 0;
     if (visible > 1) visible = 1;
 
     if (visible > 0.005) {
-      drawSunlight(sx, sy, 400, visible * 0.5);
+      drawGlow(sx, sy, 450, visible * 0.4, Date.now());
     }
 
     requestAnimationFrame(animate);
