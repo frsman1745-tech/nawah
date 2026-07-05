@@ -7,7 +7,9 @@
 .cursor__core {
   position: fixed;
   top: 0; left: 0;
-  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
   pointer-events: none;
   will-change: transform;
   transform: translate(-50%, -50%);
@@ -15,38 +17,35 @@
 
 .cursor__outer {
   width: 48px; height: 48px;
-  border: 1.5px solid rgba(201, 168, 76, 0.5);
+  background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-2.png');
   z-index: 99997;
 }
 
 .cursor__mid {
-  width: 32px; height: 32px;
-  border: 1.5px solid rgba(201, 168, 76, 0.65);
+  width: 30px; height: 30px;
+  background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-1.png');
   z-index: 99998;
 }
 
 .cursor__core {
   width: 14px; height: 14px;
-  background: var(--accent);
-  box-shadow: 0 0 12px rgba(201, 168, 76, 0.5);
+  background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/core.png');
   z-index: 99999;
 }
 
-.cursor--hover .cursor__outer {
-  width: 56px; height: 56px;
-  border-color: rgba(201, 168, 76, 0.8);
-  border-width: 2px;
+.cursor--hover .cursor__core {
+  filter: drop-shadow(0 0 5px rgba(243, 171, 3, 0.6));
+  transition: filter 0.3s ease;
 }
 
 .cursor--hover .cursor__mid {
-  width: 38px; height: 38px;
-  border-color: #C9A84C;
+  filter: drop-shadow(0 0 4px rgba(12, 28, 51, 0.5));
+  transition: filter 0.3s ease;
 }
 
-.cursor--hover .cursor__core {
-  width: 18px; height: 18px;
-  background: #d4af37;
-  box-shadow: 0 0 18px rgba(201, 168, 76, 0.7);
+.cursor--hover .cursor__outer {
+  filter: drop-shadow(0 0 6px rgba(40, 57, 75, 0.4));
+  transition: filter 0.3s ease;
 }
 
 .cursor--text .cursor__label {
@@ -56,7 +55,7 @@
 .cursor__label {
   position: fixed;
   top: 0; left: 0;
-  font-size: 10px; font-weight: 700;
+  font-size: 11px; font-weight: 700;
   letter-spacing: 0.12em;
   color: var(--accent);
   opacity: 0;
