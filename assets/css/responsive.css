@@ -103,15 +103,35 @@
   .hero__scroll-indicator { bottom: var(--space-lg); }
   .hero__scroll-indicator .arrow { width: 16px; height: 16px; }
 
+  .section__heading { margin-bottom: var(--space-xl); }
+  .features__list { gap: var(--space-lg); }
+  .glass-card { padding: var(--space-md); }
+  .team-card { padding: var(--space-md); }
+  .vision-card, .mission-card { padding: var(--space-md); }
+  .faq__item { padding: var(--space-xs) 0; }
+  .values-grid { padding: 0 var(--space-md) var(--space-xl); }
+
   .cursor__outer, .cursor__mid, .cursor__core, .cursor__label { display: none !important; }
 }
 
 @media (max-width: 480px) {
+  .hero { min-height: 88vh; }
+  .hero__headline { margin-bottom: var(--space-sm); }
+  .hero__subtitle { margin-bottom: var(--space-lg); max-width: none; }
+  .hero__content { padding: 0 var(--space-sm); }
+  .hero__scroll-indicator { bottom: var(--space-md); }
+
+  .section { padding: var(--space-xl) var(--space-sm); }
+  .section__heading { margin-bottom: var(--space-lg); }
+
   .service-card__icon-frame { width: 52px; height: 60px; }
   .service-card__icon-inner { width: 40px; height: 46px; }
+  .service-card__desc { margin-bottom: var(--space-sm); }
 
   .features__icon-frame { width: 48px; height: 55px; }
   .features__icon-inner { width: 36px; height: 36px; font-size: var(--text-base); }
+  .features__item { gap: var(--space-md); }
+  .features__text p { font-size: var(--text-base); }
 
   .team-card__photo { width: 100px; height: 100px; }
   .client-logo-circle { width: 80px; height: 80px; }
@@ -119,17 +139,20 @@
 
   .nav-overlay__link { font-size: var(--text-xl); }
 
-  .hero { min-height: 92vh; }
-  .hero__content { padding: 0 var(--space-md); }
-  .hero__scroll-indicator { bottom: var(--space-md); }
-  .hero__subtitle { max-width: none; }
+  .page-hero { min-height: 25vh; }
+  .faq__item { padding: var(--space-xs) 0; }
+  .stats__grid { gap: var(--space-md); }
 }
 
 @media (max-width: 380px) {
-  .btn { width: 100%; padding: 12px 16px; }
+  .btn { padding: 10px 14px; font-size: var(--text-sm); }
   .hero__cta.btn--primary, .hero__cta.btn--outline { max-width: none; }
-  .page-hero { min-height: 25vh; }
+  .hero { min-height: 85vh; }
+  .hero__headline { margin-bottom: var(--space-xs); }
+  html[lang="en"] .hero__headline { font-size: 1.25rem; }
+  .section { padding: var(--space-lg) var(--space-xs); }
   .footer__bottom-links { flex-direction: column; gap: var(--space-xs); }
+  .page-hero { min-height: 20vh; }
 }
 
 /* ======== Print ======== */

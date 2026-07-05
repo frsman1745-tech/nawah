@@ -1459,3 +1459,13 @@ html[lang="en"] .hero__headline {
 [dir="rtl"] .footer__grid {
   direction: rtl;
 }
+
+[dir="rtl"] .section__eyebrow {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+[dir="rtl"] .footer__heading {
+  letter-spacing: 0;
+  text-transform: none;
+}
