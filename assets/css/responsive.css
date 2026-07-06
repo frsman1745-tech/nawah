@@ -63,6 +63,8 @@
   .navbar__links { display: none; }
   .navbar__hamburger { display: flex; }
 
+  .featured-project { padding: var(--space-xl) var(--space-md); }
+
   .services__grid { grid-template-columns: 1fr; }
   .team__grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
@@ -92,6 +94,8 @@
 
   .featured-project__mockups { flex-direction: column; }
   .mockup--mobile { width: 160px; }
+  .mockup--desktop { max-width: 100%; }
+  .featured-project__info .live-link { width: 100%; justify-content: center; }
 
   .about-vision__grid { gap: var(--space-lg); }
   .vision-card, .mission-card { padding: var(--space-lg); }
@@ -136,6 +140,7 @@
   .team-card__photo { width: 100px; height: 100px; }
   .client-logo-circle { width: 80px; height: 80px; }
   .mockup--mobile { width: 120px; }
+  .mockup--desktop { max-width: 100%; }
 
   .nav-overlay__link { font-size: var(--text-xl); }
 
