@@ -1190,21 +1190,10 @@ html[lang="en"] .hero__headline {
 }
 
 .featured-project__mockups {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-lg);
-}
-
-/* Unified golden halo behind both mockups */
-.featured-project__mockups::before {
-  content: '';
-  position: absolute;
-  inset: -30px;
-  background: radial-gradient(ellipse at center, rgba(201, 168, 76, 0.04) 0%, transparent 55%);
-  pointer-events: none;
-  z-index: 0;
 }
 
 .mockup {
@@ -1233,7 +1222,16 @@ html[lang="en"] .hero__headline {
   flex-shrink: 0;
   border-radius: 32px;
   border: 4px solid #1a1a1a;
-  box-shadow: 0 15px 50px -8px rgba(0, 0, 0, 0.25);
+  box-shadow:
+    0 25px 35px -12px rgba(0, 0, 0, 0.2),
+    0 8px 15px -6px rgba(0, 0, 0, 0.1);
+}
+
+.mockup--mobile.mockup--dark {
+  border-color: #2a2a2a;
+  box-shadow:
+    0 25px 35px -12px rgba(255, 252, 248, 0.05),
+    0 8px 15px -6px rgba(255, 255, 255, 0.03);
 }
 
 /* iPhone Dynamic Island */
@@ -1251,8 +1249,16 @@ html[lang="en"] .hero__headline {
 }
 
 .mockup--mobile:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px -8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-6px);
+  box-shadow:
+    0 35px 50px -14px rgba(0, 0, 0, 0.25),
+    0 12px 20px -8px rgba(0, 0, 0, 0.15);
+}
+
+.mockup--mobile.mockup--dark:hover {
+  box-shadow:
+    0 35px 50px -14px rgba(255, 252, 248, 0.07),
+    0 12px 20px -8px rgba(255, 255, 255, 0.05);
 }
 
 .mockup--mobile img {
@@ -1267,7 +1273,16 @@ html[lang="en"] .hero__headline {
   max-width: 500px;
   border-radius: 14px;
   border: 6px solid #1a1a1a;
-  box-shadow: 0 12px 45px -8px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 25px 35px -12px rgba(0, 0, 0, 0.18),
+    0 8px 15px -6px rgba(0, 0, 0, 0.08);
+}
+
+.mockup--desktop.mockup--dark {
+  border-color: #2a2a2a;
+  box-shadow:
+    0 25px 35px -12px rgba(255, 252, 248, 0.04),
+    0 8px 15px -6px rgba(255, 255, 255, 0.02);
 }
 
 /* MacBook bottom chin */
@@ -1285,8 +1300,16 @@ html[lang="en"] .hero__headline {
 }
 
 .mockup--desktop:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 55px -8px rgba(0, 0, 0, 0.25);
+  transform: translateY(-6px);
+  box-shadow:
+    0 35px 50px -14px rgba(0, 0, 0, 0.22),
+    0 12px 20px -8px rgba(0, 0, 0, 0.12);
+}
+
+.mockup--desktop.mockup--dark:hover {
+  box-shadow:
+    0 35px 50px -14px rgba(255, 252, 248, 0.06),
+    0 12px 20px -8px rgba(255, 255, 255, 0.04);
 }
 
 .mockup--desktop img {
