@@ -1248,8 +1248,9 @@ html[lang="en"] .hero__headline {
 
 .featured-project__actions {
   display: flex;
-  gap: var(--space-md);
+  flex-direction: row;
   align-items: center;
+  gap: 12px;
 }
 
 .featured-project__info .live-link {
@@ -1262,7 +1263,6 @@ html[lang="en"] .hero__headline {
   border-radius: 50px;
   font-size: var(--text-sm);
   font-weight: 600;
-  align-self: flex-start;
   transition: transform var(--anim-base), box-shadow var(--anim-base);
 }
 
@@ -1282,10 +1282,6 @@ html[lang="en"] .hero__headline {
 
 [dir="rtl"] .featured-project__info .live-link:hover .live-link__arrow {
   transform: translateX(-3px);
-}
-
-[dir="rtl"] .featured-project__info .live-link {
-  align-self: flex-end;
 }
 
 .theme-toggle-mockup {
