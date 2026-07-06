@@ -1197,15 +1197,12 @@ html[lang="en"] .hero__headline {
   gap: var(--space-lg);
 }
 
-/* Warm ambient light spill behind mockups */
+/* Unified golden halo behind both mockups */
 .featured-project__mockups::before {
   content: '';
   position: absolute;
-  width: 70%;
-  height: 100%;
-  top: 0;
-  left: 15%;
-  background: radial-gradient(ellipse at 50% 25%, rgba(255, 248, 240, 0.06) 0%, transparent 50%);
+  inset: -30px;
+  background: radial-gradient(ellipse at center, rgba(201, 168, 76, 0.04) 0%, transparent 55%);
   pointer-events: none;
   z-index: 0;
 }
