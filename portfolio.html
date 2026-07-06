@@ -80,24 +80,24 @@
   <!-- ========== Featured Project: Pizza Khanum ========== -->
   <section class="featured-project" id="featured-pizzakhanum">
     <div class="featured-project__inner">
-      <div class="featured-project__demo">
-        <div class="featured-project__info">
-          <span class="section__eyebrow" data-i18n="featured.title">Featured Project</span>
-          <h2 class="featured-project__title" data-i18n="portfolio.project1.title">Pizza Khanum</h2>
-          <p class="featured-project__desc" data-i18n="portfolio.project1.desc">A fully integrated food ordering platform for Pizza Khanum restaurant chain — modern design, seamless UX, and complete order management system.</p>
+      <div class="featured-project__header">
+        <span class="section__eyebrow">Featured Project</span>
+        <h2 class="featured-project__title" data-i18n="portfolio.project1.title">Pizza Khanum</h2>
+        <p class="featured-project__desc" data-i18n="portfolio.project1.desc">A fully integrated food ordering platform for Pizza Khanum restaurant chain — modern design, seamless UX, and complete order management system.</p>
+      </div>
 
-          <div class="theme-toggle-mockup" id="mockup-theme-toggle">
-            <button class="theme-toggle-mockup__btn active" data-theme="light" data-i18n="featured.theme.light">Light Version</button>
-            <button class="theme-toggle-mockup__btn" data-theme="dark" data-i18n="featured.theme.dark">Dark Version</button>
+      <div class="featured-project__demo">
+        <div class="featured-project__mockups">
+
+          <!-- 📸 TODO: Add mobile screenshot here — recommended 390x844px PNG -->
+          <div class="mockup mockup--mobile" id="mockup-mobile">
+            <div style="width: 100%; aspect-ratio: 390/844; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs); color: var(--text-secondary);">
+              <!-- <img src="assets/images/portfolio/pizzakhanum-mobile.png" alt="Pizza Khanum Mobile View"> -->
+              Mobile Mockup
+            </div>
           </div>
 
-          <a href="https://pizzakhanum.vercel.app/" target="_blank" rel="noopener noreferrer" class="live-link" data-i18n="featured.visit">
-            <span class="live-link__dot"></span>
-            Visit Website <span>→</span>
-          </a>
-        </div>
-
-        <div class="featured-project__mockups">
+          <!-- 📸 TODO: Add laptop/desktop screenshot here — recommended 1440x900px PNG -->
           <div class="mockup mockup--desktop" id="mockup-desktop">
             <div style="width: 100%; aspect-ratio: 1440/900; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs); color: var(--text-secondary);">
               <!-- <img src="assets/images/portfolio/pizzakhanum-desktop.png" alt="Pizza Khanum Desktop View"> -->
@@ -105,12 +105,28 @@
             </div>
           </div>
 
-          <div class="mockup mockup--mobile" id="mockup-mobile">
-            <div style="width: 100%; aspect-ratio: 390/844; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs); color: var(--text-secondary);">
-              <!-- <img src="assets/images/portfolio/pizzakhanum-mobile.png" alt="Pizza Khanum Mobile View"> -->
-              Mobile Mockup
-            </div>
+        </div>
+
+        <div class="featured-project__info">
+          <!-- Theme Preview Toggle -->
+          <div class="theme-toggle-mockup" id="mockup-theme-toggle">
+            <button class="theme-toggle-mockup__btn active" data-theme="light" data-i18n="featured.theme.light">Light Version</button>
+            <button class="theme-toggle-mockup__btn" data-theme="dark" data-i18n="featured.theme.dark">Dark Version</button>
           </div>
+
+          <!-- Tech Tags -->
+          <div class="featured-project__tags">
+            <span class="featured-project__tag">HTML5</span>
+            <span class="featured-project__tag">CSS3</span>
+            <span class="featured-project__tag">JavaScript</span>
+            <span class="featured-project__tag">Responsive</span>
+          </div>
+
+          <!-- Live Link -->
+          <a href="https://pizzakhanum.vercel.app/" target="_blank" rel="noopener noreferrer" class="live-link" data-i18n="featured.visit">
+            <span class="live-link__dot"></span>
+            Visit Website <span>→</span>
+          </a>
         </div>
       </div>
     </div>
