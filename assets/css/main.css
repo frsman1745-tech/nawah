@@ -1197,11 +1197,20 @@ html[lang="en"] .hero__headline {
 }
 
 .mockup {
-  border-radius: 12px;
+  position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   background: var(--color-ivory);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mockup::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .mockup.mockup--dark {
@@ -1211,23 +1220,77 @@ html[lang="en"] .hero__headline {
 .mockup--mobile {
   width: 200px;
   flex-shrink: 0;
+  border-radius: 32px;
+  border: 4px solid #1a1a1a;
+  box-shadow:
+    0 15px 50px -8px rgba(0, 0, 0, 0.25),
+    0 0 80px rgba(201, 168, 76, 0.07);
+}
+
+/* iPhone Dynamic Island */
+.mockup--mobile::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 22px;
+  background: #000;
+  border-radius: 11px;
+  z-index: 3;
+}
+
+.mockup--mobile:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 60px -8px rgba(0, 0, 0, 0.3),
+    0 0 100px rgba(201, 168, 76, 0.12);
 }
 
 .mockup--mobile img {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 28px;
 }
 
 .mockup--desktop {
   flex: 1;
   max-width: 500px;
+  border-radius: 14px;
+  border: 6px solid #1a1a1a;
+  box-shadow:
+    0 12px 45px -8px rgba(0, 0, 0, 0.2),
+    0 0 60px rgba(201, 168, 76, 0.05);
+}
+
+/* MacBook bottom chin */
+.mockup--desktop::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  background: #2d2d2d;
+  border-radius: 2px 2px 0 0;
+  z-index: 1;
+}
+
+.mockup--desktop:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 18px 55px -8px rgba(0, 0, 0, 0.25),
+    0 0 80px rgba(201, 168, 76, 0.1);
 }
 
 .mockup--desktop img {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 8px;
 }
 
 .featured-project__info {
