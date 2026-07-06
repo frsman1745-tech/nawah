@@ -1197,15 +1197,12 @@ html[lang="en"] .hero__headline {
   gap: var(--space-lg);
 }
 
-/* Apple-style ambient light from screens */
+/* Unified golden halo behind both mockups */
 .featured-project__mockups::before {
   content: '';
   position: absolute;
-  width: 80%;
-  height: 70%;
-  top: 15%;
-  left: 10%;
-  background: radial-gradient(ellipse at 50% 35%, rgba(255, 252, 248, 0.05) 0%, rgba(255, 252, 248, 0.02) 30%, transparent 55%);
+  inset: -30px;
+  background: radial-gradient(ellipse at center, rgba(201, 168, 76, 0.04) 0%, transparent 55%);
   pointer-events: none;
   z-index: 0;
 }
@@ -1236,10 +1233,7 @@ html[lang="en"] .hero__headline {
   flex-shrink: 0;
   border-radius: 32px;
   border: 4px solid #1a1a1a;
-  box-shadow:
-    0 30px 60px -12px rgba(0, 0, 0, 0.25),
-    0 18px 36px -18px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 15px 50px -8px rgba(0, 0, 0, 0.25);
 }
 
 /* iPhone Dynamic Island */
@@ -1257,11 +1251,8 @@ html[lang="en"] .hero__headline {
 }
 
 .mockup--mobile:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 40px 80px -12px rgba(0, 0, 0, 0.3),
-    0 24px 48px -18px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(0, 0, 0, 0.04);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px -8px rgba(0, 0, 0, 0.3);
 }
 
 .mockup--mobile img {
@@ -1276,10 +1267,7 @@ html[lang="en"] .hero__headline {
   max-width: 500px;
   border-radius: 14px;
   border: 6px solid #1a1a1a;
-  box-shadow:
-    0 30px 60px -12px rgba(0, 0, 0, 0.2),
-    0 18px 36px -18px rgba(0, 0, 0, 0.25),
-    0 0 0 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 12px 45px -8px rgba(0, 0, 0, 0.2);
 }
 
 /* MacBook bottom chin */
@@ -1297,11 +1285,8 @@ html[lang="en"] .hero__headline {
 }
 
 .mockup--desktop:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 40px 80px -12px rgba(0, 0, 0, 0.25),
-    0 24px 48px -18px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(0, 0, 0, 0.04);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 55px -8px rgba(0, 0, 0, 0.25);
 }
 
 .mockup--desktop img {
