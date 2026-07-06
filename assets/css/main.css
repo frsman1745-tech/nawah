@@ -237,8 +237,8 @@ p {
 }
 
 .navbar__logo-img {
-  width: 28px;
-  height: 28px;
+  width: 2rem;
+  height: 2rem;
   flex-shrink: 0;
 }
 
@@ -1548,10 +1548,6 @@ html[lang="en"] .hero__headline {
 }
 
 /* ========== RTL ========== */
-
-[dir="rtl"] .navbar__logo {
-  flex-direction: row-reverse;
-}
 
 [dir="rtl"] .navbar__links {
   flex-direction: row;
