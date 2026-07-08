@@ -14,6 +14,7 @@ class HexagonParticleSystem {
     this.isRunning = true;
     this.resizeRAF = null;
     this.isMobile = window.innerWidth < 768;
+    this.frameCount = 0;
 
     this.init();
   }
@@ -59,7 +60,7 @@ class HexagonParticleSystem {
 
   createParticles() {
     var area = this.width * this.height;
-    var maxP = this.isMobile ? 15 : 30;
+    var maxP = this.isMobile ? 10 : 30;
     var divisor = this.isMobile ? 40000 : 20000;
     var count = Math.min(Math.floor(area / divisor), maxP); if (count < 3) count = 3;
     if (count < 5) count = 5;
@@ -165,6 +166,13 @@ class HexagonParticleSystem {
 
   animate() {
     if (!this.isRunning) return;
+
+    this.frameCount++;
+    var skip = this.isMobile ? 3 : 1;
+    if (this.frameCount % skip !== 0) {
+      requestAnimationFrame(function () { self.animate(); });
+      return;
+    }
 
     this.ctx.clearRect(0, 0, this.width, this.height);
 
@@ -530,6 +538,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof Lenis !== 'undefined' && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 768) {
     initLenis();
   }
+
+  if (window.innerWidth < 768) {
+    document.querySelectorAll('.hero__scroll-indicator, .hero__canvas, .page-hero__canvas').forEach(function (el) {
+      if (el) el.style.opacity = '0.3';
+    });
+  }
 });
 /* ============ ANIMATIONS: GSAP & ScrollTrigger ============ */
 
@@ -728,6 +742,7 @@ function scrollReveals() {
 function parallaxHero() {
   const canvas = document.querySelector('.hero__canvas');
   if (!canvas || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (window.innerWidth < 768) return;
 
   gsap.to(canvas, {
     y: () => canvas.offsetHeight * 0.15,
@@ -746,8 +761,11 @@ function parallaxHero() {
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     heroEntrance();
-    scrollReveals();
-    parallaxHero();
+
+    if (window.innerWidth >= 768) {
+      scrollReveals();
+      parallaxHero();
+    }
 
     if (typeof ScrollTrigger !== 'undefined') {
       ScrollTrigger.refresh();
