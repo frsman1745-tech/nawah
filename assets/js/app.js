@@ -576,7 +576,7 @@ function heroEntrance() {
 
   tl.fromTo('.hero__subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
 
-  tl.fromTo('.hero__cta', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.12 }, 1.7);
+  tl.fromTo('.hero__ctas', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6 }, 1.7);
 
   tl.fromTo('.hero__scroll-indicator', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 2.0);
 }

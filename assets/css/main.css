@@ -421,8 +421,6 @@ html[lang="en"] .hero__headline {
   justify-content: center;
   gap: var(--space-md);
   flex-wrap: wrap;
-  opacity: 0;
-  transform: translateY(20px);
 }
 
 .hero__scroll-indicator {
@@ -967,6 +965,55 @@ html[lang="en"] .hero__headline {
 
 .btn--text:hover::after {
   width: 100%;
+}
+
+.btn--gold {
+  background: linear-gradient(135deg, var(--color-gold), #b8942e);
+  color: var(--color-navy);
+  border: none;
+  padding: 16px 40px;
+  font-size: var(--text-base);
+  font-weight: 700;
+  box-shadow: 0 4px 25px -8px rgba(201, 168, 76, 0.4);
+  position: relative;
+  overflow: visible;
+}
+
+.btn--gold::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 54px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.6), rgba(201,168,76,0.1), rgba(201,168,76,0.6));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.btn--gold:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 35px -6px rgba(201, 168, 76, 0.55);
+}
+
+.btn--gold:hover::before {
+  opacity: 1;
+}
+
+.btn--gold::after {
+  content: '✦';
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.75em;
+  transition: transform 0.3s ease;
+}
+
+[dir="rtl"] .btn--gold::after {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+.btn--gold:hover::after {
+  transform: rotate(90deg);
 }
 
 .btn--whatsapp {
