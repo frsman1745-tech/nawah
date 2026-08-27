@@ -66,8 +66,8 @@ const translations = {
     "team.member.1.role": "المدير التنفيذي",
     "team.member.2.name": "أمير المرعي",
     "team.member.2.role": "مطور الخلفية & تصميم تجربة المستخدم",
-    "team.member.3.name": "اللُجين شبلّوط",
-    "team.member.3.role": "مطورة الواجهة & تصميم واجهة المستخدم",
+    "team.member.3.name": "لُجين شبلّوط",
+    "team.member.3.role": "مديرة تسويق",
 
     /* Testimonials */
     "testimonials.title": "ماذا قال عملاؤنا",
@@ -219,8 +219,8 @@ const translations = {
     "team.member.1.role": "Chief Executive Officer (CEO)",
     "team.member.2.name": "Amir Al-Mara'i",
     "team.member.2.role": "Backend Developer & UX Designer",
-    "team.member.3.name": "Al-Lujain Shublut",
-    "team.member.3.role": "Frontend Developer & UI Designer",
+    "team.member.3.name": "Lujain Shaballout",
+    "team.member.3.role": "Marketing Manager",
 
     /* Testimonials */
     "testimonials.title": "What Our Clients Say",
