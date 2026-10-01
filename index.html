@@ -10,12 +10,12 @@
   <!-- Open Graph -->
   <meta property="og:title" content="نواة / Nawah — Digital Development Agency">
   <meta property="og:description" content="نواة — وكالة تطوير مواقع، تطبيقات، وأنظمة أعمال في سوريا.">
-  <meta property="og:image" content="assets/images/og-image.jpg">
+  <meta property="og:image" content="https://res.cloudinary.com/dopbntej7/image/upload/f_auto,q_auto,w_512/v1790893106/jzynkrinp9hyvwmqhz2o.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nawah.dev">
 
   <!-- Favicon — same as site logo -->
-  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dopbntej7/image/upload/f_auto,q_auto,w_256/v1790893106/jzynkrinp9hyvwmqhz2o.png">
 
   <!-- Canonical -->
   <link rel="canonical" href="https://nawah.dev">
@@ -51,6 +51,15 @@
   }
   </script>
 
+  <!-- Theme bootstrap — must run before first paint -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('nawah-theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+    })();
+  </script>
+
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -66,7 +75,8 @@
     <nav class="navbar__inner" aria-label="Main navigation">
 
       <a href="index.html" class="navbar__logo" aria-label="Nawah Home">
-        <img src="assets/images/logo.png" alt="" class="navbar__logo-img" width="28" height="28">
+        <img src="https://res.cloudinary.com/dopbntej7/image/upload/f_auto,q_auto,w_256/v1790893106/jzynkrinp9hyvwmqhz2o.png" alt="" class="navbar__logo-img navbar__logo-img--light" width="32" height="37">
+        <img src="https://res.cloudinary.com/dopbntej7/image/upload/f_auto,q_auto,w_256/v1790893113/inpfi1nyyu2dqszcei87.png" alt="" class="navbar__logo-img navbar__logo-img--dark" width="32" height="37">
         <span data-i18n="nav.logo">نواة</span>
       </a>
 
@@ -113,7 +123,7 @@
       <p class="hero__subtitle" data-i18n="hero.subtitle">We build integrated digital solutions blending technical creativity with deep Syrian market insight — from idea to launch, the nucleus of every successful project.</p>
 
       <div class="hero__ctas">
-        <a href="https://wa.me/963998950904" target="_blank" rel="noopener noreferrer" class="btn btn--gold hero__cta" data-i18n="hero.cta.primary" data-cursor="Start">ابدأ مشروعك</a>
+        <a href="https://wa.me/963998950904" target="_blank" rel="noopener noreferrer" class="btn btn--gold hero__cta" data-i18n="hero.cta.primary">ابدأ مشروعك</a>
         <a href="portfolio.html" class="btn btn--outline hero__cta" data-i18n="hero.cta.secondary">Our Work</a>
         <a href="#about-brief" class="btn btn--text hero__cta" data-i18n="hero.cta.tertiary">
           Discover More <span class="btn__arrow">→</span>

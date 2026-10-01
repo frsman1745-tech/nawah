@@ -9,11 +9,11 @@
 
   <meta property="og:title" content="نواة / Nawah — Digital Development Agency">
   <meta property="og:description" content="تعرف على قصة نواة، رؤيتنا، ورسالتنا.">
-  <meta property="og:image" content="assets/images/og-image.jpg">
+  <meta property="og:image" content="https://res.cloudinary.com/dopbntej7/image/upload/f_auto,q_auto,w_512/v1790893106/jzynkrinp9hyvwmqhz2o.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nawah.dev/about">
 
-  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dopbntej7/image/upload/f_auto,q_auto,w_256/v1790893106/jzynkrinp9hyvwmqhz2o.png">
 
   <link rel="canonical" href="https://nawah.dev/about">
 
@@ -23,6 +23,14 @@
 
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
+
+  <script>
+    (function () {
+      var saved = localStorage.getItem('nawah-theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+    })();
+  </script>
 
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -36,7 +44,8 @@
   <header class="navbar" role="banner">
     <nav class="navbar__inner" aria-label="Main navigation">
       <a href="index.html" class="navbar__logo" aria-label="Nawah Home">
-        <img src="assets/images/logo.png" alt="" class="navbar__logo-img" width="28" height="28">
+        <img src="https://res.cloudinary.com/dopbntej7/image/upload/f_auto,q_auto,w_256/v1790893106/jzynkrinp9hyvwmqhz2o.png" alt="" class="navbar__logo-img navbar__logo-img--light" width="32" height="37">
+        <img src="https://res.cloudinary.com/dopbntej7/image/upload/f_auto,q_auto,w_256/v1790893113/inpfi1nyyu2dqszcei87.png" alt="" class="navbar__logo-img navbar__logo-img--dark" width="32" height="37">
         <span data-i18n="nav.logo">نواة</span>
       </a>
       <div class="navbar__links">

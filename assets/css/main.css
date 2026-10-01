@@ -94,6 +94,12 @@ input, textarea {
   --anim-base:   300ms ease;
   --anim-slow:   600ms ease;
   --anim-reveal: 800ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  --cursor-glow:       201 168 76;
+  --cursor-ring-glow:  rgba(14, 28, 61, 0.35);
+  /* Artwork layers share one 256px source canvas with centered content
+     (heart 24%, mid 49%, outer 74%), so one box size nests them correctly. */
+  --cursor-box: 72px;
 }
 
 [data-theme="dark"] {
@@ -109,6 +115,9 @@ input, textarea {
   --nav-bg:          rgba(26, 26, 26, 0.8);
   --glass-bg:        rgba(14, 28, 61, 0.3);
   --glass-border:    rgba(201, 168, 76, 0.2);
+
+  --cursor-glow:       243 205 120;
+  --cursor-ring-glow:  rgba(240, 196, 106, 0.4);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -232,8 +241,22 @@ p {
 
 .navbar__logo-img {
   width: 2rem;
-  height: 2rem;
+  height: auto;
+  aspect-ratio: 256 / 295;
+  object-fit: contain;
   flex-shrink: 0;
+}
+
+.navbar__logo-img--dark {
+  display: none;
+}
+
+[data-theme="dark"] .navbar__logo-img--light {
+  display: none;
+}
+
+[data-theme="dark"] .navbar__logo-img--dark {
+  display: block;
 }
 
 .navbar__links {
@@ -1603,68 +1626,90 @@ html[lang="en"] .hero__headline {
   text-transform: none;
 }
 
+/* Cursor layers, painted back-to-front: halo → outer → mid → heart core */
+
+.cursor__halo,
 .cursor__outer,
 .cursor__mid,
 .cursor__core {
   position: fixed;
   top: 0; left: 0;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
   pointer-events: none;
   will-change: transform;
   transform: translate(-50%, -50%);
 }
 
+/* Hexagonal glow behind the outer layer. The gradient alpha is held flat out to
+   the clip-path edge on purpose: a hexagon's vertices sit further from centre
+   than its flats, so any gradient that fades to zero there reads as a rounded
+   blob. Holding it lets the clip-path define a true hexagonal rim. */
+.cursor__halo {
+  width: calc(var(--cursor-box) * 1.1667);
+  height: calc(var(--cursor-box) * 1.3056);
+  z-index: 99995;
+  background-image: radial-gradient(closest-side,
+    rgb(var(--cursor-glow) / 0) 40%,
+    rgb(var(--cursor-glow) / 0.09) 78%,
+    rgb(var(--cursor-glow) / 0.16) 100%);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  opacity: 0.45;
+  will-change: transform, opacity;
+  animation: cursor-halo-pulse 3.4s ease-in-out infinite;
+}
+
+.cursor__halo::before {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  background-image: radial-gradient(closest-side,
+    rgb(var(--cursor-glow) / 0) 30%,
+    rgb(var(--cursor-glow) / 0.15) 66%,
+    rgb(var(--cursor-glow) / 0.3) 100%);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+@keyframes cursor-halo-pulse {
+  0%, 100% { opacity: 0.28; }
+  50%      { opacity: 0.62; }
+}
+
+.cursor__outer,
+.cursor__mid,
+.cursor__core {
+  width: var(--cursor-box);
+  height: var(--cursor-box);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
 .cursor__outer {
-  width: 48px; height: 48px;
-  background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-2.png');
+  background-image: url('https://res.cloudinary.com/dopbntej7/image/upload/f_auto,q_auto,w_256/v1790892439/gtkvujygah4pinnunspv.png');
   z-index: 99997;
 }
 
 .cursor__mid {
-  width: 30px; height: 30px;
-  background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/orbit-1.png');
+  background-image: url('https://res.cloudinary.com/dopbntej7/image/upload/f_auto,q_auto,w_256/v1790892432/xjdw3ubxipgzhfwa9vus.png');
   z-index: 99998;
 }
 
 .cursor__core {
-  width: 14px; height: 14px;
-  background-image: url('https://raw.githubusercontent.com/frsman1745-tech/nawah/master/assets/images/cursor/core.png');
+  background-image: url('https://res.cloudinary.com/dopbntej7/image/upload/f_auto,q_auto,w_256/v1790892425/ucanktw4enjgkvbcklen.png');
   z-index: 99999;
 }
 
-.cursor--hover .cursor__core {
-  filter: drop-shadow(0 0 5px rgba(243, 171, 3, 0.6));
-  transition: filter 0.3s ease;
-}
-
 .cursor--hover .cursor__mid {
-  filter: drop-shadow(0 0 4px rgba(12, 28, 51, 0.5));
+  filter: drop-shadow(0 0 5px var(--cursor-ring-glow));
   transition: filter 0.3s ease;
 }
 
 .cursor--hover .cursor__outer {
-  filter: drop-shadow(0 0 6px rgba(40, 57, 75, 0.4));
+  filter: drop-shadow(0 0 8px var(--cursor-ring-glow));
   transition: filter 0.3s ease;
 }
 
-.cursor--text .cursor__label {
-  opacity: 1;
-}
-
-.cursor__label {
-  position: fixed;
-  top: 0; left: 0;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--accent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  text-transform: uppercase;
-  white-space: nowrap;
-  z-index: 100000;
-  pointer-events: none;
+@media (prefers-reduced-motion: reduce) {
+  .cursor__halo { animation: none; opacity: 0.4; }
 }
 
 .section-divider {
@@ -2012,7 +2057,7 @@ html.lenis {
   .faq__item { padding: var(--space-xs) 0; }
   .values-grid { padding: 0 var(--space-md) var(--space-xl); }
 
-  .cursor__outer, .cursor__mid, .cursor__core, .cursor__label { display: none !important; }
+  .cursor__halo, .cursor__outer, .cursor__mid, .cursor__core { display: none !important; }
 }
 
 @media (max-width: 480px) {
@@ -2061,7 +2106,7 @@ html.lenis {
 
 @media print {
   .navbar { position: relative; background: none; backdrop-filter: none; }
-  .hero__canvas, .cursor__outer, .cursor__mid, .cursor__core, .cursor__label,
+  .hero__canvas, .cursor__halo, .cursor__outer, .cursor__mid, .cursor__core,
   .nav-overlay, .hero__scroll-indicator { display: none !important; }
 }
 
