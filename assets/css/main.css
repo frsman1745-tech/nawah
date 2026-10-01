@@ -95,7 +95,6 @@ input, textarea {
   --anim-slow:   600ms ease;
   --anim-reveal: 800ms cubic-bezier(0.16, 1, 0.3, 1);
 
-  --cursor-glow:       201 168 76;
   --cursor-ring-glow:  rgba(14, 28, 61, 0.35);
   /* Artwork layers share one 256px source canvas with centered content
      (heart 24%, mid 49%, outer 74%), so one box size nests them correctly. */
@@ -116,7 +115,6 @@ input, textarea {
   --glass-bg:        rgba(14, 28, 61, 0.3);
   --glass-border:    rgba(201, 168, 76, 0.2);
 
-  --cursor-glow:       243 205 120;
   --cursor-ring-glow:  rgba(240, 196, 106, 0.4);
 }
 
@@ -1626,9 +1624,8 @@ html[lang="en"] .hero__headline {
   text-transform: none;
 }
 
-/* Cursor layers, painted back-to-front: halo → outer → mid → heart core */
+/* Cursor layers, painted back-to-front: outer → mid → heart core */
 
-.cursor__halo,
 .cursor__outer,
 .cursor__mid,
 .cursor__core {
@@ -1637,45 +1634,6 @@ html[lang="en"] .hero__headline {
   pointer-events: none;
   will-change: transform;
   transform: translate(-50%, -50%);
-}
-
-/* Hexagonal glow behind the outer layer. The gradient alpha is held flat out to
-   the clip-path edge on purpose: a hexagon's vertices sit further from centre
-   than its flats, so any gradient that fades to zero there reads as a rounded
-   blob. Holding it lets the clip-path define a true hexagonal rim. */
-.cursor__halo {
-  width: calc(var(--cursor-box) * 1.1667);
-  height: calc(var(--cursor-box) * 1.3056);
-  z-index: 99995;
-  background-image: radial-gradient(closest-side,
-    rgb(var(--cursor-glow) / 0) 40%,
-    rgb(var(--cursor-glow) / 0.09) 78%,
-    rgb(var(--cursor-glow) / 0.16) 100%);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  opacity: 0.45;
-  will-change: transform, opacity;
-  animation: cursor-halo-pulse 3.4s ease-in-out infinite;
-}
-
-.cursor__halo::before {
-  content: '';
-  position: absolute;
-  inset: 12%;
-  background-image: radial-gradient(closest-side,
-    rgb(var(--cursor-glow) / 0) 30%,
-    rgb(var(--cursor-glow) / 0.15) 66%,
-    rgb(var(--cursor-glow) / 0.3) 100%);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-}
-
-@keyframes cursor-halo-pulse {
-  0%, 100% { opacity: 0.28; }
-  50%      { opacity: 0.62; }
-}
-
-.cursor__outer,
-.cursor__mid,
-.cursor__core {
   width: var(--cursor-box);
   height: var(--cursor-box);
   background-repeat: no-repeat;
@@ -1706,10 +1664,6 @@ html[lang="en"] .hero__headline {
 .cursor--hover .cursor__outer {
   filter: drop-shadow(0 0 8px var(--cursor-ring-glow));
   transition: filter 0.3s ease;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cursor__halo { animation: none; opacity: 0.4; }
 }
 
 .section-divider {
@@ -2057,7 +2011,7 @@ html.lenis {
   .faq__item { padding: var(--space-xs) 0; }
   .values-grid { padding: 0 var(--space-md) var(--space-xl); }
 
-  .cursor__halo, .cursor__outer, .cursor__mid, .cursor__core { display: none !important; }
+  .cursor__outer, .cursor__mid, .cursor__core { display: none !important; }
 }
 
 @media (max-width: 480px) {
@@ -2106,7 +2060,7 @@ html.lenis {
 
 @media print {
   .navbar { position: relative; background: none; backdrop-filter: none; }
-  .hero__canvas, .cursor__halo, .cursor__outer, .cursor__mid, .cursor__core,
+  .hero__canvas, .cursor__outer, .cursor__mid, .cursor__core,
   .nav-overlay, .hero__scroll-indicator { display: none !important; }
 }
 

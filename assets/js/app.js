@@ -264,9 +264,6 @@ const cursor = {
   init() {
     if (window.innerWidth <= 768) return;
 
-    var halo = document.createElement('div');
-    halo.className = 'cursor__halo';
-
     var outer = document.createElement('div');
     outer.className = 'cursor__outer';
 
@@ -276,7 +273,6 @@ const cursor = {
     var core = document.createElement('div');
     core.className = 'cursor__core';
 
-    document.body.appendChild(halo);
     document.body.appendChild(outer);
     document.body.appendChild(mid);
     document.body.appendChild(core);
@@ -302,7 +298,6 @@ const cursor = {
 
     function setLayersVisible(visible) {
       layersVisible = visible;
-      halo.style.opacity = visible ? '' : '0';
       outer.style.opacity = visible ? '' : '0';
       mid.style.opacity = visible ? '1' : '0';
       core.style.opacity = visible ? '1' : '0';
@@ -348,9 +343,6 @@ const cursor = {
       }
       core.style.filter = hoverGlow;
 
-      var haloScale = 1 + orbitIntensity * 0.3 + t * 0.35;
-
-      halo.style.transform = 'translate(' + mx2 + 'px, ' + my2 + 'px) translate(-50%, -50%) scale(' + haloScale.toFixed(3) + ')';
       core.style.transform = 'translate(' + cx + 'px, ' + cy + 'px) translate(-50%, -50%) scale(' + coreScale + ') rotate(' + coreRotate + 'deg)';
       mid.style.transform = 'translate(' + ox + 'px, ' + oy + 'px) translate(-50%, -50%) rotate(' + spinAngle1 + 'deg) scale(' + ringPulse + ')';
       outer.style.transform = 'translate(' + mx2 + 'px, ' + my2 + 'px) translate(-50%, -50%) rotate(' + spinAngle2 + 'deg) scale(' + ringPulse + ')';
@@ -398,9 +390,9 @@ const cursor = {
 
     window.addEventListener('resize', function () {
       if (window.innerWidth <= 768) {
-        halo.style.display = 'none'; core.style.display = 'none'; mid.style.display = 'none'; outer.style.display = 'none'; ripple.style.display = 'none';
+        core.style.display = 'none'; mid.style.display = 'none'; outer.style.display = 'none'; ripple.style.display = 'none';
       } else {
-        halo.style.display = ''; core.style.display = ''; mid.style.display = ''; outer.style.display = ''; ripple.style.display = '';
+        core.style.display = ''; mid.style.display = ''; outer.style.display = ''; ripple.style.display = '';
       }
     });
   }
