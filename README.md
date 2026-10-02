@@ -11,6 +11,7 @@ Open any HTML file directly in a browser:
 - `index.html` — Homepage
 - `portfolio.html` — Portfolio / Our Work
 - `about.html` — About Us
+- `store.html` — Store (digital services & bundles)
 
 No build tools or server required. For best performance, serve with a local server:
 
@@ -21,6 +22,48 @@ python -m http.server 8000
 # Node (npx)
 npx serve .
 ```
+
+---
+
+## Store Page (`store.html`)
+
+A bilingual catalog of 48 ready-made digital services and bundles. It reuses the site's navbar, footer, light/dark theme, custom cursor and canvas hero, and is fully AR/EN (RTL/LTR).
+
+### Data — `assets/js/store-data.js`
+
+Edit this file to add or change products. It defines two globals:
+
+- `window.NAWAH_CATEGORIES` — ordered list of `{ key, ar, en }` categories.
+- `window.NAWAH_PRODUCTS` — array of products:
+
+```js
+{
+  id: "qr", cat: "identity", price: 29, old: 59,   // old optional
+  badge: { ar: "الأكثر طلباً", en: "Best Seller" }, // or null
+  img: "assets/images/products/p-qr.svg",
+  title: { ar: "…", en: "…" },
+  short: { ar: "…", en: "…" },
+  desc:  { ar: "…", en: "…" },
+  feats: { ar: ["…"], en: ["…"] }
+}
+```
+
+Every product `id` must be unique — it is used as the DOM id (`#item-<id>`) and as a deep link (`store.html#<id>` scrolls to and highlights the product). Product images live in `assets/images/products/`.
+
+### Behavior — `assets/js/store.js`
+
+- Live search + category chips (rebuilt automatically on language change)
+- Interactive product preview modal: theme toggle (light/dark) + device frame (desktop/phone), quantity, and a direct WhatsApp order link
+- Cart persisted in `localStorage` (`nawah-cart-v1`) with a slide-in drawer and a WhatsApp checkout message
+- Toasts, reduced-motion support, and deep-link highlighting
+
+### WhatsApp number
+
+Update the `WA` constant in `assets/js/store.js` (currently `963998950904`).
+
+### Store text (i18n)
+
+All store UI strings use `data-i18n` keys under `store.*` plus `meta.store.title` / `meta.store.desc`, and the search field uses `data-i18n-placeholder="store.search"` — all in `assets/js/i18n.js`.
 
 ---
 
@@ -127,6 +170,8 @@ Create an SVG logo and save as `assets/images/logo.svg`. Then find `<!-- 📸 TO
 
 **Instagram:** Update `https://www.instagram.com/` in all footer sections.
 
+**Store WhatsApp:** Update the `WA` constant in `assets/js/store.js`.
+
 ---
 
 ## Customization Guide
@@ -150,7 +195,7 @@ Google Fonts links are in the `<head>` of each HTML file. Change them there and 
 
 ### Animations
 
-Key animation parameters are in `assets/js/animations.js`. Adjust durations, staggers, and easings.
+Key animation parameters are in `assets/js/app.js`. Adjust durations, staggers, and easings.
 
 ### Content / Copy
 
@@ -165,23 +210,21 @@ nawah/
 ├── index.html              ← Homepage
 ├── portfolio.html          ← Our Work page
 ├── about.html              ← About Us page
+├── store.html              ← Store (services & bundles)
 ├── README.md               ← This file
+├── opencode.json           ← opencode config
+├── .opencode/agent/        ← opencode agent definitions
 ├── assets/
 │   ├── css/
-│   │   ├── main.css        ← Core styles, variables, reset
-│   │   ├── components.css  ← Reusable component styles
-│   │   ├── animations.css  ← Animation-specific styles
-│   │   └── responsive.css  ← Media queries
+│   │   ├── main.css        ← Core styles, variables, components, responsive
+│   │   └── store.css       ← Store page styles
 │   ├── js/
 │   │   ├── i18n.js         ← Translation system (AR/EN)
-│   │   ├── main.js         ← Theme, cursor, navbar, mobile menu
-│   │   ├── hero.js         ← Hexagon particle canvas system
-│   │   ├── animations.js   ← GSAP timelines and ScrollTrigger
-│   │   └── counter.js      ← Animated number counters
+│   │   ├── app.js          ← Theme, cursor, navbar, hero canvas, animations
+│   │   ├── store-data.js   ← Store catalog (categories + 48 products)
+│   │   └── store.js        ← Store logic (search, filters, cart, modal)
 │   └── images/
-│       ├── team/           ← Team member photos
-│       ├── clients/        ← Client logos
-│       └── portfolio/      ← Project screenshots
+│       └── products/       ← Product images (SVG)
 ```
 
 ---
@@ -195,6 +238,7 @@ nawah/
 - **Lenis smooth scrolling** — Buttery smooth scroll experience
 - **Custom cursor** — Magnetic hover effects on interactive elements
 - **Glassmorphism** — Frosted glass cards with gold accents
+- **Store catalog** — 48 bilingual products with live search, category filters, interactive preview modal, persistent cart, and WhatsApp checkout
 - **Responsive** — Mobile-first, works on all screen sizes
 - **Accessible** — Semantic HTML, ARIA labels, reduced motion support
 - **SEO** — Schema.org structured data, Open Graph tags, canonical URLs

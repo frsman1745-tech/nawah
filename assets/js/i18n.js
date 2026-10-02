@@ -6,6 +6,7 @@ const translations = {
     "nav.logo": "نواة",
     "footer.logo": "نواة",
     "nav.home": "الرئيسية",
+    "nav.store": "المتجر",
     "nav.services": "خدماتنا",
     "nav.portfolio": "أعمالنا",
     "nav.about": "من نحن",
@@ -145,6 +146,31 @@ const translations = {
     "portfolio.project2.title": "مشروع جديد",
     "portfolio.project2.desc": "وصف المشروع سيتم إضافته قريباً",
 
+    /* Store Page */
+    "store.eyebrow": "المتجر",
+    "store.title": "كل ما يحتاجه نشاطك",
+    "store.subtitle": "اختر خدمة رقمية جاهزة أو باقة توفّر أكثر — من بطاقات QR والكاشير السحابي إلى التسويق وأنظمة البيوت الذكية.",
+    "store.search": "ابحث عن خدمة…",
+    "store.all": "الكل",
+    "store.results": "خدمة متاحة",
+    "store.add": "أضف للسلة",
+    "store.addShort": "أضف",
+    "store.added": "تمت",
+    "store.details": "التفاصيل",
+    "store.toast.added": "تمت الإضافة إلى السلة:",
+    "store.empty.title": "لا توجد نتائج",
+    "store.empty.desc": "جرّب كلمة أخرى أو غيّر التصنيف.",
+    "store.cart.title": "سلة الطلب",
+    "store.cart.total": "الإجمالي",
+    "store.cart.checkout": "اطلب عبر واتساب",
+    "store.cart.clear": "تفريغ السلة",
+    "store.cart.empty": "سلّتك فاضية. اختر خدمة من القائمة وأضفها.",
+    "store.modal.whatsapp": "اطلب عبر واتساب",
+    "store.preview.light": "فاتح",
+    "store.preview.dark": "داكن",
+    "store.preview.desktop": "سطح المكتب",
+    "store.preview.phone": "جوال",
+
     /* Page Meta */
     "meta.home.title": "نواة — وكالة تطوير رقمي | نواة كل مشروع رقمي ناجح",
     "meta.home.desc": "نواة — وكالة تطوير مواقع، تطبيقات، وأنظمة أعمال في سوريا. نحول أفكارك إلى منتجات رقمية استثنائية.",
@@ -152,6 +178,8 @@ const translations = {
     "meta.portfolio.desc": "تصفح أحدث مشاريع نواة في تطوير المواقع والتطبيقات. كل مشروع هو قصة نجاح.",
     "meta.about.title": "من نحن — نواة | قصتنا وفريقنا",
     "meta.about.desc": "تعرف على قصة نواة، رؤيتنا، ورسالتنا. فريق من الشبان السوريين الطموحين يبنون المستقبل الرقمي.",
+    "meta.store.title": "المتجر — نواة | خدمات وباقات رقمية",
+    "meta.store.desc": "تصفح خدمات وباقات نواة الرقمية — بطاقات QR، منيو، متاجر، كاشير، تسويق وأنظمة بيوت ذكية.",
   },
 
   en: {
@@ -159,6 +187,7 @@ const translations = {
     "nav.logo": "Nawah",
     "footer.logo": "Nawah",
     "nav.home": "Home",
+    "nav.store": "Store",
     "nav.services": "Services",
     "nav.portfolio": "Portfolio",
     "nav.about": "About",
@@ -297,6 +326,31 @@ const translations = {
     "portfolio.project2.title": "New Project",
     "portfolio.project2.desc": "Project description coming soon",
 
+    /* Store Page */
+    "store.eyebrow": "Store",
+    "store.title": "Everything Your Business Needs",
+    "store.subtitle": "Pick a ready-made digital service or a money-saving bundle — from QR cards and cloud POS to marketing and smart-home systems.",
+    "store.search": "Search for a service…",
+    "store.all": "All",
+    "store.results": "services available",
+    "store.add": "Add to Cart",
+    "store.addShort": "Add",
+    "store.added": "Added",
+    "store.details": "Details",
+    "store.toast.added": "Added to cart:",
+    "store.empty.title": "No results",
+    "store.empty.desc": "Try another keyword or change the category.",
+    "store.cart.title": "Your Cart",
+    "store.cart.total": "Total",
+    "store.cart.checkout": "Order on WhatsApp",
+    "store.cart.clear": "Clear cart",
+    "store.cart.empty": "Your cart is empty. Pick a service from the list and add it.",
+    "store.modal.whatsapp": "Order on WhatsApp",
+    "store.preview.light": "Light",
+    "store.preview.dark": "Dark",
+    "store.preview.desktop": "Desktop",
+    "store.preview.phone": "Phone",
+
     /* Page Meta */
     "meta.home.title": "Nawah — Digital Development Agency | The Core of Every Successful Digital Project",
     "meta.home.desc": "Nawah — a web, app, and business systems development agency in Syria. We turn your ideas into exceptional digital products.",
@@ -304,6 +358,8 @@ const translations = {
     "meta.portfolio.desc": "Browse Nawah's latest web and app development projects. Every project is a success story.",
     "meta.about.title": "About Us — Nawah | Our Story & Team",
     "meta.about.desc": "Learn about Nawah's story, vision, and mission. A team of ambitious Syrian youth building the digital future.",
+    "meta.store.title": "Store — Nawah | Digital Services & Bundles",
+    "meta.store.desc": "Browse Nawah's digital services and bundles — QR cards, menus, stores, POS, marketing and smart-home systems.",
   }
 };
 
@@ -338,6 +394,15 @@ function setLanguage(lang) {
     const translation = translations[lang]?.[key];
     if (translation) {
       el.textContent = translation;
+    }
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const translation = translations[lang]?.[key];
+    if (translation) {
+      el.setAttribute('placeholder', translation);
     }
   });
 
