@@ -12,13 +12,7 @@
 }
 
 .store__toolbar {
-  position: sticky;
-  top: var(--nav-h);
-  z-index: 60;
-  margin-inline: calc(-1 * var(--space-md));
-  padding: var(--space-md);
-  background: var(--bg-primary);
-  box-shadow: 0 14px 14px -14px rgba(14, 28, 61, 0.22);
+  padding: var(--space-md) 0;
 }
 
 .store__toolbar-inner {

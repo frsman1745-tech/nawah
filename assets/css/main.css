@@ -90,9 +90,6 @@ input, textarea {
   --section-padding: var(--space-2xl) var(--space-md);
   --max-width: 1280px;
 
-  /* ارتفاع النافبار الثابت: 44px للأزرار + padding علوي/سفلي */
-  --nav-h: calc(44px + (var(--space-md) * 2));
-
   --anim-fast:   150ms ease;
   --anim-base:   300ms ease;
   --anim-slow:   600ms ease;
@@ -442,44 +439,6 @@ html[lang="en"] .hero__headline {
 @keyframes bounce-down {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50% { transform: translateX(-50%) translateY(10px); }
-}
-
-.stats {
-  text-align: center;
-}
-
-.stats__grid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-2xl);
-  flex-wrap: wrap;
-}
-
-.stats__divider {
-  width: 40px;
-  height: 46px;
-  background: var(--accent);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  opacity: 0.15;
-}
-
-.stats__item {
-  text-align: center;
-}
-
-.stats__number {
-  font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 700;
-  color: var(--accent);
-  line-height: 1;
-  margin-bottom: var(--space-xs);
-}
-
-.stats__label {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  font-weight: 500;
 }
 
 .services__grid {
@@ -1903,9 +1862,6 @@ html.lenis {
     font-size: clamp(1.35rem, 3.5vw, 1.75rem);
   }
 
-  .stats__grid { flex-direction: column; gap: var(--space-lg); }
-  .stats__divider { transform: rotate(90deg); }
-
   .service-card__icon-frame { width: 60px; height: 69px; }
   .service-card__icon-inner { width: 46px; height: 53px; font-size: var(--text-lg); }
 
@@ -1970,7 +1926,6 @@ html.lenis {
 
   .page-hero { min-height: 25vh; }
   .faq__item { padding: var(--space-xs) 0; }
-  .stats__grid { gap: var(--space-md); }
 }
 
 @media (max-width: 380px) {

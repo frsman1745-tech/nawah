@@ -23,10 +23,6 @@ const translations = {
     /* About */
     "about.link": "اقرأ المزيد عنا",
 
-    /* Stats */
-    "stats.project.label": "مشروع منجز",
-    "stats.client.label": "عميل راضٍ",
-
     /* Services */
     "services.title": "خدماتنا",
     "services.web.title": "تصميم وتطوير المواقع",
@@ -191,10 +187,6 @@ const translations = {
 
     /* About */
     "about.link": "Read More About Us",
-
-    /* Stats */
-    "stats.project.label": "Completed Project",
-    "stats.client.label": "Happy Client",
 
     /* Services */
     "services.title": "Our Services",

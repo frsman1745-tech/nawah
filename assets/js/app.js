@@ -828,19 +828,6 @@ function initCounters() {
     }, { threshold: 0.5 });
 
     counters.forEach(c => observer.observe(c.element));
-    return;
-  }
-
-  const statsSection = document.getElementById('stats');
-  if (statsSection && typeof ScrollTrigger !== 'undefined') {
-    ScrollTrigger.create({
-      trigger: statsSection,
-      start: 'top 80%',
-      onEnter: () => {
-        counters.forEach(c => c.animate());
-      },
-      once: true,
-    });
   }
 }
 
