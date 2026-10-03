@@ -229,8 +229,8 @@
              : (lang() === "ar" ? "لمرة واحدة" : "one-time")) + "</small></p>";
     const cta =
       '<div class="pack__cta">' +
-        '<a class="btn btn--whatsapp btn--sm" href="' + waURL(p) + '" target="_blank" rel="noopener noreferrer">' +
-          esc(tt("store.modal.whatsapp", "Order on WhatsApp")) + "</a>" +
+        '<a class="btn btn--whatsapp btn--order btn--sm" href="' + waURL(p) + '" target="_blank" rel="noopener noreferrer">' +
+          esc(tt("store.modal.whatsapp", "Order Now")) + "</a>" +
         '<button class="btn btn--outline btn--sm" type="button" data-view="' + p.id + '">' +
           esc(tt("store.pack.details", "Details")) + "</button>" +
       "</div>";
@@ -250,9 +250,8 @@
       );
     }
 
-    const hot = badge ? " pack--hot" : "";
     return (
-      '<article class="pack' + hot + ' reveal" id="item-' + p.id + '" data-id="' + p.id + '"' + delay + ">" +
+      '<article class="pack reveal" id="item-' + p.id + '" data-id="' + p.id + '"' + delay + ">" +
         badge + "<h4>" + esc(L(p.title)) + "</h4>" + price +
         '<p class="pack__desc">' + esc(L(p.short)) + "</p>" + list + cta +
       "</article>"

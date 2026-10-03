@@ -974,6 +974,20 @@ html[lang="en"] .hero__headline {
   transform: scale(1.03);
 }
 
+/* زر «اطلب الآن» بالمتجر — ذهبي بدل أخضر واتساب.
+   الفوتر يبقي أخضر. specificity بكلاسين عشان يتغلب على .btn--whatsapp. */
+.btn--whatsapp.btn--order {
+  background: linear-gradient(135deg, var(--color-gold), #b8942e);
+  color: var(--color-navy);
+  box-shadow: 0 4px 25px -8px rgba(201, 168, 76, 0.4);
+}
+
+.btn--whatsapp.btn--order:hover {
+  background: linear-gradient(135deg, var(--color-gold), #b8942e);
+  box-shadow: 0 8px 35px -6px rgba(201, 168, 76, 0.55);
+  transform: scale(1.05);
+}
+
 .glass-card {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);

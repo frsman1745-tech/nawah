@@ -6,9 +6,28 @@
 /* ---------- Store hero ---------- */
 .store-hero .section__eyebrow { margin-bottom: var(--space-sm); }
 
+.store-hero {
+  min-height: 62vh;
+  padding: calc(var(--space-3xl) + 48px) 0 var(--space-3xl);
+}
+
+.store-hero .page-hero__content { max-width: 800px; }
+
+.store-hero .section__title {
+  font-size: clamp(2.1rem, 5.2vw, 3.4rem);
+  line-height: 1.12;
+}
+
+.store-hero .section__subtitle {
+  margin-top: var(--space-md);
+  margin-inline: auto;
+  max-width: 640px;
+  font-size: var(--text-lg);
+}
+
 /* ---------- Toolbar ---------- */
 .store {
-  padding-top: 0;
+  padding-top: var(--space-3xl);
 }
 
 .store__toolbar {
@@ -107,7 +126,7 @@
 
 .store__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-lg);
 }
 
@@ -525,15 +544,21 @@
   .pmodal__info { padding: var(--space-lg); overflow: visible; }
 }
 
-@media (max-width: 768px) {
-  .store__grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-md); }
+@media (max-width: 900px) {
+  .store__grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
   .product-card__feats { display: none; }
 }
 
-@media (max-width: 480px) {
-  .store__grid { grid-template-columns: 1fr; }
-  .product-card__feats { display: flex; }
-  .price b { font-size: var(--text-lg); }
+@media (max-width: 600px) {
+  .store__grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-sm); }
+  .product-card__feats { display: none; }
+  .product-card__media { padding: var(--space-sm); }
+  .product-card__body { padding: var(--space-sm); gap: var(--space-xs); }
+  .product-card__title { font-size: var(--text-sm); }
+  .product-card__desc { font-size: var(--text-xs); }
+  .product-card__cat { display: none; }
+  .price b { font-size: var(--text-sm); }
+  .pbtn { height: 32px; padding: 0 10px; font-size: 0.625rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -547,11 +572,14 @@
    Added for the bundles-first store layout.
    ========================================================================== */
 
-.section--packs { padding-bottom: var(--space-xl); }
+.section--packs {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-2xl);
+}
 
 .packs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-lg);
   align-items: stretch;
 }
@@ -639,19 +667,19 @@
   margin-top: auto;
 }
 
-.pack--hot {
-  border-color: var(--border-gold);
-  box-shadow: 0 24px 60px -26px rgba(201, 168, 76, 0.55);
-}
-
-.pack--hot::before {
+/* All packs share one static background; the gold glow shows only on hover */
+.pack::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--anim-base);
   background: radial-gradient(120% 80% at 50% 0%, rgba(201, 168, 76, 0.16), transparent 62%);
 }
+
+.pack:hover::before { opacity: 1; }
 
 /* Smart bundle — spans full width, artwork on the side */
 .pack--smart {
@@ -701,9 +729,17 @@
   to { opacity: 1; transform: none; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .packs { grid-template-columns: repeat(2, 1fr); }
+  .store-hero { min-height: 50vh; padding: calc(var(--space-3xl) + 24px) 0 var(--space-2xl); }
+}
+
+@media (max-width: 600px) {
+  .packs { grid-template-columns: 1fr; }
   .pack--smart { grid-template-columns: 1fr; gap: var(--space-md); }
   .pack--smart__media img { max-height: 200px; }
+  .store-hero { min-height: 44vh; padding: calc(var(--space-2xl) + 24px) 0 var(--space-2xl); }
+  .store-hero .section__subtitle { font-size: var(--text-base); }
 }
 
 @media (prefers-reduced-motion: reduce) {
