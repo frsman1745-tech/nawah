@@ -241,7 +241,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-sm);
-  margin-top: var(--space-xs);
+  margin-top: auto;
 }
 
 .product-card__actions {
@@ -550,7 +550,7 @@
 }
 
 @media (max-width: 600px) {
-  .store__grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-sm); }
+  .store__grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); }
   .product-card__feats { display: none; }
   .product-card__media { padding: var(--space-sm); }
   .product-card__body { padding: var(--space-sm); gap: var(--space-xs); }

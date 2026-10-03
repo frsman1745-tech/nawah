@@ -166,10 +166,6 @@
         "</div>" +
         '<div class="product-card__body">' +
           '<h3 class="product-card__title">' + esc(L(p.title)) + "</h3>" +
-          '<p class="product-card__desc">' + esc(L(p.short)) + "</p>" +
-          '<ul class="product-card__feats">' +
-            (L(p.feats) || []).slice(0, 3).map((f) => "<li>" + esc(f) + "</li>").join("") +
-          "</ul>" +
           '<div class="product-card__foot">' +
             '<span class="price"><b>' + money(p.price) + "</b>" +
               (p.old ? "<del>" + money(p.old) + "</del>" : "") + "</span>" +
