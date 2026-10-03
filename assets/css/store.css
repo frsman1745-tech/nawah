@@ -732,8 +732,8 @@ html[dir="ltr"] .reveal { --reveal-x: -48px; }
 }
 
 @keyframes reveal-slide {
-  from { opacity: 0; transform: translateX(var(--reveal-x, 48px)); }
-  to { opacity: 1; transform: translateX(0); }
+  from { opacity: 0; transform: translate(var(--reveal-x, 48px), 22px); }
+  to { opacity: 1; transform: translate(0, 0); }
 }
 
 @media (max-width: 900px) {
