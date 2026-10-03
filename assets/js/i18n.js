@@ -15,7 +15,7 @@ const translations = {
     /* Hero */
     "hero.headline": "نحن النواة اللي يُبنى من خلالها منتجك الرقمي",
     "hero.subtitle": "نبني حلولاً رقمية متكاملة تجمع بين الإبداع التقني والفهم العميق للسوق السوري — من الفكرة إلى الإطلاق، نواة كل مشروع ناجح",
-    "hero.cta.primary": "ابدأ مشروعك",
+    "hero.cta.primary": "بوابة المتجر",
     "hero.cta.secondary": "أعمالنا",
     "hero.cta.tertiary": "اكتشف المزيد",
     "hero.scroll": "اسحب للأسفل",
@@ -185,7 +185,7 @@ const translations = {
     /* Hero */
     "hero.headline": "We Are the Core From Which Your Digital Product Is Built",
     "hero.subtitle": "We build integrated digital solutions blending technical creativity with deep Syrian market insight — from idea to launch, the nucleus of every successful project.",
-    "hero.cta.primary": "Start Your Project",
+    "hero.cta.primary": "Store Portal",
     "hero.cta.secondary": "Our Work",
     "hero.cta.tertiary": "Discover More",
     "hero.scroll": "Scroll to explore",
