@@ -140,7 +140,6 @@ const translations = {
     "portfolio.project2.desc": "وصف المشروع سيتم إضافته قريباً",
 
     /* Store Page */
-    "store.eyebrow": "المتجر",
     "store.title": "كل ما يحتاجه نشاطك",
     "store.subtitle": "اختر خدمة رقمية جاهزة أو باقة توفّر أكثر — من بطاقات QR والكاشير السحابي إلى التسويق وأنظمة البيوت الذكية.",
     "store.search": "ابحث عن خدمة…",
@@ -154,6 +153,12 @@ const translations = {
     "store.preview.dark": "داكن",
     "store.preview.desktop": "سطح المكتب",
     "store.preview.phone": "جوال",
+    "store.bundles.eyebrow": "الباقات",
+    "store.bundles.title": "ابدأ بباقة جاهزة… ووفّر أكثر",
+    "store.bundles.note": "باقات مجمّعة بسعر أوفر من شراء الخدمات منفردة — اختر الباقة المناسبة واستعرض تفاصيلها.",
+    "store.services.eyebrow": "الخدمات",
+    "store.services.title": "اختر خدمة منفردة",
+    "store.pack.details": "التفاصيل",
 
     /* Page Meta */
     "meta.home.title": "نواة — وكالة تطوير رقمي | نواة كل مشروع رقمي ناجح",
@@ -304,7 +309,6 @@ const translations = {
     "portfolio.project2.desc": "Project description coming soon",
 
     /* Store Page */
-    "store.eyebrow": "Store",
     "store.title": "Everything Your Business Needs",
     "store.subtitle": "Pick a ready-made digital service or a money-saving bundle — from QR cards and cloud POS to marketing and smart-home systems.",
     "store.search": "Search for a service…",
@@ -318,6 +322,12 @@ const translations = {
     "store.preview.dark": "Dark",
     "store.preview.desktop": "Desktop",
     "store.preview.phone": "Phone",
+    "store.bundles.eyebrow": "Bundles",
+    "store.bundles.title": "Start with a ready bundle and save more",
+    "store.bundles.note": "Bundles priced lower than buying the services separately — pick the right one and view the details.",
+    "store.services.eyebrow": "Services",
+    "store.services.title": "Pick a single service",
+    "store.pack.details": "Details",
 
     /* Page Meta */
     "meta.home.title": "Nawah — Digital Development Agency | The Core of Every Successful Digital Project",

@@ -79,7 +79,7 @@ window.NAWAH_PRODUCTS = [
     feats: { ar: ["مطابقة للاشتراطات", "ختم وتوقيع رقمي", "مرتبطة بالكاشير", "أرشيف إلكتروني"], en: ["Fully compliant", "Digital stamp and signature", "Linked to the register", "Electronic archive"] } },
 
   { id: "pack-start", cat: "packages", price: 79, old: 149,
-    badge: { ar: "باقة", en: "Bundle" },
+    badge: { ar: "باقة الهوية الرقمية", en: "Digital Identity Bundle" },
     img: "assets/images/products/p-theme.svg",
     title: { ar: "باقة البداية", en: "Starter Bundle" },
     short: { ar: "هوية رقنية صحيحة بميزانية معقولة: بطاقة QR ومنيو أو كتالوج ولوحة تحكم.", en: "A proper digital identity on a sensible budget: QR card, menu or catalog, and a control panel." },
@@ -87,7 +87,7 @@ window.NAWAH_PRODUCTS = [
     feats: { ar: ["بطاقة QR مخصصة", "منيو أو كتالوج PDF", "لوحة تحكم للتعديل", "دعم 30 يوم"], en: ["Custom QR card", "PDF menu or catalog", "Editing control panel", "30 days of support"] } },
 
   { id: "pack-growth", cat: "packages", price: 229, old: 399,
-    badge: { ar: "الأكثر طلباً", en: "Best Seller" },
+    badge: { ar: "باقة التقنية", en: "Tech Bundle" },
     img: "assets/images/products/p-store.svg",
     title: { ar: "باقة النمو", en: "Growth Bundle" },
     short: { ar: "متجر كامل + كاشير سحابي + كتالوج + ولاء. الخيار الأمثل للتجار الجادّين.", en: "Full store + cloud register + catalog + loyalty. The ideal choice for serious merchants." },
@@ -95,7 +95,7 @@ window.NAWAH_PRODUCTS = [
     feats: { ar: ["متجر إلكتروني + توصيل", "كاشير سحابي", "بطاقة ولاء رقمية", "دعم أولوية"], en: ["Online store + delivery", "Cloud register", "Digital loyalty card", "Priority support"] } },
 
   { id: "pack-pro", cat: "packages", price: 449, old: 749,
-    badge: { ar: "باقة", en: "Bundle" },
+    badge: { ar: "الباقة التقنية المتكاملة", en: "Integrated Tech Bundle" },
     img: "assets/images/products/p-pos.svg",
     title: { ar: "باقة الاحتراف", en: "Professional Bundle" },
     short: { ar: "منظومة كاملة بالخدمات الثماني مع ربط وتخصيص كامل.", en: "A complete platform with all eight services, fully integrated and customized." },
@@ -335,9 +335,9 @@ window.NAWAH_PRODUCTS = [
     feats: { ar: ["باقات بمستويات", "تجديد تلقائي", "إيراد شهري متكرر", "تجميد وإيقاف العضوية"], en: ["Tiered plans", "Automatic renewal", "Recurring monthly revenue", "Freeze and pause membership"] } },
 
   { id: "pack-smart", cat: "smart", price: 690, old: 1150,
-    badge: { ar: "متكاملة", en: "All-in-One" },
+    badge: { ar: "الباقة الميدانية", en: "Field Bundle" },
     img: "assets/images/products/p-pack-smart.svg",
-    title: { ar: "باقة البيت الذكي الكاملة", en: "Complete Smart Home Bundle" },
+    title: { ar: "باقة البيت الذكي", en: "Smart Home Bundle" },
     short: { ar: "بيتك يستجيب لأوامرك — بضغطة من جوالك أو بكلمة واحدة.", en: "Your home responds to your commands — with one tap from your phone or one spoken word." },
     desc: { ar: "نبدأ بزيارة ميدانية نرسم فيها مخطط البيت ونحدد نقاط التحكم، ثم نركّب منظومة واحدة مترابطة تشمل الإنارة والتكييف والأقفال والكاميرات والستائر، ونربطها كلها في تطبيق واحد مع مساعد صوتي ومشاهد ذكية تضبطها على ذوقك. تختار ما يناسبك من القطع مجتمعة أو على دفعات، مع ضمان سنة على التنفيذ والصيانة والدعم عبر واتساب. بيتك يستجيب لأوامرك — بضغطة من جوالك أو بكلمة واحدة.", en: "We start with an on-site visit to map your home and identify control points, then install one interconnected system covering lighting, air conditioning, locks, cameras and curtains, all unified in a single app with a voice assistant and smart scenes tailored to your taste. Choose the pieces that suit you as a set or in installments, with a one-year warranty on installation, maintenance and WhatsApp support. Your home responds to your commands — with one tap from your phone or one spoken word." },
     feats: { ar: ["زيارة ميدانية ومخطط", "إنارة وتكييف وستائر", "قفل ذكي وكاميرات", "لوحة تحكم مركزية", "أكثر من 20 مشهداً ذكياً", "ضمان سنة وصيانة"], en: ["On-site visit and floor plan", "Lighting, AC and curtains", "Smart lock and cameras", "Central control panel", "More than 20 smart scenes", "One-year warranty and maintenance"] } },
