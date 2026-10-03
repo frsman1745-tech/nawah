@@ -599,7 +599,7 @@ function scrollReveals() {
   const mm = window.matchMedia('(prefers-reduced-motion: no-preference)');
   if (!mm.matches) return;
 
-  gsap.utils.toArray('.section__heading').forEach(heading => {
+  gsap.utils.toArray('.section__heading:not(.reveal)').forEach(heading => {
     gsap.fromTo(heading,
       { clipPath: 'inset(0 0 100% 0)', y: 30 },
       {
@@ -666,7 +666,7 @@ function scrollReveals() {
     }
   );
 
-  gsap.utils.toArray('.glass-card:not(.service-card):not(.team-card):not(.project-card)').forEach(card => {
+  gsap.utils.toArray('.glass-card:not(.service-card):not(.team-card):not(.project-card):not(.product-card):not(.pack):not(.reveal)').forEach(card => {
     gsap.fromTo(card,
       { y: 40, opacity: 0 },
       {
