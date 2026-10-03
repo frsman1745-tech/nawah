@@ -13,10 +13,12 @@
 
 .store__toolbar {
   position: sticky;
-  top: 74px;
+  top: var(--nav-h);
   z-index: 60;
-  padding: var(--space-md) 0;
-  background: linear-gradient(to bottom, var(--bg-primary) 72%, transparent);
+  margin-inline: calc(-1 * var(--space-md));
+  padding: var(--space-md);
+  background: var(--bg-primary);
+  box-shadow: 0 14px 14px -14px rgba(14, 28, 61, 0.22);
 }
 
 .store__toolbar-inner {

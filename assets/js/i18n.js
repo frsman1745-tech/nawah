@@ -20,10 +20,7 @@ const translations = {
     "hero.cta.tertiary": "اكتشف المزيد",
     "hero.scroll": "اسحب للأسفل",
 
-    /* About Brief */
-    "about.eyebrow": "من نحن",
-    "about.title": "نواة — حيث يبدأ كل شيء",
-    "about.text": "في عالم التكنولوجيا، كل منتج رقمي عظيم يبدأ من نواة متينة. في نواة، نؤمن بأن نجاح مشروعك الرقمي يبدأ من الأساس. نبني مواقع، تطبيقات، وأنظمة أعمال متكاملة تكون أنت في مركزها — لأنك أنت النواة الحقيقية لكل ما نبنيه.",
+    /* About */
     "about.link": "اقرأ المزيد عنا",
 
     /* Stats */
@@ -192,10 +189,7 @@ const translations = {
     "hero.cta.tertiary": "Discover More",
     "hero.scroll": "Scroll to explore",
 
-    /* About Brief */
-    "about.eyebrow": "About Us",
-    "about.title": "Nawah — Where It All Begins",
-    "about.text": "In the world of technology, every great digital product starts from a solid core. At Nawah, we believe your digital project's success begins at the foundation. We build websites, applications, and integrated business systems with you at their center — because you are the true nucleus of everything we build.",
+    /* About */
     "about.link": "Read More About Us",
 
     /* Stats */
