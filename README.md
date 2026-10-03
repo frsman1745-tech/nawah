@@ -53,9 +53,9 @@ Every product `id` must be unique — it is used as the DOM id (`#item-<id>`) an
 ### Behavior — `assets/js/store.js`
 
 - Live search + category chips (rebuilt automatically on language change)
-- Interactive product preview modal: theme toggle (light/dark) + device frame (desktop/phone), quantity, and a direct WhatsApp order link
-- Cart persisted in `localStorage` (`nawah-cart-v1`) with a slide-in drawer and a WhatsApp checkout message
-- Toasts, reduced-motion support, and deep-link highlighting
+- Interactive product details modal: theme toggle (light/dark) + device frame (desktop/phone), full description, feature list, and a direct WhatsApp order link
+- No cart — each card has a single **Details** button, and ordering goes straight to WhatsApp from the modal
+- Reduced-motion support and deep-link highlighting
 
 ### WhatsApp number
 
@@ -222,7 +222,7 @@ nawah/
 │   │   ├── i18n.js         ← Translation system (AR/EN)
 │   │   ├── app.js          ← Theme, cursor, navbar, hero canvas, animations
 │   │   ├── store-data.js   ← Store catalog (categories + 48 products)
-│   │   └── store.js        ← Store logic (search, filters, cart, modal)
+│   │   └── store.js        ← Store logic (search, filters, details modal, WhatsApp order)
 │   └── images/
 │       └── products/       ← Product images (SVG)
 ```
@@ -238,7 +238,7 @@ nawah/
 - **Lenis smooth scrolling** — Buttery smooth scroll experience
 - **Custom cursor** — Magnetic hover effects on interactive elements
 - **Glassmorphism** — Frosted glass cards with gold accents
-- **Store catalog** — 48 bilingual products with live search, category filters, interactive preview modal, persistent cart, and WhatsApp checkout
+- **Store catalog** — 48 bilingual products with live search, category filters, a details modal, and one-tap WhatsApp ordering (no cart)
 - **Responsive** — Mobile-first, works on all screen sizes
 - **Accessible** — Semantic HTML, ARIA labels, reduced motion support
 - **SEO** — Schema.org structured data, Open Graph tags, canonical URLs

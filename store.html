@@ -66,14 +66,6 @@
       </div>
 
       <div class="navbar__actions">
-        <button class="navbar__cart" id="cartBtn" aria-label="Open cart">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-          <span class="navbar__cart-count" id="cartN">0</span>
-        </button>
         <button class="navbar__toggle" id="lang-toggle" aria-label="Toggle language">EN</button>
         <button class="navbar__toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
         <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu">
@@ -134,30 +126,6 @@
 
   </main>
 
-  <!-- ========== CART DRAWER ========== -->
-  <div class="drawer" id="drawer" aria-hidden="true">
-    <div class="drawer__scrim" id="scrim"></div>
-    <aside class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
-      <div class="drawer__head">
-        <h3 id="cartTitle" data-i18n="store.cart.title">Your Cart</h3>
-        <button class="drawer__close" id="drawerX" aria-label="Close cart">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-        </button>
-      </div>
-      <div class="drawer__body" id="cartBody"></div>
-      <div class="drawer__foot">
-        <div class="drawer__total">
-          <span data-i18n="store.cart.total">Total</span>
-          <span id="cartTotal">$0</span>
-        </div>
-        <div class="drawer__actions">
-          <a class="btn btn--whatsapp" id="checkout" href="#" target="_blank" rel="noopener noreferrer" data-i18n="store.cart.checkout">Order on WhatsApp</a>
-          <button class="link-clear" id="clearCart" data-i18n="store.cart.clear">Clear cart</button>
-        </div>
-      </div>
-    </aside>
-  </div>
-
   <!-- ========== PRODUCT MODAL (interactive preview) ========== -->
   <div class="pmodal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <div class="pmodal__panel">
@@ -192,17 +160,6 @@
         <ul class="pmodal__feats" id="mList"></ul>
 
         <div class="pmodal__purchase">
-          <div class="pmodal__purchase-row">
-            <div class="q">
-              <button type="button" class="qbtn" id="mDec" aria-label="Decrease quantity">−</button>
-              <span class="num" id="mQty">1</span>
-              <button type="button" class="qbtn" id="mInc" aria-label="Increase quantity">+</button>
-            </div>
-            <button type="button" class="pbtn pbtn--solid" id="mAdd">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-              <span data-i18n="store.add">Add to Cart</span>
-            </button>
-          </div>
           <a class="btn btn--whatsapp" id="mWhats" href="#" target="_blank" rel="noopener noreferrer" data-i18n="store.modal.whatsapp">Order on WhatsApp</a>
         </div>
       </div>
@@ -252,9 +209,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- ========== TOAST ========== -->
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <!-- ========== SCRIPTS ========== -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
