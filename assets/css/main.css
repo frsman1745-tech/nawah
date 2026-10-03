@@ -225,6 +225,19 @@ p {
   flex-shrink: 0;
 }
 
+/* الوضع الفاتح: الشعار الأبيض الرسمي. الوضع الداكن: الشعار الملوّن */
+.navbar__logo-img--dark {
+  display: none;
+}
+
+[data-theme="dark"] .navbar__logo-img--light {
+  display: none;
+}
+
+[data-theme="dark"] .navbar__logo-img--dark {
+  display: block;
+}
+
 .navbar__links {
   display: flex;
   align-items: center;
