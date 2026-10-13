@@ -502,6 +502,38 @@
 
 .pmodal__price del { color: var(--text-secondary); }
 
+.pmodal__extra {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: -6px 0 var(--space-sm);
+}
+
+.pmodal__extra b { color: var(--accent); font-weight: 700; }
+
+.pmodal__extra del { opacity: 0.65; }
+
+.pmodal__req {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border: 1px solid var(--border-gold);
+  border-radius: 12px;
+  margin-bottom: var(--space-md);
+  background: var(--bg-secondary);
+}
+
+.pmodal__req b { color: var(--accent); }
+
+.btn.is-disabled,
+.pbtn.is-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(0.3);
+}
+
+.price--contact b { font-size: var(--text-lg); }
+
 .pmodal__desc {
   font-size: var(--text-sm);
   color: var(--text-secondary);

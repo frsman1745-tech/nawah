@@ -1,0 +1,178 @@
+{
+  "_note": "روابط صور عرض المتجر. ضع رابط الصورة مكان الحرف h مؤقتاً. مفتاح الصورة في images يتكوّن من مفاتيح الأزرار المختارة مفصولة بـ __ (مثال: light__desktop). أي منتج غير مذكور هنا يستخدم _default. حقل card هو صورة البطاقة في الشبكة.",
+  "_default": {
+    "groups": [
+      {
+        "key": "theme",
+        "options": [
+          { "key": "light", "ar": "فاتح", "en": "Light", "default": true },
+          { "key": "dark", "ar": "داكن", "en": "Dark" }
+        ]
+      },
+      {
+        "key": "frame",
+        "options": [
+          { "key": "desktop", "ar": "سطح المكتب", "en": "Desktop", "default": true },
+          { "key": "phone", "ar": "جوال", "en": "Phone" }
+        ]
+      }
+    ],
+    "images": {
+      "light__desktop": "h",
+      "light__phone": "h",
+      "dark__desktop": "h",
+      "dark__phone": "h"
+    }
+  },
+  "qr": {
+    "card": "h",
+    "groups": [
+      {
+        "key": "view",
+        "options": [
+          { "key": "reallife", "ar": "على الواقع", "en": "In Real Life", "default": true },
+          { "key": "desktop", "ar": "سطح المكتب", "en": "Desktop" },
+          { "key": "phone", "ar": "الجوال", "en": "Phone" }
+        ]
+      }
+    ],
+    "images": {
+      "reallife": "h",
+      "desktop": "h",
+      "phone": "h"
+    }
+  },
+  "catalog": {
+    "card": "h"
+  },
+  "menu": {
+    "card": "h",
+    "groups": [
+      {
+        "key": "lang",
+        "options": [
+          { "key": "ar", "ar": "عربي", "en": "AR", "default": true },
+          { "key": "en", "ar": "EN", "en": "EN" }
+        ]
+      }
+    ],
+    "images": {
+      "ar": "h",
+      "en": "h"
+    }
+  },
+  "booking": {
+    "card": "h",
+    "groups": [
+      {
+        "key": "show",
+        "options": [
+          { "key": "ar", "ar": "عربي", "en": "AR", "default": true },
+          { "key": "en", "ar": "EN", "en": "EN" },
+          { "key": "video", "ar": "مقطع مرئي", "en": "Video" }
+        ]
+      }
+    ],
+    "images": {
+      "ar": "h",
+      "en": "h",
+      "video": "h"
+    }
+  },
+  "loyalty": {
+    "card": "h",
+    "groups": [
+      {
+        "key": "wallet",
+        "options": [
+          { "key": "google", "ar": "قوقل", "en": "Google", "default": true },
+          { "key": "iphone", "ar": "آيفون", "en": "iPhone" },
+          { "key": "samsung", "ar": "سامسونق", "en": "Samsung" }
+        ]
+      }
+    ],
+    "images": {
+      "google": "h",
+      "iphone": "h",
+      "samsung": "h"
+    }
+  },
+  "add-hosting": {
+    "card": "h",
+    "groups": [
+      {
+        "key": "view",
+        "options": [
+          { "key": "domain", "ar": "الدومين", "en": "Domain", "default": true },
+          { "key": "email", "ar": "الإيميل", "en": "Email" },
+          { "key": "panel", "ar": "لوحة التحكم", "en": "Control Panel" }
+        ]
+      }
+    ],
+    "images": {
+      "domain": "h",
+      "email": "h",
+      "panel": "h"
+    }
+  },
+  "brand": {
+    "card": "h",
+    "groups": [
+      {
+        "key": "view",
+        "options": [
+          { "key": "logo", "ar": "الشعار", "en": "Logo", "default": true },
+          { "key": "colors", "ar": "الألوان والخطوط", "en": "Colors & Type" },
+          { "key": "guide", "ar": "دليل الهوية", "en": "Brand Guide" }
+        ]
+      }
+    ],
+    "images": {
+      "logo": "h",
+      "colors": "h",
+      "guide": "h"
+    }
+  },
+  "membership": {
+    "card": "h",
+    "groups": [
+      {
+        "key": "theme",
+        "options": [
+          { "key": "light", "ar": "فاتح", "en": "Light", "default": true },
+          { "key": "dark", "ar": "داكن", "en": "Dark" }
+        ]
+      },
+      {
+        "key": "frame",
+        "options": [
+          { "key": "desktop", "ar": "سطح المكتب", "en": "Desktop", "default": true },
+          { "key": "phone", "ar": "جوال", "en": "Phone" }
+        ]
+      },
+      {
+        "key": "lang",
+        "options": [
+          { "key": "ar", "ar": "عربي", "en": "AR", "default": true },
+          { "key": "en", "ar": "EN", "en": "EN" }
+        ]
+      }
+    ],
+    "images": {
+      "light__desktop__ar": "h",
+      "light__desktop__en": "h",
+      "light__phone__ar": "h",
+      "light__phone__en": "h",
+      "dark__desktop__ar": "h",
+      "dark__desktop__en": "h",
+      "dark__phone__ar": "h",
+      "dark__phone__en": "h"
+    }
+  },
+  "bot": {
+    "card": "h",
+    "single": "h",
+    "groups": [],
+    "images": {}
+  }
+}

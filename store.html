@@ -154,16 +154,7 @@
         <div class="pmodal__device" id="mDevice" data-theme="light" data-frame="desktop">
           <img id="mImg" src="" alt="">
         </div>
-        <div class="pmodal__controls">
-          <div class="seg" id="pvTheme">
-            <button type="button" data-pv-theme="light" class="active" data-i18n="store.preview.light">Light</button>
-            <button type="button" data-pv-theme="dark" data-i18n="store.preview.dark">Dark</button>
-          </div>
-          <div class="seg" id="pvFrame">
-            <button type="button" data-pv-frame="desktop" class="active" data-i18n="store.preview.desktop">Desktop</button>
-            <button type="button" data-pv-frame="phone" data-i18n="store.preview.phone">Phone</button>
-          </div>
-        </div>
+        <div class="pmodal__controls" id="pvControls"></div>
       </div>
 
       <div class="pmodal__info">
@@ -173,6 +164,8 @@
           <b id="mPrice"></b>
           <del id="mOld"></del>
         </div>
+        <p class="pmodal__extra" id="mExtra" style="display:none"></p>
+        <p class="pmodal__req" id="mReq" style="display:none"></p>
         <p class="pmodal__desc" id="mDesc"></p>
         <ul class="pmodal__feats" id="mList"></ul>
 

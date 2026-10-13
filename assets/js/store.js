@@ -27,7 +27,26 @@
   };
   const L = (field) => (field && (field[lang()] || field.en || field.ar)) || "";
   const catLabel = (key) => (CAT[key] ? CAT[key][lang()] : key);
-  const money = (n) => "$" + n;
+
+  /* Preview media (image links) — loaded from assets/data/store-media.json.
+     Values left as the temporary "h" placeholder fall back to the product SVG. */
+  let MEDIA = {};
+  const mediaFor = (p) => {
+    const m = MEDIA && MEDIA[p.id];
+    if (m && (m.groups || m.images || m.single)) return m;
+    return (MEDIA && MEDIA._default) || null;
+  };
+  const cardImg = (p) => {
+    const m = MEDIA && MEDIA[p.id];
+    return m && m.card && m.card !== "h" ? m.card : p.img;
+  };
+
+  const money = (n, cur) => {
+    if (n === null || n === undefined || n === 0) return "";
+    if (cur === "SYP") return n.toLocaleString("en-US") + " " + (lang() === "ar" ? "ل.س" : "SYP");
+    return "$" + n;
+  };
+
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
@@ -43,6 +62,7 @@
     store: "systems", stock: "systems", esign: "systems", care: "systems",
     zatca: "systems", pay: "systems", api: "systems", erp: "systems",
     delivery: "systems", membership: "systems", "add-hosting": "systems",
+    "add-tables": "systems",
 
     bot: "growth", social: "growth", ads: "growth", campaign: "growth",
     cro: "growth", video: "growth", market: "growth", "add-seo": "growth",
@@ -73,12 +93,12 @@
   /* Sellability ranking — best sellers first. Bundles keep their own order. */
   const RANK = [
     "qr", "menu", "catalog", "invoice", "booking", "loyalty",
-    "pack-start", "pack-growth", "pos", "store", "hr", "stock", "crm", "dash",
-    "esign", "care", "zatca", "pay", "bot", "social", "ads", "campaign", "cro",
-    "video", "market", "api", "erp", "delivery", "membership", "queue", "clinic",
-    "school", "estate", "app", "brand", "pack-pro", "pack-smart",
+    "pack-start", "pack-growth", "pos", "store", "hr", "esign", "zatca",
+    "bot", "social", "ads", "campaign", "video", "market", "membership", "queue",
+    "clinic", "school", "estate", "app", "brand", "pack-pro", "pack-smart",
     "sm-lighting", "sm-camera", "sm-lock", "sm-ac", "sm-curtain", "sm-voice",
-    "sm-monitor", "add-hosting", "add-seo", "add-training", "add-photo"
+    "sm-monitor", "add-hosting", "add-seo", "add-training", "add-photo",
+    "add-tables", "pay", "care", "dash", "crm", "stock", "api"
   ];
   const rankOf = (p) => { const i = RANK.indexOf(p.id); return i < 0 ? 999 : i; };
   const byRank = (a, b) => rankOf(a) - rankOf(b);
@@ -155,11 +175,15 @@
 
   function cardHTML(p, i) {
     const badge = L(p.badge);
+    const price = p.contact
+      ? '<span class="price price--contact"><b>' + esc(tt("store.contact", "Contact Us")) + "</b></span>"
+      : '<span class="price"><b>' + money(p.price, p.cur) + "</b>" +
+          (p.old ? "<del>" + money(p.old, p.cur) + "</del>" : "") + "</span>";
     return (
       '<article class="glass-card product-card reveal" style="--d:' + Math.min(i, 9) * 45 + 'ms" ' +
         'id="item-' + p.id + '" data-id="' + p.id + '" tabindex="0">' +
         '<div class="product-card__media">' +
-          '<img class="product-card__img" src="' + p.img + '" alt="' + esc(L(p.title)) +
+          '<img class="product-card__img" src="' + cardImg(p) + '" alt="' + esc(L(p.title)) +
             '" width="800" height="600" loading="lazy" decoding="async">' +
           '<span class="product-card__cat">' + esc(gLabel(groupOf(p))) + "</span>" +
           (badge ? '<span class="product-card__badge">' + esc(badge) + "</span>" : "") +
@@ -168,8 +192,7 @@
           '<h3 class="product-card__title">' + esc(L(p.title)) + "</h3>" +
           '<p class="product-card__desc">' + esc(L(p.short)) + "</p>" +
           '<div class="product-card__foot">' +
-            '<span class="price"><b>' + money(p.price) + "</b>" +
-              (p.old ? "<del>" + money(p.old) + "</del>" : "") + "</span>" +
+            price +
             '<span class="product-card__actions">' +
               '<button class="pbtn pbtn--solid" type="button" data-view="' + p.id + '" ' +
                 'aria-label="' + esc(tt("store.details", "Details")) + " " + esc(L(p.title)) + '">' +
@@ -188,13 +211,17 @@
     const url = location.origin + location.pathname + "#" + p.id;
     const isBundle = groupOf(p) === "bundles";
     const catName = isBundle ? (lang() === "ar" ? "باقة" : "Bundle") : catLabel(p.cat);
+    const priceLine = p.contact
+      ? (lang() === "ar" ? "السعر: تواصل معنا" : "Price: Contact us")
+      : (lang() === "ar" ? "السعر: " : "Price: ") + money(p.price, p.cur) +
+        (p.old ? (lang() === "ar" ? " (بدلاً من " + money(p.old, p.cur) + ")" : " (was " + money(p.old, p.cur) + ")") : "");
     const msg = lang() === "ar"
       ? [
           "مرحباً نواة، أريد طلب هذه الخدمة من الموقع:",
           "",
           "• " + L(p.title),
           "التصنيف: " + catName,
-          "السعر: " + money(p.price) + (p.old ? " (بدلاً من " + money(p.old) + ")" : ""),
+          priceLine,
           "",
           "الرابط: " + url,
           "",
@@ -205,7 +232,7 @@
           "",
           "• " + L(p.title),
           "Category: " + catName,
-          "Price: " + money(p.price) + (p.old ? " (was " + money(p.old) + ")" : ""),
+          priceLine,
           "",
           "Link: " + url,
           "",
@@ -237,7 +264,7 @@
       return (
         '<article class="pack pack--smart reveal" id="item-' + p.id + '" data-id="' + p.id + '"' + delay + ">" +
           '<div class="pack--smart__media">' +
-            '<img src="' + p.img + '" alt="' + esc(L(p.title)) + '" width="900" height="700" loading="lazy" decoding="async">' +
+            '<img src="' + cardImg(p) + '" alt="' + esc(L(p.title)) + '" width="900" height="700" loading="lazy" decoding="async">' +
           "</div>" +
           '<div class="pack--smart__body">' + badge +
             "<h4>" + esc(L(p.title)) + "</h4>" + price +
@@ -316,19 +343,111 @@
   const mDevice = $("#mDevice");
   let current = null;
 
+  /* Interactive preview — builds its button groups from the media config so
+     each service can expose its own buttons (light/dark, desktop/phone,
+     AR/EN, real-life, video, domain/email, …). The image for the current
+     selection is looked up in the JSON `images` map. */
+  function renderPreview(p) {
+    const controls = $("#pvControls");
+    const cfg = mediaFor(p);
+    const base = cardImg(p);
+    controls.innerHTML = "";
+    mDevice.dataset.theme = "light";
+    mDevice.dataset.frame = "desktop";
+
+    if (!cfg || ((!cfg.groups || !cfg.groups.length) && !cfg.images)) {
+      $("#mImg").src = base;
+      return;
+    }
+
+    const state = {};
+    const key = () => (cfg.groups || []).map((g) => state[g.key]).join("__");
+    const pick = () => {
+      const src = (cfg.images || {})[key()];
+      if (src && src !== "h") return src;
+      if (cfg.single && cfg.single !== "h") return cfg.single;
+      return base;
+    };
+
+    controls.innerHTML = (cfg.groups || []).map((g) =>
+      '<div class="seg" data-group="' + esc(g.key) + '">' +
+        g.options.map((o) =>
+          '<button type="button" data-opt="' + esc(o.key) + '"' +
+          (o.default ? ' class="active"' : "") + ">" +
+          esc(lang() === "ar" ? (o.ar || o.en) : (o.en || o.ar)) + "</button>").join("") +
+      "</div>").join("");
+
+    (cfg.groups || []).forEach((g) => {
+      const def = g.options.find((o) => o.default) || g.options[0];
+      state[g.key] = def.key;
+    });
+
+    const apply = () => {
+      $("#mImg").src = pick();
+      const frame = state.frame || state.view;
+      mDevice.dataset.frame = frame === "phone" ? "phone" : "desktop";
+      if (state.theme) mDevice.dataset.theme = state.theme;
+    };
+    apply();
+
+    controls.onclick = (e) => {
+      const b = e.target.closest("[data-opt]");
+      if (!b) return;
+      const seg = b.closest(".seg");
+      state[seg.dataset.group] = b.dataset.opt;
+      $$("[data-opt]", seg).forEach((x) => x.classList.toggle("active", x === b));
+      apply();
+    };
+  }
+
   function fillModal(p) {
-    $("#mImg").src = p.img;
+    $("#mImg").src = cardImg(p);
     $("#mImg").alt = L(p.title);
     $("#mCat").textContent = groupOf(p) === "bundles"
       ? (lang() === "ar" ? "باقة" : "Bundle")
       : catLabel(p.cat);
     $("#mTitle").textContent = L(p.title);
     $("#mDesc").textContent = L(p.desc);
-    $("#mPrice").textContent = money(p.price);
-    $("#mOld").textContent = p.old ? money(p.old) : "";
+    $("#mPrice").textContent = p.contact ? tt("store.contact", "Contact Us") : money(p.price, p.cur);
+    $("#mOld").textContent = !p.contact && p.old ? money(p.old, p.cur) : "";
+
+    const extra = $("#mExtra");
+    if (p.extra && p.extra.price) {
+      extra.style.display = "";
+      extra.innerHTML = '<span>' + esc(L(p.extra.label) || "") + ": </span><b>" +
+        money(p.extra.price, p.cur) + "</b>" +
+        (p.extra.old ? ' <del>' + money(p.extra.old, p.cur) + "</del>" : "");
+    } else {
+      extra.style.display = "none";
+      extra.innerHTML = "";
+    }
+
+    const req = $("#mReq");
+    if (p.req) {
+      req.style.display = "";
+      req.innerHTML = "<b>" + esc(tt("store.req", "Requirements:")) + "</b> " + esc(L(p.req));
+    } else {
+      req.style.display = "none";
+      req.innerHTML = "";
+    }
+
     $("#mList").innerHTML = (L(p.feats) || [])
       .map((f) => "<li>" + ICON_CHECK + "<span>" + esc(f) + "</span></li>").join("");
-    $("#mWhats").href = waURL(p);
+
+    const w = $("#mWhats");
+    if (p.soon) {
+      w.textContent = tt("store.soon", "Coming Soon");
+      w.removeAttribute("href");
+      w.setAttribute("aria-disabled", "true");
+      w.classList.add("is-disabled");
+    } else {
+      w.textContent = tt("store.modal.whatsapp", "Order Now");
+      w.href = waURL(p);
+      w.removeAttribute("aria-disabled");
+      w.classList.remove("is-disabled");
+    }
+
+    renderPreview(p);
   }
 
   function openModal(id) {
@@ -348,19 +467,6 @@
 
   modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
   $("#mX").addEventListener("click", closeModal);
-
-  $("#pvTheme").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-pv-theme]");
-    if (!b) return;
-    $$("[data-pv-theme]", $("#pvTheme")).forEach((x) => x.classList.toggle("active", x === b));
-    mDevice.dataset.theme = b.dataset.pvTheme;
-  });
-  $("#pvFrame").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-pv-frame]");
-    if (!b) return;
-    $$("[data-pv-frame]", $("#pvFrame")).forEach((x) => x.classList.toggle("active", x === b));
-    mDevice.dataset.frame = b.dataset.pvFrame;
-  });
 
   addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal();
@@ -407,4 +513,18 @@
   renderPacks();
   render();
   revealAll(document);
+
+  /* Load the editable image-link map, then refresh if it arrives after paint */
+  fetch("assets/data/store-media.json")
+    .then((r) => (r.ok ? r.json() : {}))
+    .then((json) => {
+      MEDIA = json || {};
+      renderPacks();
+      render();
+      if (modal.classList.contains("open") && current) {
+        const p = byId(current);
+        if (p) fillModal(p);
+      }
+    })
+    .catch(() => { MEDIA = {}; });
 })();
